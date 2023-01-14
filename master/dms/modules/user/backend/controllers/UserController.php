@@ -21,7 +21,7 @@
 				}
 			}
 
-			return $this->render('login', array(
+			return $this->render('login2', array(
 				'model' => $model
 			));
 		}

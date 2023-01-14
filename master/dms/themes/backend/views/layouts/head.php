@@ -11,14 +11,31 @@
     <link rel="icon" type="image/png" sizes="16x16" href="#">
     <title><?= Snl::app()->config()->site_title ?></title>
     <!-- Bootstrap Core CSS -->
-    <link href="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- Menu CSS -->
-    <link href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <!-- <link href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet"> -->
+
+    <!-- //////////////// NEW TEMPLATE //////////////////////// -->
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="<?= Snl::app()->config()->theme_url ?>assets_soft/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="<?= Snl::app()->config()->theme_url ?>assets_soft/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="<?= Snl::app()->config()->theme_url ?>assets_soft/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="<?= Snl::app()->config()->theme_url ?>assets_soft/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
+    <!-- ///////////////// END OF NEW TEMPLATE /////////////////// -->
+
+
+    <!-- /////////// PLUGINS ///////////////////// -->
     <!-- alerts CSS -->
     <link href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/sweetalert/sweetalert2.css" rel="stylesheet" type="text/css">
     <!-- js grid -->
     <link type="text/css" rel="stylesheet" href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/jsgrid2/jsgrid.min.css" />
     <link type="text/css" rel="stylesheet" href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/jsgrid2/jsgrid-theme.min.css" />
+
     <!-- toast CSS -->
     <link href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
     <!-- morris CSS -->
@@ -39,12 +56,15 @@
     <link href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <!-- Datetime Picker -->
     <link rel="stylesheet" type="text/css" href="<?= Snl::app()->config()->theme_url ?>plugins/datetimepicker/jquery.datetimepicker.css">
+    <!-- /////// END OF PLUGINS ///////////////  -->
+
+
     <!-- animation CSS -->
-    <link href="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/css/animate.css" rel="stylesheet">
+    <!-- <link href="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/css/animate.css" rel="stylesheet"> -->
     <!-- Custom CSS -->
-    <link href="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/css/style.css" rel="stylesheet">
+    <!-- <link href="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/css/style.css" rel="stylesheet"> -->
     <!-- color CSS -->
-    <link href="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/css/colors/default.css" id="theme" rel="stylesheet">
+    <!-- <link href="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/css/colors/default.css" id="theme" rel="stylesheet"> -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -52,8 +72,11 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
+    
+
+
     <!-- Local Custom -->
-    <link href="<?= Snl::app()->config()->theme_url ?>assets/css/local.css" rel="stylesheet">
+    <!-- <link href="<?= Snl::app()->config()->theme_url ?>assets/css/local.css" rel="stylesheet"> -->
 
     <!-- ============================================================== -->
     <!-- All Jquery -->
