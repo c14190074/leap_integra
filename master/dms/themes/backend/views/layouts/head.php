@@ -142,7 +142,7 @@
     </script>
 </head>
 
-<body class="fix-header">
+<body class="g-sidenav-show  bg-gray-100">
 
 <!-- Preloader -->
 <div class="preloader hidden">
@@ -151,6 +151,3 @@
     </svg>
 </div>
 <!-- End Preloader -->
-
-<!-- Wrapper -->
-<div id="wrapper">

@@ -52,8 +52,8 @@
 			include 'themes/backend/views/layouts/head.php';
 			if(!$isLoginPage) {
 				$controller->init();
-				include 'themes/backend/views/layouts/top_menu.php';
 				include 'themes/backend/views/layouts/left_menu.php';
+				include 'themes/backend/views/layouts/top_menu.php';
 				include 'themes/backend/views/layouts/main.php';
 			}
 			
