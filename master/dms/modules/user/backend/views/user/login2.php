@@ -41,10 +41,10 @@
                   </a>
                 </li>
               </ul>
-              <!-- <li class="nav-item d-flex align-items-center">
+              <li class="nav-item d-flex align-items-center" style="opacity: 0;">
                 <a class="btn btn-round btn-sm mb-0 btn-outline-primary me-2" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard">Online Builder</a>
               </li>
-              <ul class="navbar-nav d-lg-block d-none">
+              <!-- <ul class="navbar-nav d-lg-block d-none">
                 <li class="nav-item">
                   <a href="https://www.creative-tim.com/product/soft-ui-dashboard" class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark">Free download</a>
                 </li>
@@ -83,7 +83,8 @@
                       <label class="form-check-label" for="rememberMe">Remember me</label>
                     </div>
                     <div class="text-center">
-                      <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
+                      <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
+                      
                     </div>
                   </form>
                 </div>
@@ -97,7 +98,7 @@
             </div>
             <div class="col-md-6">
               <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('../assets/img/curved-images/curved6.jpg')"></div>
+                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('<?= Snl::app()->config()->theme_url ?>assets_soft/img/curved-images/7566.jpg')"></div>
               </div>
             </div>
           </div>
