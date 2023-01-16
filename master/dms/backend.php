@@ -45,7 +45,7 @@
 			$controller->$action();
 		} else {
 			$isLoginPage = FALSE;
-			if($module == 'user' && $action == 'login') {
+			if(($module == 'user' && $action == 'login') || ($module == 'user' && $action == 'register')) {
 			    $isLoginPage = TRUE;
 			}
 
@@ -55,6 +55,10 @@
 				include 'themes/backend/views/layouts/left_menu.php';
 				include 'themes/backend/views/layouts/top_menu.php';
 				include 'themes/backend/views/layouts/main.php';
+			}
+
+			if($isLoginPage) {
+				include 'themes/backend/views/layouts/top_menu_login.php';
 			}
 			
 			echo $controller->$action();

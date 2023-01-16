@@ -26,6 +26,18 @@
 			));
 		}
 
+		public function register() {
+			if(Snl::app()->isAdmin()) {
+				$this->redirect('admin/dashboard/index');
+			}
+
+			$model = new User;
+
+			return $this->render('register', array(
+				'model' => $model
+			));
+		}
+
 		public function logout() {
 			Snl::session()->unsetSession(SecurityHelper::encrypt('backendlogin'));
 			$this->redirect('admin/user/login');
