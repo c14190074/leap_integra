@@ -180,7 +180,7 @@
 			}
 
 			$login_data = json_decode($login_data);
-			if(isset($login_data->username)) {
+			if(isset($login_data->email)) {
 				return TRUE;
 			}
 
@@ -257,8 +257,10 @@
 		// END OF SESSION
 		
 		// FLASH MESSSAGE
+
 		public function setFlashMessage($msg, $type = '') {
-			$msg_element = '<div class="row"><div class="col-sm-12"><div class="alert alert-dismissable alert-'.$type.'"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'.$msg.' </div></div></div>';
+			// $msg_element = '<div class="row"><div class="col-sm-12"><div role="alert" class="alert text-white alert-'.$type.'">'.$msg.' </div></div></div>';
+			$msg_element = '<div class="row"><div class="col-sm-12"><div role="alert" class="text-black">'.$msg.' </div></div></div>';
 			$this->createSession('flashmessage', $msg_element);
 		}
 

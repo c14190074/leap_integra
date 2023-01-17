@@ -12,12 +12,12 @@
 			$model = new User;
 
 			if(isset($_POST['User'])) {
-				$model->username = $_POST['User']['username'];
+				$model->email = $_POST['User']['email'];
 				$model->password = $_POST['User']['password'];
 				if($model->validateLogin()) {
-					$this->redirect('admin');
+					$this->redirect('admin/dashboard/index');
 				} else {
-					Snl::app()->setFlashMessage('Username atau password salah.', 'danger');
+					Snl::app()->setFlashMessage('Email atau password salah!', 'danger');
 				}
 			}
 
@@ -32,6 +32,15 @@
 			}
 
 			$model = new User;
+			if(isset($_POST['User'])) {
+				$model->setAttributes($_POST['User']);
+				if($model->save()) {
+					Snl::app()->setFlashMessage('User baru berhasil ditambahkan.', 'success');
+					$this->redirect('admin/user/login');
+				} else {
+					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
+				}
+			}
 
 			return $this->render('register', array(
 				'model' => $model
@@ -57,6 +66,7 @@
 			$model = new User;
 			if(isset($_POST['User'])) {
 				$model->setAttributes($_POST['User']);
+
 				if($model->save()) {
 					Snl::app()->setFlashMessage('User baru berhasil ditambahkan.', 'success');
 					$this->redirect('admin/user/index');

@@ -6,15 +6,15 @@
           <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
             <div class="card card-plain mt-8">
               <div class="card-header pb-0 text-left bg-transparent">
-                <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
-                <p class="mb-0">Enter your email and password to sign in</p>
+                <h3 class="font-weight-bolder text-info text-gradient">Selamat datang!</h3>
+                <p class="mb-0">Silahkan masukkan email dan password untuk login</p>
               </div>
               <div class="card-body">
+                <?= Snl::app()->getFlashMessage() ?>
                 <form role="form" class="form-horizontal" id="loginform" action="#" method="POST">
-                  <label>Username</label>
+                  <label>Email</label>
                   <div class="mb-3">
-                      <?= Snl::app()->getFlashMessage() ?>
-                      <?= Snl::chtml()->activeTextbox($model, 'username') ?>                        
+                      <?= Snl::chtml()->activeTextbox($model, 'email') ?>                        
                   </div>
                   <label>Password</label>
                   <div class="mb-3">

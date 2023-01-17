@@ -1,6 +1,6 @@
 <?php
 	class User extends SnlActiveRecord {
-		public $user_id, $username, $password, $email, $firstname, $lastname, $status, $secret_key, $encryption_key, $encryption_iv, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $user_id, $fullname, $email, $password, $phone, $address, $position, $status, $status_email, $secret_key, $encryption_key, $encryption_iv, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 		public $password_repeat;
 
 		public function __construct() {
@@ -11,8 +11,8 @@
 
 		public function rules() {
 			return array(
-				'required'	=> array('username', 'password', 'email', 'firstname'),
-				'unique'	=> array('username'),
+				'required'	=> array('fullname', 'email', 'password', 'phone'),
+				// 'unique'	=> array('email'),
 				'repeat'	=> array('password'),
 				'email'		=> array('email')
 				// 'integer'	=> array('status')
@@ -26,13 +26,14 @@
 
 		public function getLabel($field, $with_rule = FALSE) {
 			$labels = array(
-				'user_id' => 'User Id',
-				'username' => 'Username',
-				'password' => 'Password',
+				'user_id' => 'User ID',
+				'fullname' => 'Nama Lengkap',
 				'email' => 'Email',
-				'firstname' => 'Nama Depan',
-				'lastname' => 'Nama Belakang',
+				'password' => 'Password',
+				'phone' => 'No. Telp',
+				'address' => 'Alamat',
 				'status' => 'Status',
+				'status_email' => 'Status Email',
 				'secret_key' => 'Secret Key',
 				'encryption_key' => 'Encryption Key',
 				'encryption_iv' => 'Encryption IV',
@@ -41,7 +42,7 @@
 				'updated_on' => 'Updated On',
 				'updated_by' => 'Updated By',
 				'is_deleted' => 'Is Deleted',
-				'password_repeat' => 'Repeat Password',
+				'password_repeat' => 'Ulangi Password',
 			);
 
 			$label = isset($labels[$field]) ? $labels[$field] : ucwords(str_replace('_', ' ', $field));
@@ -87,6 +88,8 @@
 			$digits = 16;
 
 			if($this->isNewRecord) {
+				$this->status = 0;
+				$this->status_email = 0;
 				$this->created_on = Snl::app()->dateNow();
 				$this->created_by = Snl::app()->user()->user_id;
 				$this->updated_on = Snl::app()->dateNow();
@@ -123,8 +126,8 @@
 
 		public function validateLogin() {
 			$model = User::model()->findByAttribute(array(
-				'condition' => 'username = :username AND status = :status AND is_deleted = 0',
-				'params'	=> array(':username' => $this->username, ':status' => 1)
+				'condition' => 'email = :email AND status = :status AND is_deleted = 0',
+				'params'	=> array(':email' => $this->email, ':status' => 0)
 			));
 
 			if($model == NULL) {
@@ -142,11 +145,11 @@
 		public function generateSessionLogin($model) {
 			$data = new stdClass();
 			$data->user_id 		= $model->user_id;
-			$data->username 	= $model->username;
-			$data->completeName = $model->firstname.' '.$model->lastname;
-			$data->firstname 	= $model->firstname;
-			$data->lastname 	= $model->lastname;
-			$data->email 		= $model->email;
+			$data->email 	= $model->email;
+			$data->fullname = $model->fullname;
+			$data->phone 	= $model->phone;
+			$data->address 	= $model->address;
+			$data->status_email = $model->status_email;
 			$data->status 		= $model->status;
 
 			Snl::session()->createSession(SecurityHelper::encrypt('backendlogin'), json_encode($data));
@@ -163,8 +166,8 @@
 
 		public function validateApiLogin($generate_session = FALSE) {
 			$model = User::model()->findByAttribute(array(
-				'condition' => 'username = :username AND status = :status AND is_deleted = 0',
-				'params'	=> array(':username' => $this->username, ':status' => 1)
+				'condition' => 'email = :email AND status = :status AND is_deleted = 0',
+				'params'	=> array(':email' => $this->email, ':status' => 1)
 			));
 
 			if($model == NULL) {
@@ -182,9 +185,8 @@
 		public function getApiLoginInformation($with_address = TRUE) {
 			$result = array(
 				'user_id'		=> $this->user_id,
-				'username' 		=> $this->username,
 				'email'			=> $this->email,
-				'firstname'		=> $this->firstname,
+				'fullname'		=> $this->fullname,
 				//'encryption_key'=> $this->encryption_key,
 				//'encryption_iv'	=> $this->encryption_iv,
 			);
