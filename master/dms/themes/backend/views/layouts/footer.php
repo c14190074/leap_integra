@@ -1,6 +1,6 @@
 	    <!-- footer -->
 	    <?php if(!$isLoginPage) : ?>
-	    <footer class="footer pt-3  ">
+	    <footer class="footer pt-3" style="display: none;">
 	        <div class="container-fluid">
 	          <div class="row align-items-center justify-content-lg-between">
 	            <div class="col-lg-6 mb-lg-0 mb-4">
@@ -83,6 +83,43 @@
 		<?php endif; ?>
 	    <!-- End footer -->
 	</div> <!-- end of container-fluid py-4 -->
+
+	<!-- Pop up modal untuk create folder -->
+	<div class="me-2">
+	    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+	        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+	            <div class="modal-content">
+	                <div class="modal-body p-0">
+	                    <div class="card card-plain">
+	                        <div class="card-header pb-0 text-left">
+	                            <h3 class="font-weight-bolder text-info text-gradient"><i class="fa fa-folder me-1"></i>Buat Folder</h3>
+	                            
+	                        </div>
+	                        <div class="card-body">
+	                            <form role="form text-left">
+	                                <label>Nama</label>
+	                                <div class="input-group mb-3">
+	                                    <input type="text" class="form-control" placeholder="Nama" aria-label="Email" aria-describedby="email-addon" />
+	                                </div>
+
+	                                <label>Access</label>
+	                                <div class="input-group mb-3">
+	                                    <input type="text" class="form-control" placeholder="Nama" aria-label="Email" aria-describedby="email-addon" />
+	                                </div>
+	                                
+	                             
+	                                <div class="text-center">
+	                                    <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Buat</button>
+	                                </div>
+	                            </form>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
 </main>
 	<!--   Core JS Files   -->
 	  <script src="<?= Snl::app()->config()->theme_url ?>assets_soft/js/core/popper.min.js"></script>
