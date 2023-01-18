@@ -14,24 +14,24 @@
               <span class="navbar-toggler-bar bar3"></span>
             </span>
           </button>
-          <div class="collapse navbar-collapse" id="navigation">
+          <div class="collapse navbar-collapse" id="navigation" style="display: none !important;">
             <ul class="navbar-nav mx-auto ms-xl-auto me-xl-7">
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="<?= Snl::app()->baseUrl() ?>admin/dashboard/index">
-                  <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
-                  Dashboard
+                <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="https://integrasolusi.com/blog/home/">
+                  <!-- <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i> -->
+                  Company
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link me-2" href="#">
-                  <i class="fa fa-user opacity-6 text-dark me-1"></i>
-                  Profile
+                <a class="nav-link me-2" href="https://integrasolusi.com/blog/">
+                  <!-- <i class="fa fa-user opacity-6 text-dark me-1"></i> -->
+                  Blog
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link me-2" href="<?= Snl::app()->baseUrl() ?>admin/user/register">
-                  <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                  Sign Up
+                <a class="nav-link me-2" href="https://integrasolusi.com/web/kontak">
+                  <!-- <i class="fas fa-user-circle opacity-6 text-dark me-1"></i> -->
+                  Contact Us
                 </a>
               </li>
               <li class="nav-item">

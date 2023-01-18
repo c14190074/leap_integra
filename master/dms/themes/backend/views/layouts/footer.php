@@ -41,41 +41,32 @@
 			    <div class="container">
 			      <div class="row">
 			        <div class="col-lg-8 mb-4 mx-auto text-center">
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
+			          <a href="https://integrasolusi.com/blog/home/" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
 			            Company
 			          </a>
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-			            About Us
-			          </a>
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-			            Team
-			          </a>
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-			            Products
-			          </a>
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
+			         
+			          <a href="https://integrasolusi.com/blog/" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
 			            Blog
 			          </a>
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-			            Pricing
+
+			           <a href="https://integrasolusi.com/web/kontak" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
+			            Contact Us
 			          </a>
+			          
 			        </div>
 			        <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-			            <span class="text-lg fab fa-dribbble"></span>
+			        	<a href="https://www.instagram.com/integrateknologisolusi/" target="_blank" class="text-secondary me-xl-4 me-4">
+				            <span class="text-lg fab fa-instagram"></span>
+				        </a>
+
+			          <a href="https://www.youtube.com/channel/UCl7N-jXu4W2YQS1rYKuhh5w" target="_blank" class="text-secondary me-xl-4 me-4">
+			            <span class="text-lg fab fa-youtube"></span>
 			          </a>
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-			            <span class="text-lg fab fa-twitter"></span>
+
+			          <a href="https://www.facebook.com/integraoffice/?ref=aymt_homepage_panel&eid=ARBdf6TREqaGnIB6qumwUDW-N8RU-jarhGxGhMBV4BO3jVENmYaF9Tq43clzJTii3-67_1sHSCGZvo2N" target="_blank" class="text-secondary me-xl-4 me-4">
+			            <span class="text-lg fab fa-facebook"></span>
 			          </a>
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-			            <span class="text-lg fab fa-instagram"></span>
-			          </a>
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-			            <span class="text-lg fab fa-pinterest"></span>
-			          </a>
-			          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-			            <span class="text-lg fab fa-github"></span>
-			          </a>
+			          
 			        </div>
 			      </div>
 			      <div class="row" style="display: none;">
