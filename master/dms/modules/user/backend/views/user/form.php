@@ -8,7 +8,11 @@
     <div class="form-group">
         <label class="col-md-12"><?= $model->getLabel('email', TRUE); ?></label>
         <div class="col-md-12">
-            <?= Snl::chtml()->activeTextbox($model, 'email') ?>
+            <?php if($model->isNewRecord) : ?>
+                <?= Snl::chtml()->activeTextbox($model, 'email') ?>
+            <?php else : ?>
+                <label class="col-md-12"><?= $model->email; ?></label>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -37,6 +41,13 @@
         <label class="col-md-12"><?= $model->getLabel('phone', TRUE); ?></label>
         <div class="col-md-12">
             <?= Snl::chtml()->activeTextbox($model, 'phone') ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-12"><?= $model->getLabel('status', TRUE); ?></label>
+        <div class="col-md-12">
+            <?= Snl::chtml()->activeDropdown($model, 'status', ['0'=>'Inactive','1'=>'Active']) ?>
         </div>
     </div>
 

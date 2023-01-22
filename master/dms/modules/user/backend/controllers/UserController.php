@@ -163,7 +163,7 @@
 			$pageIndex = isset($_GET['pageIndex']) ? $_GET['pageIndex'] : 1;
 			$pageSize = isset($_GET['pageSize']) ? $_GET['pageSize'] : 10;
 			$sortField = isset($_GET['sortField']) ? $_GET['sortField'] : 'updated_on';
-			$sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder'] : 'asc';
+			$sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder'] : 'desc';
 			$offset = ($pageIndex - 1) * $pageSize;
 			$search_query = $this->parseSearchQuery(new User, $gets);
 			if(!empty($search_query)) {
