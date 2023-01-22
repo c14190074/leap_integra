@@ -29,6 +29,12 @@
 			}
 		}
 
+		public function openfolder() {
+			$id = isset($_GET['id']) ? $_GET['id'] : 0;
+			$id = SecurityHelper::decrypt($id);
+			echo $id;
+		}
+
 		// All ajax function
 		public function validate() {
 			$post = $_POST['post'];
