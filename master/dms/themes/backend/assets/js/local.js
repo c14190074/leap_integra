@@ -32,7 +32,12 @@ function submitform(form, model) {
 	initLoading();
 	clearErrorMsg(form);
 
-	var ajaxUrl = baseUrl + 'admin/'+model.toLowerCase()+'/validate?ajax=1';
+    var ajaxUrl = baseUrl + 'admin/'+model.toLowerCase()+'/validate?ajax=1';
+
+    if(model.toLowerCase() == "folder") {
+        ajaxUrl = baseUrl + 'admin/files/validate?ajax=1';
+    }
+
 	var post = $('#'+form).serializeArray();
 	$.post(ajaxUrl, {post:post}, function(result) {
 		console.log(result);
@@ -45,7 +50,10 @@ function submitform(form, model) {
 			  	setMsg(form, model+'_'+key, value);	
 			});
 
-			swal("WARNING!", "Terjadi kesalahan input. Mohon periksa ulang data yang anda inputkan.");
+            if(model.toLowerCase() != "folder") {
+                swal("WARNING!", "Terjadi kesalahan input. Mohon periksa ulang data yang anda inputkan.");    
+            }
+			
 		}
 	});
 }

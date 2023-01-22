@@ -85,6 +85,9 @@
 	</div> <!-- end of container-fluid py-4 -->
 
 	<!-- Pop up modal untuk create folder -->
+	<?php
+		$model_folder = new Folder;
+	?>
 	<div class="me-2">
 	    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
 	        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
@@ -96,21 +99,36 @@
 	                            
 	                        </div>
 	                        <div class="card-body">
-	                            <form role="form text-left">
-	                                <label>Nama</label>
+	                            <form role="form text-left" id="app_form" action="<?= Snl::app()->baseUrl() ?>admin/files/createfolder" method="POST">
+	                                <!-- <label>Nama</label>
 	                                <div class="input-group mb-3">
 	                                    <input type="text" class="form-control" placeholder="Nama" aria-label="Email" aria-describedby="email-addon" />
-	                                </div>
+	                                </div> -->
 
-	                                <label>Access</label>
-	                                <div class="input-group mb-3">
-	                                    <input type="text" class="form-control" placeholder="Nama" aria-label="Email" aria-describedby="email-addon" />
-	                                </div>
-	                                
+	                                <div class="form-group">
+								        <label class="col-md-12"><?= $model_folder->getLabel('name', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_folder, 'name') ?>
+								        </div>
+								    </div>
+
+								    <div class="form-group">
+								        <label class="col-md-12"><?= $model_folder->getLabel('description', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_folder, 'description') ?>
+								        </div>
+								    </div>
+
 	                             
-	                                <div class="text-center">
+	                                <!-- <div class="text-center">
 	                                    <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Buat</button>
-	                                </div>
+	                                </div> -->
+
+	                                <div class="form-group">
+								        <div class="col-md-12">
+								            <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0" onclick="submitform('app_form', 'Folder')">Buat</button>
+								        </div>
+								    </div>
 	                            </form>
 	                        </div>
 	                    </div>

@@ -1,6 +1,8 @@
 <?php
     echo $toolbar;
     echo Snl::app()->getFlashMessage();
+    //SecurityHelper::encrypt
+
 ?>
 
 <div class="card">
@@ -10,39 +12,48 @@
         <tr>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Folder</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deskripsi</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Owner</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Created By</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Updated By</th>
           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Updated</th>
         </tr>
       </thead>
       <tbody>
-        <?php for($i=0; $i<5; $i++) : ?>
+        <?php foreach($model as $folder) : ?>
+            <?php
+              $user_created = User::model()->findByPk($folder->created_by);
+              $user_updated = User::model()->findByPk($folder->updated_by);
+            ?>
             <tr>
               <td>
                 <div class="d-flex px-2 py-1">
                   <div>
-                    <!-- <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg" class="avatar avatar-sm me-3"> -->
                     <i class="fa fa-folder opacity-6 text-dark me-3"></i>
                   </div>
                   <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-secondary text-sm text-dark">Leap UK. Petra</h6>
+                    <h6 class="mb-0 text-secondary text-sm text-dark"><a href="<?= Snl::app()->baseUrl() ?>admin/files/openfolder?id=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a></h6>
                   </div>
                 </div>
               </td>
 
               <td>
-                <p class="text-xs text-secondary mb-0">Dokumen-dokumen program leap (agung wibowo)</p>
+                <p class="text-xs text-secondary mb-0"><?= $folder->description ?></p>
               </td>
 
               <td>
-                <p class="text-xs font-weight-bold mb-0">Mas Agung</p>
-                <p class="text-xs text-secondary mb-0">mas@agung.com</p>
+                <p class="text-xs font-weight-bold mb-0"><?= $user_created->fullname ?></p>
+                <p class="text-xs text-secondary mb-0"><?= $user_created->email ?></p>
+              </td>
+
+              <td>
+                <p class="text-xs font-weight-bold mb-0"><?= $user_updated->fullname ?></p>
+                <p class="text-xs text-secondary mb-0"><?= $user_updated->email ?></p>
               </td>
 
               <td class="align-middle text-center text-sm">
-                <p class="text-xs text-secondary mb-0">18 Jan 2023 11:00</p>
+                <p class="text-xs text-secondary mb-0"><?= date('d M Y h:i', strtotime($user_updated->updated_on)) ?></p>
               </td>
             </tr>
-        <?php endfor; ?>
+        <?php endforeach; ?>
         
       </tbody>
     </table>
