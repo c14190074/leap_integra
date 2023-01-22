@@ -48,5 +48,14 @@
 }
 
 
+/**
+ * Folder List
+ */
 
+#folder-list table tbody tr:hover {
+    background-color: #c4e2ff;
+}
 
+#folder-list table tbody tr:hover td{
+    border-color: #c4e2ff;
+}
