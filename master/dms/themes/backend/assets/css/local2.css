@@ -1,0 +1,40 @@
+/**
+ * JSGRID
+ */
+.jsgrid-table th.jsgrid-header-sortable {
+	padding: 0.75rem 1.5rem;
+    text-transform: capitalize;
+    letter-spacing: 0;
+    border-bottom: 1px solid #e9ecef;
+    white-space: nowrap;
+    font-weight: 700!important;
+    font-size: .80rem!important;
+}
+
+.jsgrid-grid-body .jsgrid-table tr.jsgrid-row td, .jsgrid-grid-body .jsgrid-table tr.jsgrid-alt-row td {
+    font-size: .80rem!important;
+    padding: 0.5em 0.8rem;
+}
+
+.jsgrid-table tr.jsgrid-filter-row td input[type=text], .jsgrid-table tr.jsgrid-filter-row td select {
+    display: block;
+    width: 100%;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.4rem;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d2d6da;
+    appearance: none;
+    border-radius: 0.5rem;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    border-radius: 0.5rem;
+    border-top-right-radius: 0.5rem !important;
+    border-bottom-right-radius: 0.5rem !important;
+    border-left-width: 1px;
+}
+
+.jsgrid-grid-body table.jsgrid-table {
+    width: 100% !important;
+}

@@ -2,17 +2,12 @@
     echo $toolbar;
     echo Snl::app()->getFlashMessage();
 ?>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="white-box p-l-20 p-r-20">
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="user_grid"></div>
-                </div>
-            </div> 
-        </div>
+
+<div class="card" >
+    <div class="table-responsive" id="user_grid">
     </div>
 </div>
+
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -39,20 +34,19 @@
                 },
             },
             fields: [{
-                name: "username",
-                type: "text",
-            }, {
+                title: "Email",
                 name: "email",
                 type: "text",
             }, {
-                title: "Nama Depan",
-                name: "firstname",
-                type: "text",                
-            }, {
-                title: "Nama Belakang",
-                name: "lastname",
+                title: "Nama",
+                name: "fullname",
                 type: "text",
             }, {
+                title: "Phone",
+                name: "phone",
+                type: "text",                
+            }, {
+                title: "Status",
                 name: "status",
                 type: "select",
                 items: [
@@ -63,11 +57,22 @@
                 valueField: "value",
                 textField: "text"
             }, {
+                title: "Email Status",
+                name: "status_email",
+                type: "select",
+                items: [
+                    { text: "", value: "" },
+                    { text: "Verified", value: "1" },
+                    { text: "Not Verified", value: "0" },
+                ],
+                valueField: "value",
+                textField: "text"
+            }, {
                 type: "control",
                 itemTemplate: function(value, item) {
-                    var $editElm = "<a href='"+baseUrl+"admin/user/update?id="+item.user_id+"' title='Edit'><i class='glyphicon glyphicon-pencil'></i></a>&nbsp;";
+                    var $editElm = "<a href='"+baseUrl+"admin/user/update?id="+item.user_id+"' title='Edit'><i class='fa fa-pencil'></i></a>&nbsp;";
 
-                    var $deleteElm = '<a href="'+baseUrl+'admin/user/delete?id='+item.user_id+'" title="Delete" onclick="return confirm(\'Are you sure to delete this item?\')"><i class="glyphicon glyphicon-trash"></i></a>';
+                    var $deleteElm = '<a href="'+baseUrl+'admin/user/delete?id='+item.user_id+'" title="Delete" onclick="return confirm(\'Are you sure to delete this item?\')"><i class="fa fa-trash"></i></a>';
                     return $editElm + $deleteElm;
                 }
             }]

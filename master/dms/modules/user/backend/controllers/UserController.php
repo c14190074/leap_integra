@@ -162,7 +162,7 @@
 			$data = array();
 			$pageIndex = isset($_GET['pageIndex']) ? $_GET['pageIndex'] : 1;
 			$pageSize = isset($_GET['pageSize']) ? $_GET['pageSize'] : 10;
-			$sortField = isset($_GET['sortField']) ? $_GET['sortField'] : 'username';
+			$sortField = isset($_GET['sortField']) ? $_GET['sortField'] : 'updated_on';
 			$sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder'] : 'asc';
 			$offset = ($pageIndex - 1) * $pageSize;
 			$search_query = $this->parseSearchQuery(new User, $gets);
@@ -171,7 +171,14 @@
 			}
 
 			$total_search_query = $search_query." ORDER BY ".$sortField." ".$sortOrder;
-			$itemsCount = count(User::model()->findAll(array('condition' => 'is_deleted = 0'.$search_query)));
+			$model = User::model()->findAll(array('condition' => 'is_deleted = 0'.$search_query));
+
+			$itemsCount = 0;
+
+			if(is_countable($model)) {
+				$itemsCount = count($model);
+			}
+
 
 			$search_query .= " ORDER BY ".$sortField." ".$sortOrder." LIMIT ".$pageSize." OFFSET ".$offset;
 			$users = User::model()->findAll(array('condition' => 'is_deleted = 0'.$search_query));

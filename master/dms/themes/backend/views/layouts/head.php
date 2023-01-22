@@ -77,7 +77,7 @@
 
     <!-- Local Custom -->
     <!-- <link href="<?= Snl::app()->config()->theme_url ?>assets/css/local.css" rel="stylesheet"> -->
-
+    <link href="<?= Snl::app()->config()->theme_url ?>assets/css/local2.css" rel="stylesheet">
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
