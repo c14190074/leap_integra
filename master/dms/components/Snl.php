@@ -260,7 +260,7 @@
 
 		public function setFlashMessage($msg, $type = '') {
 			// $msg_element = '<div class="row"><div class="col-sm-12"><div role="alert" class="alert text-white alert-'.$type.'">'.$msg.' </div></div></div>';
-			$msg_element = '<div class="row"><div class="col-sm-12"><div role="alert" class="text-black">'.$msg.' </div></div></div>';
+			$msg_element = '<div role="alert" class="alert alert-info alert-dismissible fade show text-white"><span class="alert-text">'.$msg.'</span><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button></div>';
 			$this->createSession('flashmessage', $msg_element);
 		}
 

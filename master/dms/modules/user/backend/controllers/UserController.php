@@ -113,7 +113,7 @@
 			$model = User::model()->findByPk($id);
 			if($model !== NULL) {
 				if($model->delete()) {
-					Snl::app()->setFlashMessage('User '.$model->username.' berhasil dihapus.', 'success');
+					Snl::app()->setFlashMessage('User dengan email '.$model->email.' berhasil dihapus.', 'success');
 				} else {
 					Snl::app()->setFlashMessage('Internal server error.', 'danger');
 				}
