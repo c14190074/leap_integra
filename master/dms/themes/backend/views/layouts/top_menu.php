@@ -17,13 +17,7 @@
             </div>
           </div>
           <ul class="navbar-nav justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-
-              <a href="javascript:;" class="nav-link text-body p-0" data-bs-toggle="modal" data-bs-target="#modal-form">
-                <i class="fa fa-folder-plus me-sm-1"></i>
-                <span class="d-sm-inline d-none">Folder</span>
-              </a>
-            </li>
+            
            
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
@@ -34,11 +28,23 @@
                 </div>
               </a>
             </li>
-            <!-- <li class="nav-item px-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0">
-                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+
+            <?php if($module == 'user') : ?>
+            <li class="nav-item d-flex align-items-center p-2">
+              <a href="<?= Snl::app()->baseUrl() ?>admin/user/create" class="nav-link text-body">
+                <i class="fa fa-user-plus me-sm-1"></i>
+                <span class="d-sm-inline d-none">User</span>
               </a>
-            </li> -->
+            </li>
+            <?php endif; ?>
+
+            <li class="nav-item d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" data-bs-toggle="modal" data-bs-target="#modal-form">
+                <i class="fa fa-folder-plus me-sm-1"></i>
+                <span class="d-sm-inline d-none">Folder</span>
+              </a>
+            </li>
+            
             <li class="nav-item dropdown px-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>

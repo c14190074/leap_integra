@@ -12,7 +12,7 @@
 		public function rules() {
 			return array(
 				'required'	=> array('fullname', 'email', 'password', 'phone'),
-				// 'unique'	=> array('email'),
+				'unique'	=> array('email'),
 				'repeat'	=> array('password'),
 				'email'		=> array('email')
 				// 'integer'	=> array('status')

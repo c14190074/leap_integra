@@ -165,7 +165,7 @@
 					if(isset($rules['unique']) && count($rules['unique']) > 0) {
 						foreach($rules['unique'] as $attribute) {
 							if($key == $attribute) {
-								return $this->uniqueValidation($key, $value);
+								$this->uniqueValidation($key, $value);
 							}
 						}
 					}
@@ -219,7 +219,7 @@
 					"params"	=> array(":value" => $value)
 				));
 				
-				if(is_countable($model) && count($model) > 0) {
+				if(isset($model)) {
 					$primary_key = $this->primary_key;
 					if($model->$primary_key != $this->$primary_key) {
 						$this->setError($attribute, 'unique');

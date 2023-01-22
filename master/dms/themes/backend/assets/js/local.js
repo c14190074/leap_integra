@@ -24,7 +24,7 @@ var setMsg = function(form, obj, msg) {
 			$parentObj.addClass('has-error');
 		}
 
-		$parentObj.find('.help-block.with-errors').html('<ul class="list-unstyled"><li>'+msg+'</li></ul>');
+		$parentObj.find('.help-block.with-errors').html('<ul class="list-unstyled"><li><span class="text-sm" style="color: red;">'+msg+'</span></li></ul>');
 	}
 }
 

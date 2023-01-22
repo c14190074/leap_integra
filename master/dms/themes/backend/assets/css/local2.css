@@ -1,4 +1,12 @@
 /**
+ * GENERAL
+ */
+
+.hidden {
+   display: none !important; 
+}
+
+/**
  * JSGRID
  */
 .jsgrid-table th.jsgrid-header-sortable {
@@ -38,3 +46,7 @@
 .jsgrid-grid-body table.jsgrid-table {
     width: 100% !important;
 }
+
+
+
+
