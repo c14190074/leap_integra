@@ -4,8 +4,10 @@
       <a class="navbar-brand m-0" href="<?= Snl::app()->baseUrl() ?>admin/dashboard/index" target="_blank">
         <img src="<?= Snl::app()->config()->theme_url ?>assets_soft/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">ITS | DMS</span>
+
       </a>
     </div>
+    <p class="px-4 text-secondary text-sm">Hi, <?= Snl::app()->user()->fullname ?></p clas="my-3">
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
