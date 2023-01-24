@@ -87,6 +87,7 @@
 	<!-- Pop up modal untuk create folder -->
 	<?php
 		$model_folder = new Folder;
+		$model_folder->folder_parent_id = $parentfolderid;
 	?>
 	<div class="me-2">
 	    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
@@ -100,10 +101,13 @@
 	                        </div>
 	                        <div class="card-body">
 	                            <form role="form text-left" id="app_form" action="<?= Snl::app()->baseUrl() ?>admin/files/createfolder" method="POST">
-	                                <!-- <label>Nama</label>
-	                                <div class="input-group mb-3">
-	                                    <input type="text" class="form-control" placeholder="Nama" aria-label="Email" aria-describedby="email-addon" />
-	                                </div> -->
+	                                <div class="form-group" style="display: none;">
+								        <label class="col-md-12"><?= $model_folder->getLabel('folder_parent_id', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_folder, 'folder_parent_id') ?>
+								        </div>
+								    </div>
+	                                
 
 	                                <div class="form-group">
 								        <label class="col-md-12"><?= $model_folder->getLabel('name', TRUE); ?></label>

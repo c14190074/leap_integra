@@ -7,18 +7,18 @@
 		public function index() {
 			$this->page_title = 'Files';
 
-			$folder_id = isset($_GET['folder']) ? $_GET['folder'] : 0;
-			$folder_id = SecurityHelper::decrypt($folder_id);
-			$folder_parent_id = $folder_id;
+			$folder_id = isset($_GET['folder']) ? SecurityHelper::decrypt($_GET['folder']) : 0;
+			
+			$GLOBALS['parentfolderid'] = $folder_id;
 
 			$folder_parent = NULL;
-			if($folder_parent_id > 0) {
-				$folder_parent = Folder::model()->findByPk($folder_parent_id);
+			if($folder_id > 0) {
+				$folder_parent = Folder::model()->findByPk($folder_id);
 			}
 
 			$model = Folder::model()->findAll(array(
 				'condition' => 'folder_parent_id = :id AND is_deleted = 0',
-				'params'	=> array(':id' => $folder_parent_id)
+				'params'	=> array(':id' => $folder_id)
 			));
 
 			return $this->render('index', array(
@@ -32,21 +32,14 @@
 			if(isset($_POST['Folder'])) {
 				$model = new Folder;
 				$model->setAttributes($_POST['Folder']);
-				$model->folder_parent_id = $folder_parent_id;
-
+				
 				if($model->save()) {
 					Snl::app()->setFlashMessage('Folder baru berhasil ditambahkan.', 'success');
-					$this->redirect('admin/files/index');
+					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_id));
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
 				}
 			}
-		}
-
-		public function openfolder() {
-			$id = isset($_GET['folder']) ? $_GET['folder'] : 0;
-			$id = SecurityHelper::decrypt($id);
-			echo $id;
 		}
 
 		// All ajax function

@@ -6,9 +6,9 @@
 	$module = isset($_GET['module']) ? strtolower($_GET['module']) : 'user';
 	$action = isset($_GET['action']) ? strtolower($_GET['action']) : 'login';
 	$ajax	= isset($_GET['ajax']) ? $_GET['ajax'] : 0;
-	$folder_parent_id = 0;
+	$global_folder_id = 0;
 	$GLOBALS['module'] = $module;
-	$GLOBALS['folder_parent_id'] = $folder_parent_id;
+	$GLOBALS['parentfolderid'] = $global_folder_id;
 
 	// import all file on base components
 	foreach (glob("components/base/*.php") as $filename) {
