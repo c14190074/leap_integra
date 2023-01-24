@@ -12,7 +12,7 @@
 <?php endif; ?>
 
 <?php if($model != NULL) : ?>
-<div class="card" id="folder-list">
+<div class="card" id="folder_list">
   <div class="table-responsive">
     <table class="table align-items-center mb-0">
       <thead>

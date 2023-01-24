@@ -52,10 +52,16 @@
  * Folder List
  */
 
-#folder-list table tbody tr:hover {
+#folder_list table tbody tr:hover {
     background-color: #c4e2ff;
 }
 
-#folder-list table tbody tr:hover td{
+#folder_list table {
+    border-spacing: 0;
+}
+
+
+/*#folder_list table tbody tr:hover td{
     border-color: #c4e2ff;
 }
+*/
