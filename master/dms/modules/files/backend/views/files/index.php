@@ -1,11 +1,25 @@
 <?php
     echo $toolbar;
     echo Snl::app()->getFlashMessage();
-    //SecurityHelper::encrypt
-
+    // print_r($local_breadcrumbs);
 ?>
 
 <input type="hidden" id="folder_parent_name" value="<?= $folder_parent != NULL ? ucwords(strtolower($folder_parent->name)) : '' ?>" />
+
+<?php if(count($local_breadcrumbs) > 0) : ?>
+<nav aria-label="breadcrumb" class="p-3 pt-0">
+  <ol class="breadcrumb bg-transparent mb-0 pb-0 px-0 me-sm-6 me-5 pt-0">
+    <?php foreach($local_breadcrumbs as $data) : ?>
+      <?php if(end($local_breadcrumbs) == $data) : ?>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page"><?= $data['name'] ?></li>
+      <?php else : ?>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="<?= $data['url'] ?>"><?= $data['name'] ?></a></li>
+      <?php endif; ?>
+      
+    <?php endforeach; ?>    
+  </ol>
+</nav>
+<?php endif; ?>
 
 <?php if($model == NULL) : ?>
   <p class="text-sm text-secondary p-3">No file or folder</p>

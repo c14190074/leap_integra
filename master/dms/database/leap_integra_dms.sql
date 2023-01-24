@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 24, 2023 at 03:14 AM
+-- Generation Time: Jan 24, 2023 at 04:30 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.26
 
@@ -44,10 +44,11 @@ CREATE TABLE `tbl_folder` (
 --
 
 INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `description`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
-(1, 2, 'Leap 2023', 'leap uk. petra 2023', '2023-01-22 13:23:47', 3, '2023-01-22 13:23:47', 3, 0),
-(2, 0, 'Semester 1', 'data kuliah semester 1', '2023-01-22 13:24:29', 3, '2023-01-22 13:24:29', 3, 0),
-(3, 0, 'bali 2022', 'liburan akhir tahun', '2023-01-22 13:24:49', 3, '2023-01-22 13:24:49', 3, 0),
-(4, 0, 'imlek 2023', 'foto-foto imlek tahun 2023 tuban', '2023-01-22 13:36:26', 3, '2023-01-22 13:36:26', 3, 0);
+(1, 0, 'Semester 1', 'data kuliah sms 1', '2023-01-24 09:51:18', 3, '2023-01-24 09:51:18', 3, 0),
+(2, 1, 'Matematika', 'PPT matkul MTK', '2023-01-24 09:51:50', 3, '2023-01-24 09:51:50', 3, 0),
+(3, 2, 'Pertemuan 1', '', '2023-01-24 09:52:09', 3, '2023-01-24 09:52:09', 3, 0),
+(4, 0, 'Semester 2', 'data kuliah sms 2', '2023-01-24 09:52:41', 3, '2023-01-24 09:52:41', 3, 0),
+(5, 4, 'Pertemuan 1', '3 Jan 2023', '2023-01-24 10:28:51', 3, '2023-01-24 10:28:51', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -112,7 +113,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_folder`
 --
 ALTER TABLE `tbl_folder`
-  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
