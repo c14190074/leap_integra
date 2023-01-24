@@ -20,7 +20,7 @@
                   <div class="mb-3">
                     <?= Snl::chtml()->activePassword($model, 'password') ?>
                   </div>
-                  <div class="form-check form-switch">
+                  <div class="form-check form-switch" style="display: none;">
                     <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                     <label class="form-check-label" for="rememberMe">Remember me</label>
                   </div>
