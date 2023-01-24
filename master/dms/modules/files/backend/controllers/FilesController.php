@@ -7,11 +7,24 @@
 		public function index() {
 			$this->page_title = 'Files';
 
-			$model = Folder::model()->findAll(array('condition' => 'is_deleted = 0'));
+			$folder_id = isset($_GET['folder']) ? $_GET['folder'] : 0;
+			$folder_id = SecurityHelper::decrypt($folder_id);
+			$folder_parent_id = $folder_id;
+
+			$folder_parent = NULL;
+			if($folder_parent_id > 0) {
+				$folder_parent = Folder::model()->findByPk($folder_parent_id);
+			}
+
+			$model = Folder::model()->findAll(array(
+				'condition' => 'folder_parent_id = :id AND is_deleted = 0',
+				'params'	=> array(':id' => $folder_parent_id)
+			));
 
 			return $this->render('index', array(
-				'toolbar' => $this->toolbar(),
-				'model' => $model
+				'toolbar' 	=> $this->toolbar(),
+				'model' 	=> $model,
+				'folder_parent'	=> $folder_parent
 			));
 		}
 
@@ -19,6 +32,7 @@
 			if(isset($_POST['Folder'])) {
 				$model = new Folder;
 				$model->setAttributes($_POST['Folder']);
+				$model->folder_parent_id = $folder_parent_id;
 
 				if($model->save()) {
 					Snl::app()->setFlashMessage('Folder baru berhasil ditambahkan.', 'success');
@@ -30,7 +44,7 @@
 		}
 
 		public function openfolder() {
-			$id = isset($_GET['id']) ? $_GET['id'] : 0;
+			$id = isset($_GET['folder']) ? $_GET['folder'] : 0;
 			$id = SecurityHelper::decrypt($id);
 			echo $id;
 		}

@@ -5,6 +5,13 @@
 
 ?>
 
+<input type="hidden" id="folder_parent_name" value="<?= $folder_parent != NULL ? ucwords(strtolower($folder_parent->name)) : '' ?>" />
+
+<?php if($model == NULL) : ?>
+  <p class="text-sm text-secondary p-3">No file or folder</p>
+<?php endif; ?>
+
+<?php if($model != NULL) : ?>
 <div class="card" id="folder-list">
   <div class="table-responsive">
     <table class="table align-items-center mb-0">
@@ -30,7 +37,7 @@
                     <i class="fa fa-folder opacity-6 text-dark me-3"></i>
                   </div>
                   <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-secondary text-sm text-dark"><a href="<?= Snl::app()->baseUrl() ?>admin/files/openfolder?id=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a></h6>
+                    <h6 class="mb-0 text-secondary text-sm text-dark"><a href="<?= Snl::app()->baseUrl() ?>admin/files/index?folder=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a></h6>
                   </div>
                 </div>
               </td>
@@ -59,10 +66,13 @@
     </table>
   </div>
 </div>
+<?php endif; ?>
 
 <script type="text/javascript">
     $(document).ready(function() {
-        
+      if($("#folder_parent_name").val() != "") {
+        $("#page_subtitle").html($("#folder_parent_name").val());
+      }
 
     });
 </script>
