@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 24, 2023 at 04:30 AM
+-- Generation Time: Jan 25, 2023 at 07:03 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.26
 
@@ -31,7 +31,10 @@ CREATE TABLE `tbl_folder` (
   `folder_id` int(11) NOT NULL,
   `folder_parent_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT 'folder',
+  `format` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `user_access` varchar(255) DEFAULT NULL,
   `created_on` datetime DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_on` datetime DEFAULT NULL,
@@ -43,12 +46,11 @@ CREATE TABLE `tbl_folder` (
 -- Dumping data for table `tbl_folder`
 --
 
-INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `description`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
-(1, 0, 'Semester 1', 'data kuliah sms 1', '2023-01-24 09:51:18', 3, '2023-01-24 09:51:18', 3, 0),
-(2, 1, 'Matematika', 'PPT matkul MTK', '2023-01-24 09:51:50', 3, '2023-01-24 09:51:50', 3, 0),
-(3, 2, 'Pertemuan 1', '', '2023-01-24 09:52:09', 3, '2023-01-24 09:52:09', 3, 0),
-(4, 0, 'Semester 2', 'data kuliah sms 2', '2023-01-24 09:52:41', 3, '2023-01-24 09:52:41', 3, 0),
-(5, 4, 'Pertemuan 1', '3 Jan 2023', '2023-01-24 10:28:51', 3, '2023-01-24 10:28:51', 3, 0);
+INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `type`, `format`, `description`, `user_access`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
+(1, 0, 'UK Petra 2019', 'folder', NULL, 'Data kuliah', NULL, '2023-01-25 12:41:09', 3, '2023-01-25 12:41:09', 3, 0),
+(2, 0, 'Pelindo', 'folder', NULL, '', NULL, '2023-01-25 12:57:53', 1, '2023-01-25 12:57:53', 1, 0),
+(3, 0, 'Project POS', 'folder', NULL, '', NULL, '2023-01-25 12:58:52', 3, '2023-01-25 12:58:52', 3, 0),
+(4, 0, 'Project Android', 'folder', NULL, '', '[\"1\"]', '2023-01-25 12:59:15', 3, '2023-01-25 12:59:15', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -81,13 +83,9 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`user_id`, `fullname`, `email`, `password`, `phone`, `address`, `position`, `status`, `status_email`, `secret_key`, `encryption_key`, `encryption_iv`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
-(1, 'agung wibowo', 'agun1g@gmail.com', 'nKi9kD1gum4=', '081358118511', NULL, NULL, 1, 1, NULL, '5189754027270662', '6OVKBC5JWZFA0IUT', '2023-01-17 11:26:27', NULL, '2023-01-22 11:31:37', 3, 0),
-(2, 'Agung wibowo', 'agung2@gmail.com', 'pY7u8+BPOYk=', '13123', NULL, NULL, 0, 0, NULL, '4031468449187719', 'XHCM9VR3EK5IQUNL', '2023-01-17 11:30:51', NULL, '2023-01-22 11:25:12', 3, 0),
-(3, 'agung tiga', 'agung3@gmail.com', 'm6L/vmbZkqY=', '4546465', NULL, NULL, 0, 0, NULL, '6546163835169557', 'GW6TFH1JLV298CAB', '2023-01-17 11:33:31', NULL, '2023-01-22 12:43:49', 3, 0),
-(4, 'Agung Empat', 'agung4@email.com', 'mDZtF/raA0k=', '54654321', NULL, NULL, 0, 0, NULL, '7662792784839380', 'MIYNP5BZXFL9HT4Q', '2023-01-22 11:59:04', 3, '2023-01-22 11:59:04', 3, 0),
-(5, 'agung lima', 'agung5@email.com', 'Crh3fh4k1Vs=', '1232323', NULL, NULL, 0, 0, NULL, '9651696283021357', '8YKD5TOMANCJ3XRV', '2023-01-22 12:05:04', 3, '2023-01-22 12:05:04', 3, 0),
-(6, 'agung', 'agung6@email.com', 'NVZv6CuKVg4=', '1323213', NULL, NULL, 0, 0, NULL, '6957615888663111', 'G8OFU09WA7C5PMHI', '2023-01-22 12:25:04', 3, '2023-01-22 12:25:04', 3, 0),
-(7, 'agung tujuh', 'agung7@email.com', 'nLZAFmg=', '1231232', NULL, NULL, 0, 0, NULL, '8459411301161311', 'RSP9UJ0LVAIMZOYC', '2023-01-22 12:28:37', 3, '2023-01-22 12:44:34', 3, 0);
+(1, 'Agung Wibowo', 'agung@email.com', 'tsG26M+doZc=', '081356894563', NULL, NULL, 1, 1, NULL, '6143541754438333', 'MXLPR1SYD935TJVF', '2023-01-25 06:37:26', 1, '2023-01-25 06:37:26', 1, 0),
+(2, 'Delvo Anderson', 'delvo@email.com', 'urrnRO/83iY=', '456789874565', NULL, NULL, 1, 0, NULL, '9378434021479912', '8MD2RPBW91SZNXI7', '2023-01-25 12:39:43', 3, '2023-01-25 12:39:43', 3, 0),
+(3, 'jonas', 'jonas@email.com', 'yYROW/X4cLI=', '456987123654', NULL, NULL, 1, 0, NULL, '3783289032730952', 'CNY0GMIWE6DUK4FR', '2023-01-25 12:40:25', 3, '2023-01-25 12:40:25', 3, 0);
 
 --
 -- Indexes for dumped tables
@@ -113,13 +111,13 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_folder`
 --
 ALTER TABLE `tbl_folder`
-  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -40,7 +40,7 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach($model as $folder) : ?>
+        <?php foreach($model as $folder) : if($folder->hasAccess()) : ?>
             <?php
               $user_created = User::model()->findByPk($folder->created_by);
               $user_updated = User::model()->findByPk($folder->updated_by);
@@ -71,6 +71,9 @@
                         $user_access_model = User::model()->findByPk($id);
                         array_push($user_email, $user_access_model->email);
                       }
+
+                      array_push($user_email, $user_created->email);
+                      
                       echo implode( ", ", $user_email);
                     } else {
                       echo "Only you";
@@ -94,7 +97,7 @@
                 <p class="text-xs text-secondary mb-0"><?= date('d M Y h:i', strtotime($user_updated->updated_on)) ?></p>
               </td>
             </tr>
-        <?php endforeach; ?>
+        <?php endif; endforeach; ?>
         
       </tbody>
     </table>

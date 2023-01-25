@@ -85,4 +85,43 @@
 			return TRUE;
 		}
 
+		public static function getCountUserFolder($user_id) {
+			$folder_ctr = 0;
+			$model = Folder::model()->findAll(array(
+				'condition' => 'is_deleted = 0'
+			));
+
+			if($model != NULL) {
+				foreach($model as $m) {
+					if($m->created_by == $user_id) {
+						$folder_ctr++;
+					}
+
+					if($m->user_access != NULL) {
+                      $user_access = json_decode($m->user_access);
+                      foreach($user_access as $id) {
+                        if($id == $user_id) {
+                        	$folder_ctr++;
+                        }
+                      }                      
+                    } 
+				}
+			}
+
+			return $folder_ctr;
+		}
+
+		public function hasAccess() {
+			$user_access = array();
+			if($this->user_access != NULL) {
+				$user_access = json_decode($this->user_access);
+			}
+
+			if($this->created_by == Snl::app()->user()->user_id || in_array(Snl::app()->user()->user_id, $user_access)) {
+				return true;
+			}
+
+			return false;
+		}
+
 	}
