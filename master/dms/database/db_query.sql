@@ -32,3 +32,7 @@ CREATE TABLE IF NOT EXISTS `tbl_folder` (
 	`is_deleted` TINYINT(1) DEFAULT 0 COMMENT '0=No; 1=Yes',
 	PRIMARY KEY (`folder_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tbl_folder` ADD `user_access` VARCHAR(255) DEFAULT NULL AFTER `description`;
+ALTER TABLE `tbl_folder` ADD `type` VARCHAR(255) DEFAULT 'folder' AFTER `name`;
+ALTER TABLE `tbl_folder` ADD `format` VARCHAR(255) DEFAULT NULL AFTER `type`;

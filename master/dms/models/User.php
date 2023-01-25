@@ -88,7 +88,6 @@
 			$digits = 16;
 
 			if($this->isNewRecord) {
-				$this->status = 0;
 				$this->status_email = 0;
 				$this->created_on = Snl::app()->dateNow();
 				$this->created_by = Snl::app()->user()->user_id;
@@ -127,7 +126,7 @@
 		public function validateLogin() {
 			$model = User::model()->findByAttribute(array(
 				'condition' => 'email = :email AND status = :status AND is_deleted = 0',
-				'params'	=> array(':email' => $this->email, ':status' => 0)
+				'params'	=> array(':email' => $this->email, ':status' => 1)
 			));
 
 			if($model == NULL) {

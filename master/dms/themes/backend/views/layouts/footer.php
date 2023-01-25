@@ -88,8 +88,13 @@
 	<?php
 		$model_folder = new Folder;
 		$model_folder->folder_parent_id = $parentfolderid;
+		$user_model = User::model()->findAll(array(
+			'condition' => 'is_deleted = 0 AND status = 1 AND user_id != :id',
+			'params'	=> array('id' => Snl::app()->user()->user_id)
+		));
+
 	?>
-	<div class="me-2">
+	<div class="me-2" id="folder_form_modal">
 	    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
 	        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
 	            <div class="modal-content">
@@ -123,6 +128,20 @@
 								        </div>
 								    </div>
 
+								    <div class="form-group">
+								        <label class="col-md-12"><?= $model_folder->getLabel('user_access', TRUE); ?></label>
+								        <div class="col-md-12">
+								        	<select class="select2 form-control" name="Folder[user_access][]" multiple="multiple">
+								            	<?php 
+								            		if($user_model != NULL) {
+								            			foreach($user_model as $d) {
+								            				echo "<option value='".$d->user_id."'>".ucwords(strtolower($d->fullname))."</option>";
+								            			}
+								            		}
+								            	?>
+											</select>
+								        </div>
+								    </div>
 	                             
 	                                <!-- <div class="text-center">
 	                                    <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Buat</button>
@@ -130,7 +149,7 @@
 
 	                                <div class="form-group">
 								        <div class="col-md-12">
-								            <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0" onclick="submitform('app_form', 'Folder')">Buat</button>
+								            <button type="button" class="btn bg-gradient-info btn-lg w-100 mt-4 mb-0" onclick="submitform('app_form', 'Folder')">Buat</button>
 								        </div>
 								    </div>
 	                            </form>
@@ -158,6 +177,8 @@
 
         $(document).ready(function() {
         	$('.select2').select2();
+
+        	
 
         	jQuery('.mydatepicker').datepicker({
         		autoclose: true,

@@ -54,6 +54,8 @@
 			if(isset($_POST['Folder'])) {
 				$model = new Folder;
 				$model->setAttributes($_POST['Folder']);
+				$model->type = "folder";
+				$model->user_access = isset($_POST['Folder']['user_access']) ? json_encode($_POST['Folder']['user_access']) : NULL;
 				
 				if($model->save()) {
 					Snl::app()->setFlashMessage('Folder baru berhasil ditambahkan.', 'success');

@@ -61,7 +61,10 @@
 }
 
 
-/*#folder_list table tbody tr:hover td{
-    border-color: #c4e2ff;
-}
+/**
+ * SELECT2
 */
+
+#folder_form_modal #modal-form .form-control {
+    border-radius: 0 !important;
+}

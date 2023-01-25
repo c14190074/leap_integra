@@ -33,6 +33,7 @@
         <tr>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Folder</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deskripsi</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Akses</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Created By</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Updated By</th>
           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Updated</th>
@@ -58,6 +59,25 @@
 
               <td>
                 <p class="text-xs text-secondary mb-0"><?= $folder->description ?></p>
+              </td>
+
+              <td>
+                <p class="text-xs text-secondary mb-0">
+                  <?php
+                    if($folder->user_access != NULL) {
+                      $user_email = array();
+                      $user_access = json_decode($folder->user_access);
+                      foreach($user_access as $id) {
+                        $user_access_model = User::model()->findByPk($id);
+                        array_push($user_email, $user_access_model->email);
+                      }
+                      echo implode( ", ", $user_email);
+                    } else {
+                      echo "Only you";
+                    }
+                  ?>
+
+                </p>
               </td>
 
               <td>
