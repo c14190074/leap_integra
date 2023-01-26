@@ -112,6 +112,13 @@
 								            <?= Snl::chtml()->activeTextbox($model_folder, 'folder_parent_id') ?>
 								        </div>
 								    </div>
+
+								    <div class="form-group" style="display: none;">
+								        <label class="col-md-12"><?= $model_folder->getLabel('folder_id', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_folder, 'folder_id') ?>
+								        </div>
+								    </div>
 	                                
 
 	                                <div class="form-group">
@@ -131,7 +138,7 @@
 								    <div class="form-group">
 								        <label class="col-md-12"><?= $model_folder->getLabel('user_access', TRUE); ?></label>
 								        <div class="col-md-12">
-								        	<select class="select2 form-control" name="Folder[user_access][]" multiple="multiple">
+								        	<select class="select2 form-control user-list" name="Folder[user_access][]" multiple="multiple">
 								            	<?php 
 								            		if($user_model != NULL) {
 								            			foreach($user_model as $d) {
@@ -142,14 +149,9 @@
 											</select>
 								        </div>
 								    </div>
-	                             
-	                                <!-- <div class="text-center">
-	                                    <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Buat</button>
-	                                </div> -->
-
 	                                <div class="form-group">
 								        <div class="col-md-12">
-								            <button type="button" class="btn bg-gradient-info btn-lg w-100 mt-4 mb-0" onclick="submitform('app_form', 'Folder')">Buat</button>
+								            <button type="button" class="btn bg-gradient-info btn-lg w-100 mt-4 mb-0" onclick="submitform('app_form', 'Folder')">Submit</button>
 								        </div>
 								    </div>
 	                            </form>
@@ -178,7 +180,6 @@
         $(document).ready(function() {
         	$('.select2').select2();
 
-        	
 
         	jQuery('.mydatepicker').datepicker({
         		autoclose: true,

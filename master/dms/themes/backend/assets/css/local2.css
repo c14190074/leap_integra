@@ -60,6 +60,9 @@
     border-spacing: 0;
 }
 
+.edit-folder:hover {
+    color: #67b108 !important;
+}
 
 /**
  * SELECT2

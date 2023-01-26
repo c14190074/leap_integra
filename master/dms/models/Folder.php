@@ -124,4 +124,11 @@
 			return false;
 		}
 
+		public function isTheOwner() {
+			if($this->created_by == Snl::app()->user()->user_id) {
+				return true;
+			}
+			return false;
+		}
+
 	}

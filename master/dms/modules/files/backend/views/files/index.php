@@ -35,7 +35,7 @@
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deskripsi</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Akses</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Created By</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Updated By</th>
+          <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Updated By</th> -->
           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Updated</th>
         </tr>
       </thead>
@@ -52,7 +52,13 @@
                     <i class="fa fa-folder opacity-6 text-dark me-3"></i>
                   </div>
                   <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-secondary text-sm text-dark"><a href="<?= Snl::app()->baseUrl() ?>admin/files/index?folder=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a></h6>
+                    <h6 class="mb-0 text-secondary text-sm text-dark">
+                      <a href="<?= Snl::app()->baseUrl() ?>admin/files/index?folder=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a>
+
+                      <?php if($folder->isTheOwner()) : ?>
+                        <i role="button" class="fa fa-pencil text-secondary text-xxs ms-1 edit-folder" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
+                      <?php endif; ?>
+                    </h6>
                   </div>
                 </div>
               </td>
@@ -86,11 +92,6 @@
               <td>
                 <p class="text-xs font-weight-bold mb-0"><?= $user_created->fullname ?></p>
                 <p class="text-xs text-secondary mb-0"><?= $user_created->email ?></p>
-              </td>
-
-              <td>
-                <p class="text-xs font-weight-bold mb-0"><?= $user_updated->fullname ?></p>
-                <p class="text-xs text-secondary mb-0"><?= $user_updated->email ?></p>
               </td>
 
               <td class="align-middle text-center text-sm">

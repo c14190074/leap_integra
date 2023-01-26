@@ -111,4 +111,20 @@ $(document).ready(function() {
             });
         }
     });
+
+    $('body').on('click', '.edit-folder', function() {
+        var folder_id = $(this).data('folder-id');
+        var ajaxUrl = baseUrl + 'admin/files/getfolderdata?ajax=1&id='+folder_id;
+
+        $.get(ajaxUrl, function(data, status){
+            data = $.parseJSON(data);
+            console.log(data.user_access);
+            $('#Folder_folder_id').val(data.folder_id);
+            $('#Folder_name').val(data.name);
+            $('#Folder_description').val(data.description);
+            $('.user-list').val(data.user_access).trigger('change');
+            $('#modal-form').modal('show');
+        });
+        
+    });
 });

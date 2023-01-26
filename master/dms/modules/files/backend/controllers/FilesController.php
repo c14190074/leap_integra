@@ -56,13 +56,19 @@
 
 		public function createfolder() {
 			if(isset($_POST['Folder'])) {
+				$message_result = 'Folder baru berhasil ditambahkan.';
 				$model = new Folder;
+				if(isset($_POST['Folder']['folder_id'])) {
+					$model = Folder::model()->findByPk($_POST['Folder']['folder_id']);
+					$message_result = 'Folder berhasil diubah.';
+				}
+				
 				$model->setAttributes($_POST['Folder']);
 				$model->type = "folder";
 				$model->user_access = isset($_POST['Folder']['user_access']) ? json_encode($_POST['Folder']['user_access']) : NULL;
 				
 				if($model->save()) {
-					Snl::app()->setFlashMessage('Folder baru berhasil ditambahkan.', 'success');
+					Snl::app()->setFlashMessage($message_result, 'success');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_id));
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
@@ -102,6 +108,19 @@
 			}
 
 			echo json_encode($result);
+		}
+
+		public function getfolderdata() {
+			$folder_id = SecurityHelper::decrypt($_GET['id']);
+			$model = Folder::model()->findByPk($folder_id);
+			$data = array(
+				'folder_id' => $model->folder_id,
+				'name' 		=> $model->name,
+				'description' => $model->description,
+				'user_access' => $model->user_access != NULL ? json_decode($model->user_access) : [],
+			);
+
+			echo json_encode($data);
 		}
 		
 	}
