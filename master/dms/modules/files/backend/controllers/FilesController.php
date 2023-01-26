@@ -58,7 +58,7 @@
 			if(isset($_POST['Folder'])) {
 				$message_result = 'Folder baru berhasil ditambahkan.';
 				$model = new Folder;
-				if(isset($_POST['Folder']['folder_id'])) {
+				if(isset($_POST['Folder']['folder_id']) && $_POST['Folder']['folder_id'] != "") {
 					$model = Folder::model()->findByPk($_POST['Folder']['folder_id']);
 					$message_result = 'Folder berhasil diubah.';
 				}
@@ -121,6 +121,35 @@
 			);
 
 			echo json_encode($data);
+		}
+
+		public function deletefolder() {
+			$folder_id = SecurityHelper::decrypt($_POST['folder_id']);
+			$model = Folder::model()->findByPk($folder_id);
+
+			if(!$model->hasChild()) {
+				$model->is_deleted = 1;
+
+				if($model->save()) {
+					Snl::app()->setFlashMessage('Folder '.$model->name.' berhasil dihapus.', 'success');
+					$result = array(
+						'valid' => TRUE
+					);
+				} else {
+					Snl::app()->setFlashMessage('Internal server error.', 'danger');
+					$result = array(
+						'valid' => FALSE
+					);
+				}				
+			} else {
+				Snl::app()->setFlashMessage('Folder '.$model->name.' tidak dapat dihapus karena terdapat file/folder di dalamnya.', 'danger');
+				$result = array(
+					'valid' => FALSE
+				);
+			}
+
+
+			echo json_encode($result);
 		}
 		
 	}

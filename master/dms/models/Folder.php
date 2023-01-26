@@ -131,4 +131,17 @@
 			return false;
 		}
 
+		public function hasChild() {
+			$model = Folder::model()->findAll(array(
+				'condition' => 'folder_parent_id = :id AND is_deleted = 0',
+				'params'		=> array(':id' => $this->folder_id)
+			));
+
+			if($model != NULL) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 	}

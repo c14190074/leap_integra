@@ -57,6 +57,7 @@
 
                       <?php if($folder->isTheOwner()) : ?>
                         <i role="button" class="fa fa-pencil text-secondary text-xxs ms-1 edit-folder" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
+                        <i role="button" class="fa fa-trash text-secondary text-xxs ms-1 delete-folder" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
                       <?php endif; ?>
                     </h6>
                   </div>

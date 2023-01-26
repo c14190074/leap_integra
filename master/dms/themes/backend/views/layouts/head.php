@@ -31,7 +31,7 @@
 
     <!-- /////////// PLUGINS ///////////////////// -->
     <!-- alerts CSS -->
-    <link href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/sweetalert/sweetalert2.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css" rel="stylesheet" type="text/css">
     <!-- js grid -->
     <link type="text/css" rel="stylesheet" href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/jsgrid2/jsgrid.min.css" />
     <link type="text/css" rel="stylesheet" href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/jsgrid2/jsgrid-theme.min.css" />
@@ -93,7 +93,7 @@
     <!--Wave Effects -->
     <script src="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/js/waves.js"></script>
     <!-- Sweet-Alert  -->
-    <script src="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/sweetalert/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
     <!-- Fancyapps  -->
     <script src="<?= Snl::app()->config()->theme_url ?>plugins/fancybox-master/dist/jquery.fancybox.min.js"></script>
     <!-- JS-Grid  -->

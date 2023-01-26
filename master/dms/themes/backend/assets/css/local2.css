@@ -47,6 +47,16 @@
     width: 100% !important;
 }
 
+/**
+ * SWEET ALERT
+ */
+
+.swal2-popup .swal2-title {
+    font-size: 1.575em;
+}
+
+
+
 
 /**
  * Folder List
@@ -60,7 +70,7 @@
     border-spacing: 0;
 }
 
-.edit-folder:hover {
+.edit-folder:hover, .delete-folder:hover {
     color: #67b108 !important;
 }
 

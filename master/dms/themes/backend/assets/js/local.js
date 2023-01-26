@@ -127,4 +127,30 @@ $(document).ready(function() {
         });
         
     });
+
+    $('body').on('click', '.delete-folder', function() {
+        var folder_id = $(this).data('folder-id');
+
+        Swal.fire({
+          title: 'Apakah anda yakin untuk menghapus folder ini?',
+          // showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Hapus',
+          // denyButtonText: `Don't save`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            // initLoading();
+
+            var ajaxUrl = baseUrl + 'admin/files/deletefolder?ajax=1';
+            $.post(ajaxUrl, {folder_id:folder_id}, function(result) {
+                // console.log(result);
+                location.reload();
+            });
+
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info');
+          }
+        });
+    });
 });
