@@ -1,6 +1,6 @@
 <?php
 	class User extends SnlActiveRecord {
-		public $user_id, $fullname, $email, $password, $phone, $address, $position, $status, $status_email, $secret_key, $encryption_key, $encryption_iv, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $user_id, $is_superadmin, $fullname, $email, $password, $phone, $address, $position, $status, $status_email, $secret_key, $encryption_key, $encryption_iv, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 		public $password_repeat;
 
 		public function __construct() {
@@ -27,6 +27,7 @@
 		public function getLabel($field, $with_rule = FALSE) {
 			$labels = array(
 				'user_id' => 'User ID',
+				'is_superadmin' => 'Superadmin?',
 				'fullname' => 'Nama Lengkap',
 				'email' => 'Email',
 				'password' => 'Password',
@@ -155,6 +156,7 @@
 		public function generateSessionLogin($model) {
 			$data = new stdClass();
 			$data->user_id 		= $model->user_id;
+			$data->is_superadmin = $model->is_superadmin;
 			$data->email 	= $model->email;
 			$data->fullname = $model->fullname;
 			$data->phone 	= $model->phone;
@@ -195,6 +197,7 @@
 		public function getApiLoginInformation($with_address = TRUE) {
 			$result = array(
 				'user_id'		=> $this->user_id,
+				'is_superadmin'	=> $this->is_superadmin,
 				'email'			=> $this->email,
 				'fullname'		=> $this->fullname,
 				//'encryption_key'=> $this->encryption_key,

@@ -59,6 +59,10 @@
 		}
 
 		public function index() {
+			if(!Snl::app()->user()->is_superadmin) {
+				$this->redirect('admin/dashboard/index');
+			}
+
 			$this->page_title = LabelHelper::getLabel('manage_user');
 			$this->crumbs = array('User', 'Index');
 			$this->toolbarElement = '<a href="'.Snl::app()->baseUrl().'admin/user/create" class="btn btn-primary btn-sm pull-right m-l-20"><i class="glyphicon glyphicon-plus"></i></a>';
@@ -69,6 +73,10 @@
 		}
 
 		public function create() {
+			if(!Snl::app()->user()->is_superadmin) {
+				$this->redirect('admin/dashboard/index');
+			}
+
 			$model = new User;
 			if(isset($_POST['User'])) {
 				$model->setAttributes($_POST['User']);
@@ -91,6 +99,10 @@
 		}
 
 		public function update() {
+			if(!Snl::app()->user()->is_superadmin) {
+				$this->redirect('admin/dashboard/index');
+			}
+
 			$id = isset($_GET['id']) ? $_GET['id'] : 0;
 			$model = User::model()->findByPk($id);
 			$model->password_repeat = $model->password;
@@ -115,6 +127,10 @@
 		}
 
 		public function delete() {
+			if(!Snl::app()->user()->is_superadmin) {
+				$this->redirect('admin/dashboard/index');
+			}
+			
 			$id = isset($_GET['id']) ? $_GET['id'] : 0;
 			$model = User::model()->findByPk($id);
 			if($model !== NULL) {

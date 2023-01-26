@@ -36,3 +36,4 @@ CREATE TABLE IF NOT EXISTS `tbl_folder` (
 ALTER TABLE `tbl_folder` ADD `user_access` VARCHAR(255) DEFAULT NULL AFTER `description`;
 ALTER TABLE `tbl_folder` ADD `type` VARCHAR(255) DEFAULT 'folder' AFTER `name`;
 ALTER TABLE `tbl_folder` ADD `format` VARCHAR(255) DEFAULT NULL AFTER `type`;
+ALTER TABLE `tbl_user` ADD `is_superadmin` INT(1) DEFAULT 0 AFTER `user_id`;
