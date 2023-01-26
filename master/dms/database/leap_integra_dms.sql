@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2023 at 07:03 AM
+-- Generation Time: Jan 26, 2023 at 11:10 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.26
 
@@ -48,9 +48,12 @@ CREATE TABLE `tbl_folder` (
 
 INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `type`, `format`, `description`, `user_access`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
 (1, 0, 'UK Petra 2019', 'folder', NULL, 'Data kuliah', NULL, '2023-01-25 12:41:09', 3, '2023-01-25 12:41:09', 3, 0),
-(2, 0, 'Pelindo', 'folder', NULL, '', NULL, '2023-01-25 12:57:53', 1, '2023-01-25 12:57:53', 1, 0),
+(2, 0, 'Pelindo', 'folder', NULL, '', NULL, '2023-01-25 12:57:53', 1, '2023-01-26 16:26:40', 1, 1),
 (3, 0, 'Project POS', 'folder', NULL, '', NULL, '2023-01-25 12:58:52', 3, '2023-01-25 12:58:52', 3, 0),
-(4, 0, 'Project Android', 'folder', NULL, '', '[\"1\"]', '2023-01-25 12:59:15', 3, '2023-01-25 12:59:15', 3, 0);
+(4, 0, 'Project Android - POS', 'folder', NULL, '', '[\"1\"]', '2023-01-25 12:59:15', 3, '2023-01-26 10:56:27', 3, 0),
+(5, 0, 'Project Android - DMS', 'folder', NULL, 'Project android untuk Leap', '[\"1\",\"2\"]', '2023-01-26 10:08:23', 3, '2023-01-26 10:08:23', 3, 0),
+(6, 0, 'SMK N 1 Tuban', 'folder', NULL, 'Data sekolah', NULL, '2023-01-26 16:15:23', 1, '2023-01-26 16:25:11', 1, 1),
+(7, 2, 'Pertemuan 1', 'folder', NULL, 'Diskusi fitur app', NULL, '2023-01-26 16:26:09', 1, '2023-01-26 16:26:31', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -60,6 +63,7 @@ INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `type`, `form
 
 CREATE TABLE `tbl_user` (
   `user_id` int(11) NOT NULL,
+  `is_superadmin` int(1) DEFAULT 0,
   `fullname` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -82,10 +86,10 @@ CREATE TABLE `tbl_user` (
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`user_id`, `fullname`, `email`, `password`, `phone`, `address`, `position`, `status`, `status_email`, `secret_key`, `encryption_key`, `encryption_iv`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
-(1, 'Agung Wibowo', 'agung@email.com', 'tsG26M+doZc=', '081356894563', NULL, NULL, 1, 1, NULL, '6143541754438333', 'MXLPR1SYD935TJVF', '2023-01-25 06:37:26', 1, '2023-01-25 06:37:26', 1, 0),
-(2, 'Delvo Anderson', 'delvo@email.com', 'urrnRO/83iY=', '456789874565', NULL, NULL, 1, 0, NULL, '9378434021479912', '8MD2RPBW91SZNXI7', '2023-01-25 12:39:43', 3, '2023-01-25 12:39:43', 3, 0),
-(3, 'jonas', 'jonas@email.com', 'yYROW/X4cLI=', '456987123654', NULL, NULL, 1, 0, NULL, '3783289032730952', 'CNY0GMIWE6DUK4FR', '2023-01-25 12:40:25', 3, '2023-01-25 12:40:25', 3, 0);
+INSERT INTO `tbl_user` (`user_id`, `is_superadmin`, `fullname`, `email`, `password`, `phone`, `address`, `position`, `status`, `status_email`, `secret_key`, `encryption_key`, `encryption_iv`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
+(1, 1, 'Agung Wibowo', 'agung@email.com', 'tsG26M+doZc=', '081356894563', NULL, NULL, 1, 1, NULL, '6143541754438333', 'MXLPR1SYD935TJVF', '2023-01-25 06:37:26', 1, '2023-01-25 06:37:26', 1, 0),
+(2, 0, 'Delvo Anderson', 'delvo@email.com', 'urrnRO/83iY=', '456789874565', NULL, NULL, 1, 1, NULL, '9378434021479912', '8MD2RPBW91SZNXI7', '2023-01-25 12:39:43', 3, '2023-01-25 12:39:43', 3, 0),
+(3, 0, 'jonas', 'jonas@email.com', 'yYROW/X4cLI=', '456987123654', NULL, NULL, 1, 1, NULL, '3783289032730952', 'CNY0GMIWE6DUK4FR', '2023-01-25 12:40:25', 3, '2023-01-25 12:40:25', 3, 0);
 
 --
 -- Indexes for dumped tables
@@ -111,7 +115,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_folder`
 --
 ALTER TABLE `tbl_folder`
-  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
