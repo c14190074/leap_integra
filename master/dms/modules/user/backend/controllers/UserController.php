@@ -14,8 +14,14 @@
 			if(isset($_POST['User'])) {
 				$model->email = $_POST['User']['email'];
 				$model->password = $_POST['User']['password'];
-				if($model->validateLogin()) {
+				$login_result = $model->validateLogin();
+
+				if($login_result == 3) {
 					$this->redirect('admin/dashboard/index');
+				} else if($login_result == 1) {
+					Snl::app()->setFlashMessage('User belum aktif!', 'danger');
+				} else if($login_result == 2) {
+					Snl::app()->setFlashMessage('Email belum terverifikasi!', 'danger');				
 				} else {
 					Snl::app()->setFlashMessage('Email atau password salah!', 'danger');
 				}

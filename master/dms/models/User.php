@@ -125,20 +125,31 @@
 
 		public function validateLogin() {
 			$model = User::model()->findByAttribute(array(
-				'condition' => 'email = :email AND status = :status AND is_deleted = 0',
-				'params'	=> array(':email' => $this->email, ':status' => 1)
+				'condition' => 'email = :email AND is_deleted = 0',
+				'params'	=> array(':email' => $this->email)
 			));
 
 			if($model == NULL) {
-				return FALSE;
+				return 0;
 			} else {
 				if(SecurityHelper::decrypt($model->password, $model->encryption_key, $model->encryption_iv) == $this->password) {
-					$this->generateSessionLogin($model);
-					return TRUE;
+					if($model->status == 0) {
+						return 1;
+					}
+
+					if($model->status_email == 0) {
+						return 2;
+					}
+
+					if($model->status == 1 && $model->status_email == 1) {
+						$this->generateSessionLogin($model);
+						return 3;	
+					}
+					
 				}
 			}
 
-			return FALSE;
+			return 0;
 		}
 
 		public function generateSessionLogin($model) {
