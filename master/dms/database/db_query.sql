@@ -37,3 +37,23 @@ ALTER TABLE `tbl_folder` ADD `user_access` VARCHAR(255) DEFAULT NULL AFTER `desc
 ALTER TABLE `tbl_folder` ADD `type` VARCHAR(255) DEFAULT 'folder' AFTER `name`;
 ALTER TABLE `tbl_folder` ADD `format` VARCHAR(255) DEFAULT NULL AFTER `type`;
 ALTER TABLE `tbl_user` ADD `is_superadmin` INT(1) DEFAULT 0 AFTER `user_id`;
+
+
+CREATE TABLE IF NOT EXISTS `tbl_file` (
+	`file_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`folder_id` INT(11),
+	`nomer` VARCHAR(255),
+	`perihal` VARCHAR(255),
+	`unit_kerja` VARCHAR(255),
+	`keyword` VARCHAR(255),
+	`related_document` VARCHAR(255),
+	`description` VARCHAR(255),
+	`created_on` DATETIME DEFAULT NULL,
+	`created_by` INT(11) DEFAULT NULL,
+	`updated_on` DATETIME DEFAULT NULL,
+	`updated_by` INT(11) DEFAULT NULL,
+	`is_deleted` TINYINT(1) DEFAULT 0 COMMENT '0=No; 1=Yes',
+	PRIMARY KEY (`file_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tbl_file` ADD `name` VARCHAR(255) DEFAULT 0 AFTER `folder_id`;

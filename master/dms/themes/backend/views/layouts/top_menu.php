@@ -39,13 +39,20 @@
             <?php endif; ?>
 
             <li class="nav-item d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" data-bs-toggle="modal" data-bs-target="#modal-upload-form">
+                <i class="fa fa-upload me-sm-1"></i>
+                <span class="d-sm-inline d-none">Upload</span>
+              </a>
+            </li>
+
+            <li class="nav-item d-flex px-3 align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" data-bs-toggle="modal" data-bs-target="#modal-form">
                 <i class="fa fa-folder-plus me-sm-1"></i>
                 <span class="d-sm-inline d-none">Folder</span>
               </a>
             </li>
             
-            <li class="nav-item dropdown px-3 d-flex align-items-center">
+            <li class="nav-item dropdown d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
                 <span class="d-sm-inline d-none">Pengaturan</span>

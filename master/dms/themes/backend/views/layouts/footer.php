@@ -163,6 +163,90 @@
 	    </div>
 	</div>
 
+
+	<?php
+		$model_file = new File;
+		
+	?>
+	<!-- Pop up modal untuk upload file -->
+	<div class="me-2" id="upload-file-container">
+	    <div class="modal fade" id="modal-upload-form" tabindex="-1" role="dialog" aria-labelledby="modal-upload-form" aria-hidden="true">
+	        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	            <div class="modal-content">
+	                <div class="modal-body p-0">
+	                    <div class="card card-plain">
+	                        <div class="card-body">
+	                            <form action="<?= Snl::app()->baseUrl() ?>admin/files/upload" class="dropzone" id="my-dropzone">
+								    <div class="dz-message">
+								        <h1 class="mb-0 "><i class="fa fa-file-text-o"></i></h1>
+								        <p class="mb-2">Tarik file disini</p>
+								        <p class="text-sm text-secondary mb-3">atau</p>
+								        <button type="button" class="btn btn-default">Pilih Dokumen</button>
+								    </div>
+								</form>
+
+								<hr />
+
+
+								<form role="form text-left" id="app_form" action="<?= Snl::app()->baseUrl() ?>admin/files/uploadfile" method="POST">
+	                                <div class="form-group">
+								        <label class="col-md-12"><?= $model_file->getLabel('nomer', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'nomer') ?>
+								        </div>
+								    </div>
+
+								    <div class="form-group">
+								        <label class="col-md-12"><?= $model_file->getLabel('perihal', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'perihal') ?>
+								        </div>
+								    </div>
+
+								    
+								    <div class="form-group">
+								        <label class="col-md-12"><?= $model_file->getLabel('unit_kerja', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'unit_kerja') ?>
+								        </div>
+								    </div>
+
+								    <div class="form-group">
+								        <label class="col-md-12"><?= $model_file->getLabel('keyword', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'keyword') ?>
+								        </div>
+								    </div>
+
+								    <div class="form-group">
+								        <label class="col-md-12"><?= $model_file->getLabel('related_document', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'related_document') ?>
+								        </div>
+								    </div>
+
+								    <div class="form-group">
+								        <label class="col-md-12"><?= $model_file->getLabel('description', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'description') ?>
+								        </div>
+								    </div>
+
+	                                <div class="form-group">
+								        <div class="col-md-12 text-center">
+								            <button type="button" class="btn bg-gradient-info mt-4 mb-0" onclick="submitform('app_form', 'Folder')">Submit</button>
+
+								            <button type="button" class="btn bg-gradient-warning mt-4 mb-0">Cancel</button>
+								        </div>
+								    </div>
+	                            </form>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </main>
 	<!--   Core JS Files   -->
 	  <script src="<?= Snl::app()->config()->theme_url ?>assets_soft/js/core/popper.min.js"></script>
@@ -180,6 +264,18 @@
         $(document).ready(function() {
         	$('.select2').select2();
 
+        	Dropzone.autoDiscover = false;
+        	
+        	var myDropzone = new Dropzone("#my-dropzone", { 
+		       autoProcessQueue: false,
+		       maxFilesize: 1,
+		       acceptedFiles: ".doc,.docx,.pdf,.txt"
+		    });
+
+		    $('body').on('click', '#upload_btn', function() {
+		    	// myDropzone.processQueue();
+
+		    });
 
         	jQuery('.mydatepicker').datepicker({
         		autoclose: true,

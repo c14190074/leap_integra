@@ -55,8 +55,32 @@
     font-size: 1.575em;
 }
 
+/**
+ * DROPZONE
+ */
 
+.dropzone {
+    text-align: center;
+    background-color: #f8f9fa;
+    border-color: #d2d6da;
+    /*background: white;
+    border-radius: 5px;
+    border: 2px dashed rgb(0, 135, 247);
+    border-image: none;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;*/
+}
 
+.dropzone .dz-preview .dz-progress {
+    border: 3px solid #17c1e8;
+    background-color: #17c1e8;
+    height: 0;
+}
+
+.dropzone .dz-preview.dz-file-preview .dz-image {
+    border-radius: 5px;
+}
 
 /**
  * Folder List

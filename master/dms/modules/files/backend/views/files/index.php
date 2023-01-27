@@ -49,7 +49,7 @@
               <td>
                 <div class="d-flex px-2 py-1">
                   <div>
-                    <i class="fa fa-folder opacity-6 text-dark me-3"></i>
+                    <i class="fa fa-folder opacity-6 link-info me-3"></i>
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-secondary text-sm text-dark">

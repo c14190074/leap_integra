@@ -76,6 +76,22 @@
 			}
 		}
 
+		public function upload() {
+			$this->page_title = 'Upload Files';
+			
+			if (!empty($_FILES)) {
+			    $tempFile = $_FILES['file']['tmp_name'];
+			    $targetPath = Snl::app()->rootDirectory() . 'uploads/documents/';
+			    $targetFile =  $targetPath. $_FILES['file']['name'];
+			 
+			    move_uploaded_file($tempFile,$targetFile);
+			}
+			
+			return $this->render('upload', array(
+				'toolbar' 	=> $this->toolbar(),
+			));
+		}
+
 		// All ajax function
 		public function validate() {
 			$post = $_POST['post'];

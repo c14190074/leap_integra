@@ -56,6 +56,9 @@
     <link href="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <!-- Datetime Picker -->
     <link rel="stylesheet" type="text/css" href="<?= Snl::app()->config()->theme_url ?>plugins/datetimepicker/jquery.datetimepicker.css">
+    <!-- Dropzone -->
+    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+
     <!-- /////// END OF PLUGINS ///////////////  -->
 
 
@@ -127,6 +130,9 @@
 
     <!-- Touch Punch -->
     <script src="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/touch-punch/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+
+    <!-- Dropzone -->
+    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/js/cbpFWTabs.js"></script>
