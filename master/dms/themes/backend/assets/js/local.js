@@ -68,49 +68,44 @@ function updateOrderStatus(order_id, status) {
 }
 
 $(document).ready(function() {
-	$('body').on('click', '.order-on-delivery', function() {
-        if(!$(this).hasClass('disabled')) {
-            var order_id = $(this).data('order-id');
-
-            swal({   
-                title: "Apakah anda yakin untuk mengubah status order ini menjadi \"Delivery (Dalam Pengiriman)\"?",   
-                text: "Aksi ini tidak dapat diulang / anda tidak dapat mengubahnya kembali!",
-                type: "warning",   
-                showCancelButton: true,   
-                confirmButtonColor: "#DD6B55",   
-                confirmButtonText: "Ya, saya yakin!", 
-                cancelButtonText: "Batal",
-                closeOnConfirm: false 
-            }, function(isConfirm){   
-                if(isConfirm) {
-                    swal({title:'', timer:1});
-                    updateOrderStatus(order_id, 'Delivery');
-                }
-            });
+    Dropzone.autoDiscover = false;
+            
+    var myDropzone = new Dropzone("#my-dropzone", { 
+        autoProcessQueue: false,
+        maxFilesize: 1,
+        acceptedFiles: ".doc,.docx,.pdf,.txt",
+        success : function(file, response){
+            $('#File_name').val(file.name);
+            $('#app_form_upload').submit();
         }
     });
 
-    $('body').on('click', '.order-complete', function() {
-        if(!$(this).hasClass('disabled')) {
-            var order_id = $(this).data('order-id');
+    $('body').on('click', '#upload-file-btn', function() {
+        var form = "app_form_upload";
+        var ajaxUrl = baseUrl + 'admin/files/validatefileattribute?ajax=1';
+        var post = $('#app_form_upload').serializeArray();
+        var model = "File";
 
-            swal({   
-                title: "Apakah anda yakin order ini telah selesai / complete?",   
-                text: "Aksi ini tidak dapat diulang / anda tidak dapat mengubahnya kembali!",
-                type: "warning",   
-                showCancelButton: true,   
-                confirmButtonColor: "#DD6B55",   
-                confirmButtonText: "Ya, saya yakin!", 
-                cancelButtonText: "Batal",
-                closeOnConfirm: false 
-            }, function(isConfirm){   
-                if(isConfirm) {
-                    swal({title:'', timer:1});
-                    updateOrderStatus(order_id, 'Complete');
-                }
-            });
-        }
+        $.post(ajaxUrl, {post:post}, function(result) {
+            console.log(result);
+            result = $.parseJSON(result);
+            if(result.valid) {
+                myDropzone.processQueue();
+            } else {
+                destroyLoading();
+                $.each(result.msg, function(key, value) {
+                    setMsg(form, model+'_'+key, value); 
+                });
+
+                // if(model.toLowerCase() != "folder") {
+                //     swal("WARNING!", "Terjadi kesalahan input. Mohon periksa ulang data yang anda inputkan.");    
+                // }
+            }
+        });
+
     });
+
+	
 
     $('body').on('click', '.edit-folder', function() {
         var folder_id = $(this).data('folder-id');

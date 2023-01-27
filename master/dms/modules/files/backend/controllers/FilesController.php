@@ -76,23 +76,31 @@
 			}
 		}
 
+		public function savedocumentattribute() {
+			$model = new File;
+			if(isset($_POST['File'])) {
+				$model->setAttributes($_POST['File']);
+				if($model->save()) {
+					Snl::app()->setFlashMessage('File baru berhasil ditambahkan.', 'success');
+					$this->redirect('admin/files/index');
+				} else {
+					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
+				}
+			}
+		}
+
+		// All ajax function
 		public function upload() {
-			$this->page_title = 'Upload Files';
-			
 			if (!empty($_FILES)) {
 			    $tempFile = $_FILES['file']['tmp_name'];
 			    $targetPath = Snl::app()->rootDirectory() . 'uploads/documents/';
 			    $targetFile =  $targetPath. $_FILES['file']['name'];
 			 
 			    move_uploaded_file($tempFile,$targetFile);
+			    echo json_encode($tempFile);
 			}
-			
-			return $this->render('upload', array(
-				'toolbar' 	=> $this->toolbar(),
-			));
 		}
-
-		// All ajax function
+		
 		public function validate() {
 			$post = $_POST['post'];
 			$data = array();
@@ -109,6 +117,39 @@
 			$id = isset($data['folder_id']) ? $data['folder_id'] : 0;
 			if($id > 0) {
 				$model = Folder::model()->findByPk($id);
+			}
+
+			$model->setAttributes($data);
+			if($model->validate()) {
+				$result = array(
+					'valid' => TRUE
+				);
+			} else {
+				$result = array(
+					'valid' => FALSE,
+					'msg'	=> $model->errors
+				);
+			}
+
+			echo json_encode($result);
+		}
+
+		public function validatefileattribute() {
+			$post = $_POST['post'];
+			$data = array();
+			$result = array();
+			$model = new File;
+
+			if(count($post) > 0) {
+				foreach ($post as $key => $value) {
+					$name = str_replace(']', '', str_replace('[', '', str_replace($model->classname, '', $value['name'])));
+					$data[$name] = $value['value'];
+				}
+			}
+
+			$id = isset($data['file_id']) ? $data['file_id'] : 0;
+			if($id > 0) {
+				$model = File::model()->findByPk($id);
 			}
 
 			$model->setAttributes($data);

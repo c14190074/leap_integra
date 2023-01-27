@@ -10,7 +10,7 @@
 
 		public function rules() {
 			return array(
-				'required'	=> array('name'),
+				'required'	=> array('nomer'),
 			);
 		}
 

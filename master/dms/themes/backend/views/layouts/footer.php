@@ -166,7 +166,6 @@
 
 	<?php
 		$model_file = new File;
-		
 	?>
 	<!-- Pop up modal untuk upload file -->
 	<div class="me-2" id="upload-file-container">
@@ -176,7 +175,7 @@
 	                <div class="modal-body p-0">
 	                    <div class="card card-plain">
 	                        <div class="card-body">
-	                            <form action="<?= Snl::app()->baseUrl() ?>admin/files/upload" class="dropzone" id="my-dropzone">
+	                            <form action="<?= Snl::app()->baseUrl() ?>admin/files/upload?ajax=1" class="dropzone" id="my-dropzone">
 								    <div class="dz-message">
 								        <h1 class="mb-0 "><i class="fa fa-file-text-o"></i></h1>
 								        <p class="mb-2">Tarik file disini</p>
@@ -185,10 +184,16 @@
 								    </div>
 								</form>
 
-								<hr />
+								<hr style="border-top: 1px solid aquamarine !important;" />
 
+								<form role="form text-left" id="app_form_upload" action="<?= Snl::app()->baseUrl() ?>admin/files/savedocumentattribute" method="POST">
+									<div class="form-group">
+								        <label class="col-md-12"><?= $model_file->getLabel('name', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'name') ?>
+								        </div>
+								    </div>
 
-								<form role="form text-left" id="app_form" action="<?= Snl::app()->baseUrl() ?>admin/files/uploadfile" method="POST">
 	                                <div class="form-group">
 								        <label class="col-md-12"><?= $model_file->getLabel('nomer', TRUE); ?></label>
 								        <div class="col-md-12">
@@ -234,9 +239,9 @@
 
 	                                <div class="form-group">
 								        <div class="col-md-12 text-center">
-								            <button type="button" class="btn bg-gradient-info mt-4 mb-0" onclick="submitform('app_form', 'Folder')">Submit</button>
+								            <button type="button" class="btn bg-gradient-info mt-4 mb-0" id="upload-file-btn">Submit</button>
 
-								            <button type="button" class="btn bg-gradient-warning mt-4 mb-0">Cancel</button>
+								            <button type="button" class="btn bg-gradient-warning mt-4 mb-0" data-dismiss="modal">Cancel</button>
 								        </div>
 								    </div>
 	                            </form>
@@ -263,19 +268,6 @@
 
         $(document).ready(function() {
         	$('.select2').select2();
-
-        	Dropzone.autoDiscover = false;
-        	
-        	var myDropzone = new Dropzone("#my-dropzone", { 
-		       autoProcessQueue: false,
-		       maxFilesize: 1,
-		       acceptedFiles: ".doc,.docx,.pdf,.txt"
-		    });
-
-		    $('body').on('click', '#upload_btn', function() {
-		    	// myDropzone.processQueue();
-
-		    });
 
         	jQuery('.mydatepicker').datepicker({
         		autoclose: true,
