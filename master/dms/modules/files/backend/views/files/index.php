@@ -21,21 +21,19 @@
 </nav>
 <?php endif; ?>
 
-<?php if($model == NULL) : ?>
+<?php if($model == NULL || Folder::countNumberOfFile($model) == 0) : ?>
   <p class="text-sm text-secondary p-3">No file or folder</p>
-<?php endif; ?>
 
-<?php if($model != NULL) : ?>
+<?php else : ?>
 <div class="card" id="folder_list">
   <div class="table-responsive">
     <table class="table align-items-center mb-0">
       <thead>
         <tr>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Folder</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deskripsi</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unit Kerja</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nomor</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Perihal</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Akses</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Created By</th>
-          <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Updated By</th> -->
           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Updated</th>
         </tr>
       </thead>
@@ -49,13 +47,27 @@
               <td>
                 <div class="d-flex px-2 py-1">
                   <div>
-                    <i class="fa fa-folder opacity-6 link-info me-3"></i>
+                    <?php
+                      if($folder->type == "file") {
+                        if($folder->format == "pdf") {
+                          echo "<i class='fa fa-file-pdf-o opacity-6 text-dark me-3'></i>";
+                        } else if($folder->format == "doc" || $folder->format == "docx" || $folder->format == "docs") {
+                          echo "<i class='fa fa-file-word-o opacity-6 text-dark me-3'></i>";
+                        } else {
+                          echo "<i class='fa fa-file opacity-6 text-dark me-3'></i>";
+                        }
+                      } else {
+                        echo "<i class='fa fa-folder opacity-6 link-info me-3'></i>";
+                      }
+                    ?>
+
+                    
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-secondary text-sm text-dark">
                       <a href="<?= Snl::app()->baseUrl() ?>admin/files/index?folder=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a>
 
-                      <?php if($folder->isTheOwner()) : ?>
+                      <?php if($folder->isTheOwner() && $folder->type == "folder") : ?>
                         <i role="button" class="fa fa-pencil text-secondary text-xxs ms-1 edit-folder" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
                         <i role="button" class="fa fa-trash text-secondary text-xxs ms-1 delete-folder" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
                       <?php endif; ?>
@@ -65,7 +77,11 @@
               </td>
 
               <td>
-                <p class="text-xs text-secondary mb-0"><?= $folder->description ?></p>
+                <p class="text-xs text-secondary mb-0"><?= $folder->nomor ?></p>
+              </td>
+
+              <td>
+                <p class="text-xs text-secondary mb-0"><?= $folder->name ?></p>
               </td>
 
               <td>
@@ -90,10 +106,10 @@
                 </p>
               </td>
 
-              <td>
+             <!--  <td>
                 <p class="text-xs font-weight-bold mb-0"><?= $user_created->fullname ?></p>
                 <p class="text-xs text-secondary mb-0"><?= $user_created->email ?></p>
-              </td>
+              </td> -->
 
               <td class="align-middle text-center text-sm">
                 <p class="text-xs text-secondary mb-0"><?= date('d M Y h:i', strtotime($user_updated->updated_on)) ?></p>

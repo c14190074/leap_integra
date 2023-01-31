@@ -150,4 +150,17 @@
 			}
 		}
 
+		public static function countNumberOfFile($model = NULL) {
+			$ctr = 0;
+			if($model != NULL) {
+				foreach($model as $folder) {
+					if($folder->hasAccess()) {
+						$ctr++;
+					}
+				}
+			}
+
+			return $ctr;
+		}
+
 	}
