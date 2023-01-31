@@ -80,9 +80,10 @@
 			$model = new File;
 			if(isset($_POST['File'])) {
 				$model->setAttributes($_POST['File']);
+				
 				if($model->save()) {
 					Snl::app()->setFlashMessage('File baru berhasil ditambahkan.', 'success');
-					$this->redirect('admin/files/index');
+					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_id));
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
 				}

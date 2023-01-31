@@ -166,6 +166,7 @@
 
 	<?php
 		$model_file = new File;
+		$model_file->folder_id = $parentfolderid;
 	?>
 	<!-- Pop up modal untuk upload file -->
 	<div class="me-2" id="upload-file-container">
@@ -187,7 +188,14 @@
 								<hr style="border-top: 1px solid aquamarine !important;" />
 
 								<form role="form text-left" id="app_form_upload" action="<?= Snl::app()->baseUrl() ?>admin/files/savedocumentattribute" method="POST">
-									<div class="form-group">
+									<div class="form-group" style="display: none;">
+								        <label class="col-md-12"><?= $model_file->getLabel('folder_id', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'folder_id') ?>
+								        </div>
+								    </div>
+
+									<div class="form-group" style="display: none;">
 								        <label class="col-md-12"><?= $model_file->getLabel('name', TRUE); ?></label>
 								        <div class="col-md-12">
 								            <?= Snl::chtml()->activeTextbox($model_file, 'name') ?>
