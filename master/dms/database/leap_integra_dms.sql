@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2023 at 11:10 AM
+-- Generation Time: Jan 31, 2023 at 04:11 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.26
 
@@ -20,6 +20,36 @@ SET time_zone = "+00:00";
 --
 -- Database: `leap_integra_dms`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_file`
+--
+
+CREATE TABLE `tbl_file` (
+  `file_id` int(11) NOT NULL,
+  `folder_id` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT '0',
+  `nomer` varchar(255) DEFAULT NULL,
+  `perihal` varchar(255) DEFAULT NULL,
+  `unit_kerja` varchar(255) DEFAULT NULL,
+  `keyword` varchar(255) DEFAULT NULL,
+  `related_document` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_on` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `is_deleted` tinyint(1) DEFAULT 0 COMMENT '0=No; 1=Yes'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_file`
+--
+
+INSERT INTO `tbl_file` (`file_id`, `folder_id`, `name`, `nomer`, `perihal`, `unit_kerja`, `keyword`, `related_document`, `description`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
+(1, NULL, 'EF_TestResult.pdf', '270120231701', 'Hasil Test EF', '1701', '#hasil,#test', 'Single Document', 'Format pdf', '2023-01-27 17:01:44', 1, '2023-01-27 17:01:44', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -53,7 +83,8 @@ INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `type`, `form
 (4, 0, 'Project Android - POS', 'folder', NULL, '', '[\"1\"]', '2023-01-25 12:59:15', 3, '2023-01-26 10:56:27', 3, 0),
 (5, 0, 'Project Android - DMS', 'folder', NULL, 'Project android untuk Leap', '[\"1\",\"2\"]', '2023-01-26 10:08:23', 3, '2023-01-26 10:08:23', 3, 0),
 (6, 0, 'SMK N 1 Tuban', 'folder', NULL, 'Data sekolah', NULL, '2023-01-26 16:15:23', 1, '2023-01-26 16:25:11', 1, 1),
-(7, 2, 'Pertemuan 1', 'folder', NULL, 'Diskusi fitur app', NULL, '2023-01-26 16:26:09', 1, '2023-01-26 16:26:31', 1, 1);
+(7, 2, 'Pertemuan 1', 'folder', NULL, 'Diskusi fitur app', NULL, '2023-01-26 16:26:09', 1, '2023-01-26 16:26:31', 1, 1),
+(8, 4, 'Minggu 1', 'folder', NULL, '01 Jan - 8 Jan 2023', NULL, '2023-01-27 17:05:38', 1, '2023-01-27 17:05:38', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -96,6 +127,12 @@ INSERT INTO `tbl_user` (`user_id`, `is_superadmin`, `fullname`, `email`, `passwo
 --
 
 --
+-- Indexes for table `tbl_file`
+--
+ALTER TABLE `tbl_file`
+  ADD PRIMARY KEY (`file_id`);
+
+--
 -- Indexes for table `tbl_folder`
 --
 ALTER TABLE `tbl_folder`
@@ -112,10 +149,16 @@ ALTER TABLE `tbl_user`
 --
 
 --
+-- AUTO_INCREMENT for table `tbl_file`
+--
+ALTER TABLE `tbl_file`
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `tbl_folder`
 --
 ALTER TABLE `tbl_folder`
-  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
