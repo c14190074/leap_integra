@@ -195,7 +195,7 @@
 								        </div>
 								    </div>
 
-									<div class="form-group" style="display: block;">
+									<div class="form-group" style="display: none;">
 								        <label class="col-md-12"><?= $model_file->getLabel('name', TRUE); ?></label>
 								        <div class="col-md-12">
 								            <?= Snl::chtml()->activeTextbox($model_file, 'name') ?>

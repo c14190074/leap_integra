@@ -15,7 +15,7 @@
 			
 			if(Folder::getCountUserFolder(Snl::app()->user()->user_id) > 0) {
 				$model = Folder::model()->findAll(array(
-					'condition' => 'folder_parent_id = :id AND is_deleted = 0',
+					'condition' => 'folder_parent_id = :id AND is_deleted = 0 ORDER BY type DESC',
 					'params'	=> array(':id' => $folder_id)
 				));
 
