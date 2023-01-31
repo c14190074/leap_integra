@@ -165,8 +165,8 @@
 
 
 	<?php
-		$model_file = new File;
-		$model_file->folder_id = $parentfolderid;
+		$model_file = new Folder;
+		$model_file->folder_parent_id = $parentfolderid;
 	?>
 	<!-- Pop up modal untuk upload file -->
 	<div class="me-2" id="upload-file-container">
@@ -189,23 +189,37 @@
 
 								<form role="form text-left" id="app_form_upload" action="<?= Snl::app()->baseUrl() ?>admin/files/savedocumentattribute" method="POST">
 									<div class="form-group" style="display: none;">
-								        <label class="col-md-12"><?= $model_file->getLabel('folder_id', TRUE); ?></label>
+								        <label class="col-md-12"><?= $model_file->getLabel('folder_parent_id', TRUE); ?></label>
 								        <div class="col-md-12">
-								            <?= Snl::chtml()->activeTextbox($model_file, 'folder_id') ?>
+								            <?= Snl::chtml()->activeTextbox($model_file, 'folder_parent_id') ?>
 								        </div>
 								    </div>
 
-									<div class="form-group" style="display: none;">
+									<div class="form-group" style="display: block;">
 								        <label class="col-md-12"><?= $model_file->getLabel('name', TRUE); ?></label>
 								        <div class="col-md-12">
 								            <?= Snl::chtml()->activeTextbox($model_file, 'name') ?>
 								        </div>
 								    </div>
 
-	                                <div class="form-group">
-								        <label class="col-md-12"><?= $model_file->getLabel('nomer', TRUE); ?></label>
+								    <div class="form-group" style="display: none;">
+								        <label class="col-md-12"><?= $model_file->getLabel('format', TRUE); ?></label>
 								        <div class="col-md-12">
-								            <?= Snl::chtml()->activeTextbox($model_file, 'nomer') ?>
+								            <?= Snl::chtml()->activeTextbox($model_file, 'format') ?>
+								        </div>
+								    </div>
+
+								    <div class="form-group" style="display: none;">
+								        <label class="col-md-12"><?= $model_file->getLabel('size', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'size') ?>
+								        </div>
+								    </div>
+
+	                                <div class="form-group">
+								        <label class="col-md-12"><?= $model_file->getLabel('nomor', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'nomor') ?>
 								        </div>
 								    </div>
 

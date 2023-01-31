@@ -107,6 +107,11 @@
 </div>
 <?php endif; ?>
 
+<hr />
+
+
+
+
 <script type="text/javascript">
     $(document).ready(function() {
       if($("#folder_parent_name").val() != "") {

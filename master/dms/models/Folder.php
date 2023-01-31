@@ -1,16 +1,16 @@
 <?php
 	class Folder extends SnlActiveRecord {
-		public $folder_id, $folder_parent_id, $name, $type, $format, $description, $user_access, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $folder_id, $folder_parent_id, $name, $nomor, $perihal, $unit_kerja, $keyword, $related_document, $type, $format, $size, $description, $user_access, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 
 		public function __construct() {
-		    $this->classname = 'Folder';
+		  $this->classname = 'Folder';
 			$this->table_name = 'tbl_folder';
 			$this->primary_key = 'folder_id';
 		}
 
 		public function rules() {
 			return array(
-				'required'	=> array('name'),
+				// 'required'	=> array('name'),
 			);
 		}
 
@@ -23,9 +23,15 @@
 			$labels = array(
 				'folder_id' => 'Folder ID',
 				'folder_parent_id' => 'Folder Parent',
-				'name' => 'Nama Folder',
+				'name' => 'Nama',
+				'nomor' => 'Nomor',
+				'perihal' => 'Perihal',
+				'unit_kerja' => 'Unit Kerja',
+				'keyword' => 'Keyword',
+				'related_document' => 'Dokumen Terkait',
 				'type' => 'Type',
 				'format' => 'Format',
+				'size' => 'Size',
 				'description' => 'Deskripsi',
 				'user_access' => 'Siapa yang dapat mengakses?',
 				'created_on' => 'Created On',

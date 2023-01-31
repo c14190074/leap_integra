@@ -67,6 +67,22 @@ function updateOrderStatus(order_id, status) {
     });
 }
 
+function formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return '0 Bytes'
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
+
+function getFileExtension(filename) {
+    return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
+}
+
 $(document).ready(function() {
     Dropzone.autoDiscover = false;
             
@@ -75,7 +91,10 @@ $(document).ready(function() {
         maxFilesize: 1,
         acceptedFiles: ".doc,.docx,.pdf,.txt",
         success : function(file, response){
-            $('#File_name').val(file.name);
+            // console.log(file);
+            $('#upload-file-container').find('#Folder_name').val(file.name);
+            $('#Folder_format').val(getFileExtension(file.name));
+            $('#Folder_size').val(formatBytes(file.size));
             $('#app_form_upload').submit();
         }
     });

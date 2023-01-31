@@ -45,12 +45,18 @@
 					}
 				}
 			}
+
+			$files = File::model()->findAll(array(
+				'condition' => 'folder_id = :folder_id AND is_deleted = 0',
+				'params'	=> array(':folder_id' => $folder_id)
+			));
 			
 			return $this->render('index', array(
 				'toolbar' 	=> $this->toolbar(),
 				'model' 	=> $model,
 				'folder_parent'	=> $folder_parent,
-				'local_breadcrumbs' => array_reverse($local_breadcrumbs)
+				'local_breadcrumbs' => array_reverse($local_breadcrumbs),
+				'files'		=> $files
 			));
 		}
 
@@ -77,13 +83,13 @@
 		}
 
 		public function savedocumentattribute() {
-			$model = new File;
-			if(isset($_POST['File'])) {
-				$model->setAttributes($_POST['File']);
-				
+			$model = new Folder;
+			if(isset($_POST['Folder'])) {
+				$model->setAttributes($_POST['Folder']);
+				$model->type = "file";
 				if($model->save()) {
 					Snl::app()->setFlashMessage('File baru berhasil ditambahkan.', 'success');
-					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_id));
+					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
 				}
@@ -139,7 +145,7 @@
 			$post = $_POST['post'];
 			$data = array();
 			$result = array();
-			$model = new File;
+			$model = new Folder;
 
 			if(count($post) > 0) {
 				foreach ($post as $key => $value) {
@@ -150,7 +156,7 @@
 
 			$id = isset($data['file_id']) ? $data['file_id'] : 0;
 			if($id > 0) {
-				$model = File::model()->findByPk($id);
+				$model = Folder::model()->findByPk($id);
 			}
 
 			$model->setAttributes($data);

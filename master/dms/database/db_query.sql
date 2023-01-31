@@ -38,6 +38,14 @@ ALTER TABLE `tbl_folder` ADD `type` VARCHAR(255) DEFAULT 'folder' AFTER `name`;
 ALTER TABLE `tbl_folder` ADD `format` VARCHAR(255) DEFAULT NULL AFTER `type`;
 ALTER TABLE `tbl_user` ADD `is_superadmin` INT(1) DEFAULT 0 AFTER `user_id`;
 
+ALTER TABLE `tbl_folder` ADD `nomor` VARCHAR(255) DEFAULT NULL AFTER `name`;
+ALTER TABLE `tbl_folder` ADD `perihal` VARCHAR(255) DEFAULT NULL AFTER `nomor`;
+ALTER TABLE `tbl_folder` ADD `unit_kerja` VARCHAR(255) DEFAULT NULL AFTER `perihal`;
+ALTER TABLE `tbl_folder` ADD `keyword` VARCHAR(255) DEFAULT NULL AFTER `unit_kerja`;
+ALTER TABLE `tbl_folder` ADD `related_document` VARCHAR(255) DEFAULT NULL AFTER `keyword`;
+ALTER TABLE `tbl_folder` ADD `size` VARCHAR(255) DEFAULT NULL AFTER `format`;
+
+
 
 CREATE TABLE IF NOT EXISTS `tbl_file` (
 	`file_id` INT(11) NOT NULL AUTO_INCREMENT,
