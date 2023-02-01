@@ -10,7 +10,6 @@
                     </div> -->
 
                     <div class="card-body">
-                        
                     	<div class="card-body p-3">
 							<div class="row">
 								<div class="col-md-4 text-center">
@@ -33,7 +32,7 @@
 										</div>
 
 										<div class="col-md-6">
-											<button type="button" class="btn btn-outline-info w-100"><i class="me-2 fa fa-download"></i>Unduh</button>
+											<button type="button" class="btn btn-outline-info w-100" id="btn-download-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>"><i class="me-2 fa fa-download"></i>Unduh</button>
 										</div>
 
 										<div class="col-md-6">

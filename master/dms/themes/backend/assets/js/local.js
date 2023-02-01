@@ -224,7 +224,11 @@ $(document).ready(function() {
         } else {
             window.open(fileUrl, '_blank');
         }
-        
+    });
+
+    $('body').on('click', '#btn-download-file', function() {
+        var fileUrl = $(this).data('url');
+        window.open(fileUrl, '_blank');
     });
     
 });
