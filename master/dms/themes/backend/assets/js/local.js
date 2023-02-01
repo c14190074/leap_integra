@@ -104,24 +104,89 @@ function gettext(fileurl) {
     );
 }
 
-// function loadDocx(filename) {
-//   // Read document.xml from docx document
-//   const AdmZip = require("adm-zip");
-//   const zip = new AdmZip(filename);
-//   const xml = zip.readAsText("word/document.xml");
-//   // Load xml DOM
-//   const cheerio = require('cheerio');
-//   $ = cheerio.load(xml, {
-//     normalizeWhitespace: true,
-//     xmlMode: true
-//   })
-//   // Extract text
-//   let out = new Array()
-//   $('w\\:t').each((i, el) => {
-//     out.push($(el).text())
-//   })
-//   $('#showdocx').html(out);
+
+function loadFile(url, callback) {
+    PizZipUtils.getBinaryContent(url, callback);
+}
+function generate(fileUrl) {
+    loadFile(
+        fileUrl,
+        function (error, content) {
+            if (error) {
+                throw error;
+            }
+            var zip = new PizZip(content);
+            var doc = new window.docxtemplater(zip, {
+                paragraphLoop: true,
+                linebreaks: true,
+            });
+
+            // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
+            // doc.render({
+            //     first_name: "John",
+            //     last_name: "Doe",
+            //     phone: "0652455478",
+            //     description: "New Website",
+            // });
+
+            // var blob = doc.getZip().generate({
+            //     type: "blob",
+            //     mimeType:
+            //         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            //     // compression: DEFLATE adds a compression step.
+            //     // For a 50MB output document, expect 500ms additional CPU time
+            //     compression: "DEFLATE",
+            // });
+            // Output the document using Data-URI
+            // saveAs(blob, "output.docx");
+            $('#modal-load-docx').find('.card-body').html(doc.getFullText());
+            $('#modal-view-file').modal('hide');
+            $('#modal-load-docx').modal('show');
+        }
+    );
+};
+
+
+// const PizZip = require("pizzip");
+// const { DOMParser, XMLSerializer } = require("@xmldom/xmldom");
+// const fs = require("fs");
+// const path = require("path");
+
+// function str2xml(str) {
+//     if (str.charCodeAt(0) === 65279) {
+//         // BOM sequence
+//         str = str.substr(1);
+//     }
+//     return new DOMParser().parseFromString(str, "text/xml");
 // }
+
+// function getParagraphs(content) {
+//     const zip = new PizZip(content);
+//     const xml = str2xml(zip.files["word/document.xml"].asText());
+//     const paragraphsXml = xml.getElementsByTagName("w:p");
+//     const paragraphs = [];
+
+//     for (let i = 0, len = paragraphsXml.length; i < len; i++) {
+//         let fullText = "";
+//         const textsXml =
+//             paragraphsXml[i].getElementsByTagName("w:t");
+//         for (let j = 0, len2 = textsXml.length; j < len2; j++) {
+//             const textXml = textsXml[j];
+//             if (textXml.childNodes) {
+//                 fullText += textXml.childNodes[0].nodeValue;
+//             }
+//         }
+
+//         paragraphs.push(fullText);
+//     }
+//     // return paragraphs;
+//     $('#modal-load-docx').find('.card-body').html(paragraphs);
+//     $('#modal-view-file').modal('hide');
+//     $('#modal-load-docx').modal('show');
+// }
+
+
+
 
 $(document).ready(function() {
     Dropzone.autoDiscover = false;
@@ -220,7 +285,7 @@ $(document).ready(function() {
         var fileUrl = $(this).data('url');
         var fileFormat = $(this).data('format');
         if(fileFormat == 'docx') {
-            gettext(fileUrl);
+            generate(fileUrl);
         } else {
             window.open(fileUrl, '_blank');
         }
