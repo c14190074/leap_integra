@@ -274,6 +274,12 @@
 	        </div>
 	    </div>
 	</div>
+
+	<!-- Pop up modal untuk view file -->
+	<div class="me-2" id="view-file-container">
+		
+	</div>
+
 </main>
 	<!--   Core JS Files   -->
 	  <script src="<?= Snl::app()->config()->theme_url ?>assets_soft/js/core/popper.min.js"></script>

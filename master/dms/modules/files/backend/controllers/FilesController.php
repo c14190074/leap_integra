@@ -215,5 +215,12 @@
 
 			echo json_encode($result);
 		}
+
+		public function viewfile() {
+			$folder_id = SecurityHelper::decrypt($_GET['folder_id']);
+			$model = Folder::model()->findByPk($folder_id);
+			$user_model = User::model()->findByPk($model->created_by);
+			echo $this->render('_viewfile', array('model' => $model, 'user' => $user_model));
+		}
 		
 	}

@@ -124,8 +124,6 @@ $(document).ready(function() {
 
     });
 
-	
-
     $('body').on('click', '.edit-folder', function() {
         var folder_id = $(this).data('folder-id');
         var ajaxUrl = baseUrl + 'admin/files/getfolderdata?ajax=1&id='+folder_id;
@@ -165,6 +163,15 @@ $(document).ready(function() {
           } else if (result.isDenied) {
             Swal.fire('Changes are not saved', '', 'info');
           }
+        });
+    });
+
+    $('body').on('click', '.view-file', function() {
+        var folder_id = $(this).data('folder-id');
+        var ajaxUrl = baseUrl + 'admin/files/viewfile?ajax=1&folder_id='+folder_id;
+        $.get(ajaxUrl, function(data, status){
+            $('#view-file-container').html(data);
+            $('#modal-view-file').modal('show');
         });
     });
 });

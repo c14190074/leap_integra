@@ -60,12 +60,19 @@
                         echo "<i class='fa fa-folder opacity-6 link-info me-3'></i>";
                       }
                     ?>
-
-                    
                   </div>
+                  
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-secondary text-sm text-dark">
-                      <a href="<?= Snl::app()->baseUrl() ?>admin/files/index?folder=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a>
+                      <?php if($folder->type == "folder") : ?>
+                        <a href="<?= Snl::app()->baseUrl() ?>admin/files/index?folder=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a>
+
+                      <?php else : ?>
+                        <p class="text-sm mb-0 view-file" role="button" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>">
+                          <?= $folder->name ?>
+                        </p>
+
+                      <?php endif; ?>
 
                       <?php if($folder->isTheOwner() && $folder->type == "folder") : ?>
                         <i role="button" class="fa fa-pencil text-secondary text-xxs ms-1 edit-folder" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
