@@ -29,7 +29,7 @@
 								<div class="col-md-8">
 									<div class="row">
 										<div class="col-md-6">
-											<button type="button" class="btn btn-outline-info w-100"><i class="me-2 fa fa-eye"></i>Lihat</button>
+											<button type="button" class="btn btn-outline-info w-100" id="btn-open-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>" data-format="<?= $model->format ?>"><i class="me-2 fa fa-eye"></i>Lihat</button>
 										</div>
 
 										<div class="col-md-6">

@@ -134,6 +134,14 @@
     <!-- Dropzone -->
     <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
 
+    <!-- Docxtemplater -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.33.0/docxtemplater.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.4/dist/pizzip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.4/dist/pizzip-utils.js"></script>
+    <!-- <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script> -->
+    
+
     <!-- Custom Theme JavaScript -->
     <script src="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/js/cbpFWTabs.js"></script>
     <script src="<?= Snl::app()->config()->theme_url ?>ampleadmin-minimal/js/custom.min.js"></script>

@@ -83,6 +83,46 @@ function getFileExtension(filename) {
     return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
 }
 
+function loadFile(url, callback) {
+    PizZipUtils.getBinaryContent(url, callback);
+}
+function gettext(fileurl) {
+    loadFile(
+        fileurl,
+        function (error, content) {
+            if (error) {
+                throw error;
+            }
+            var zip = new PizZip(content);
+            var doc = new window.docxtemplater(zip, {linebreaks: true});
+            var text = doc.getFullText();
+            $('#modal-load-docx').find('.card-body').html(text);
+            $('#modal-view-file').modal('hide');
+            $('#modal-load-docx').modal('show');
+            // $('#showdocx').html(text);
+        }
+    );
+}
+
+// function loadDocx(filename) {
+//   // Read document.xml from docx document
+//   const AdmZip = require("adm-zip");
+//   const zip = new AdmZip(filename);
+//   const xml = zip.readAsText("word/document.xml");
+//   // Load xml DOM
+//   const cheerio = require('cheerio');
+//   $ = cheerio.load(xml, {
+//     normalizeWhitespace: true,
+//     xmlMode: true
+//   })
+//   // Extract text
+//   let out = new Array()
+//   $('w\\:t').each((i, el) => {
+//     out.push($(el).text())
+//   })
+//   $('#showdocx').html(out);
+// }
+
 $(document).ready(function() {
     Dropzone.autoDiscover = false;
             
@@ -174,4 +214,17 @@ $(document).ready(function() {
             $('#modal-view-file').modal('show');
         });
     });
+
+
+    $('body').on('click', '#btn-open-file', function() {
+        var fileUrl = $(this).data('url');
+        var fileFormat = $(this).data('format');
+        if(fileFormat == 'docx') {
+            gettext(fileUrl);
+        } else {
+            window.open(fileUrl, '_blank');
+        }
+        
+    });
+    
 });

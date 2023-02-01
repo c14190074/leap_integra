@@ -277,8 +277,24 @@
 
 	<!-- Pop up modal untuk view file -->
 	<div class="me-2" id="view-file-container">
-		
+
 	</div>
+
+	<!-- Pop up modal untuk load file docs -->
+	<div class="modal fade" id="modal-load-docx" tabindex="-1" role="dialog" aria-labelledby="modal-load-docx" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	        <div class="modal-content">
+	            <div class="modal-body p-0">
+	                <div class="card card-plain">
+	                    <div class="card-body">
+	                    	
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
 
 </main>
 	<!--   Core JS Files   -->
@@ -287,6 +303,8 @@
 	  <script src="<?= Snl::app()->config()->theme_url ?>assets_soft/js/plugins/perfect-scrollbar.min.js"></script>
 	  <script src="<?= Snl::app()->config()->theme_url ?>assets_soft/js/plugins/smooth-scrollbar.min.js"></script>
 	  <script src="<?= Snl::app()->config()->theme_url ?>assets_soft/js/plugins/chartjs.min.js"></script>
+
+
 	<script>
         (function() {
             [].slice.call(document.querySelectorAll('.sttabs')).forEach(function(el) {
