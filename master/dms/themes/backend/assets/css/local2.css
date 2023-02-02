@@ -111,3 +111,15 @@ span.view-file-attribute:hover {
 #folder_form_modal #modal-form .form-control {
     border-radius: 0 !important;
 }
+
+/*
+* TABLE
+*/
+
+#user-access-role .table thead th {
+    padding: 0;
+}
+
+#user-access-role .table> :not(caption)>*>* {
+    padding-left: 0;
+}

@@ -273,6 +273,51 @@
 								        </div>
 								    </div>
 
+								    <div class="form-group">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="table-responsive" id="user-access-role">
+												    <table class="table align-items-center mb-0">
+												      <thead>
+												        <tr>
+												          <th class="text-xs font-weight-bolder opacity-7"><label><?= $model_file->getLabel('user_access', TRUE); ?></label></th>
+												          <th class="text-xs font-weight-bolder opacity-7"><label>Akses</label></th>
+												          <th class="text-xs font-weight-bolder opacity-7"><label>&nbsp;</label></th>
+												        </tr>
+												      </thead>
+
+												      <tbody>
+												      	<tr>
+												      		<td>
+												      			<select class="form-control user-list" name="Folder[user_access][]">
+													            	<?php 
+													            		if($user_model != NULL) {
+													            			foreach($user_model as $d) {
+													            				echo "<option value='".$d->user_id."'>".ucwords(strtolower($d->fullname))."</option>";
+													            			}
+													            		}
+													            	?>
+																</select>
+												      		</td>
+												      		<td>
+												      			<select class="form-control user-list" name="Folder[access_role][]">
+													            	<option value="view">Lihat</option>
+													            	<option value="edit">Revisi</option>
+																</select>
+
+												      		</td>
+												      		<td>
+												      			<i class="fa fa-plus text-sm me-2 link-info append-user-role" role="button"></i>
+												      			<i class="fa fa-times text-sm me-2 link-danger remove-user-role" role="button"></i>
+												      		</td>
+												      	</tr>
+												      </tbody>
+												  </table>
+												</div>
+											</div>
+										</div>
+								    </div>
+
 
 	                                <div class="form-group">
 								        <div class="col-md-12 text-center">

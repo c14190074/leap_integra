@@ -311,5 +311,12 @@ $(document).ready(function() {
         // myDropzone.disable();
     });
 
+    $('body').on('click', '.append-user-role', function() {
+        $('#user-access-role').find('tbody').append("<tr>"+$(this).parent().parent().html()+"</tr>");
+    });
+
+    $('body').on('click', '.remove-user-role', function() {
+        $(this).parent().parent().remove();
+    });
     
 });
