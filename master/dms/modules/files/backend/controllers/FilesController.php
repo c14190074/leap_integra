@@ -61,12 +61,14 @@
 		}
 
 		public function createfolder() {
+			$isNewRecord = TRUE;
 			if(isset($_POST['Folder'])) {
 				$message_result = 'Folder baru berhasil ditambahkan.';
 				$model = new Folder;
 				if(isset($_POST['Folder']['folder_id']) && $_POST['Folder']['folder_id'] != "") {
 					$model = Folder::model()->findByPk($_POST['Folder']['folder_id']);
 					$message_result = 'Folder berhasil diubah.';
+					$isNewRecord = FALSE;
 				}
 				
 				$model->setAttributes($_POST['Folder']);
@@ -75,7 +77,16 @@
 				
 				if($model->save()) {
 					Snl::app()->setFlashMessage($message_result, 'info');
-					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_id));
+					if($isNewRecord) {
+						$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_id));
+					} else {
+						if($model->folder_parent_id == 0) {
+							$this->redirect('admin/files/index');
+						} else {
+							$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
+						}
+					}
+					
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
 				}
