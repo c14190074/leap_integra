@@ -105,46 +105,46 @@ function getFileExtension(filename) {
 //     );
 // }
 
-// function loadFile(url, callback) {
-//     PizZipUtils.getBinaryContent(url, callback);
-// }
-// function generate(fileUrl) {
-//     loadFile(
-//         fileUrl,
-//         function (error, content) {
-//             if (error) {
-//                 throw error;
-//             }
-//             var zip = new PizZip(content);
-//             var doc = new window.docxtemplater(zip, {
-//                 paragraphLoop: true,
-//                 linebreaks: true,
-//             });
+function loadFile(url, callback) {
+    PizZipUtils.getBinaryContent(url, callback);
+}
+function generate(fileUrl) {
+    loadFile(
+        fileUrl,
+        function (error, content) {
+            if (error) {
+                throw error;
+            }
+            var zip = new PizZip(content);
+            var doc = new window.docxtemplater(zip, {
+                paragraphLoop: true,
+                linebreaks: true,
+            });
 
-//             // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
-//             // doc.render({
-//             //     first_name: "John",
-//             //     last_name: "Doe",
-//             //     phone: "0652455478",
-//             //     description: "New Website",
-//             // });
+            // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
+            // doc.render({
+            //     first_name: "John",
+            //     last_name: "Doe",
+            //     phone: "0652455478",
+            //     description: "New Website",
+            // });
 
-//             // var blob = doc.getZip().generate({
-//             //     type: "blob",
-//             //     mimeType:
-//             //         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-//             //     // compression: DEFLATE adds a compression step.
-//             //     // For a 50MB output document, expect 500ms additional CPU time
-//             //     compression: "DEFLATE",
-//             // });
-//             // Output the document using Data-URI
-//             // saveAs(blob, "output.docx");
-//             $('#modal-load-docx').find('.card-body').html(doc.getFullText());
-//             $('#modal-view-file').modal('hide');
-//             $('#modal-load-docx').modal('show');
-//         }
-//     );
-// };
+            // var blob = doc.getZip().generate({
+            //     type: "blob",
+            //     mimeType:
+            //         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            //     // compression: DEFLATE adds a compression step.
+            //     // For a 50MB output document, expect 500ms additional CPU time
+            //     compression: "DEFLATE",
+            // });
+            // Output the document using Data-URI
+            // saveAs(blob, "output.docx");
+            $('#modal-load-docx').find('.card-body').html(doc.getFullText());
+            $('#modal-view-file').modal('hide');
+            $('#modal-load-docx').modal('show');
+        }
+    );
+};
 
 
 // function PreviewWordDoc() {
@@ -265,9 +265,9 @@ $(document).ready(function() {
     $('body').on('click', '#btn-open-file', function() {
         var fileUrl = $(this).data('url');
         var fileFormat = $(this).data('format');
-        
+
         if(fileFormat == 'docx') {
-            window.open(fileUrl, '_blank');
+            generate(fileUrl);
         } else {
             window.open(fileUrl, '_blank');
         }
