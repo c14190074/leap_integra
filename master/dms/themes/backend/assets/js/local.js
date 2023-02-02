@@ -299,5 +299,13 @@ $(document).ready(function() {
           }
         });
     });
+
+    $('body').on('click', '#close-upload-form', function() {
+        $('#modal-upload-form').modal('hide');
+        // myDropzone.off('error');
+        myDropzone.removeAllFiles(true);
+        // myDropzone.disable();
+    });
+
     
 });

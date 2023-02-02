@@ -278,7 +278,7 @@
 								        <div class="col-md-12 text-center">
 								            <button type="button" class="btn bg-gradient-info mt-4 mb-0" id="upload-file-btn">Submit</button>
 
-								            <button type="button" class="btn bg-gradient-warning mt-4 mb-0" data-dismiss="modal">Cancel</button>
+								            <button type="button" class="btn bg-gradient-warning mt-4 mb-0" data-dismiss="modal-upload-form" id="close-upload-form">Cancel</button>
 								        </div>
 								    </div>
 	                            </form>
