@@ -83,109 +83,93 @@ function getFileExtension(filename) {
     return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
 }
 
-function loadFile(url, callback) {
-    PizZipUtils.getBinaryContent(url, callback);
-}
-function gettext(fileurl) {
-    loadFile(
-        fileurl,
-        function (error, content) {
-            if (error) {
-                throw error;
-            }
-            var zip = new PizZip(content);
-            var doc = new window.docxtemplater(zip, {linebreaks: true});
-            var text = doc.getFullText();
-            $('#modal-load-docx').find('.card-body').html(text);
-            $('#modal-view-file').modal('hide');
-            $('#modal-load-docx').modal('show');
-            // $('#showdocx').html(text);
-        }
-    );
-}
-
-
-function loadFile(url, callback) {
-    PizZipUtils.getBinaryContent(url, callback);
-}
-function generate(fileUrl) {
-    loadFile(
-        fileUrl,
-        function (error, content) {
-            if (error) {
-                throw error;
-            }
-            var zip = new PizZip(content);
-            var doc = new window.docxtemplater(zip, {
-                paragraphLoop: true,
-                linebreaks: true,
-            });
-
-            // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
-            // doc.render({
-            //     first_name: "John",
-            //     last_name: "Doe",
-            //     phone: "0652455478",
-            //     description: "New Website",
-            // });
-
-            // var blob = doc.getZip().generate({
-            //     type: "blob",
-            //     mimeType:
-            //         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            //     // compression: DEFLATE adds a compression step.
-            //     // For a 50MB output document, expect 500ms additional CPU time
-            //     compression: "DEFLATE",
-            // });
-            // Output the document using Data-URI
-            // saveAs(blob, "output.docx");
-            $('#modal-load-docx').find('.card-body').html(doc.getFullText());
-            $('#modal-view-file').modal('hide');
-            $('#modal-load-docx').modal('show');
-        }
-    );
-};
-
-
-// const PizZip = require("pizzip");
-// const { DOMParser, XMLSerializer } = require("@xmldom/xmldom");
-// const fs = require("fs");
-// const path = require("path");
-
-// function str2xml(str) {
-//     if (str.charCodeAt(0) === 65279) {
-//         // BOM sequence
-//         str = str.substr(1);
-//     }
-//     return new DOMParser().parseFromString(str, "text/xml");
+// function loadFile(url, callback) {
+//     PizZipUtils.getBinaryContent(url, callback);
 // }
 
-// function getParagraphs(content) {
-//     const zip = new PizZip(content);
-//     const xml = str2xml(zip.files["word/document.xml"].asText());
-//     const paragraphsXml = xml.getElementsByTagName("w:p");
-//     const paragraphs = [];
-
-//     for (let i = 0, len = paragraphsXml.length; i < len; i++) {
-//         let fullText = "";
-//         const textsXml =
-//             paragraphsXml[i].getElementsByTagName("w:t");
-//         for (let j = 0, len2 = textsXml.length; j < len2; j++) {
-//             const textXml = textsXml[j];
-//             if (textXml.childNodes) {
-//                 fullText += textXml.childNodes[0].nodeValue;
+// function gettext(fileurl) {
+//     loadFile(
+//         fileurl,
+//         function (error, content) {
+//             if (error) {
+//                 throw error;
 //             }
+//             var zip = new PizZip(content);
+//             var doc = new window.docxtemplater(zip, {linebreaks: true});
+//             var text = doc.getFullText();
+//             $('#modal-load-docx').find('.card-body').html(text);
+//             $('#modal-view-file').modal('hide');
+//             $('#modal-load-docx').modal('show');
+//             // $('#showdocx').html(text);
 //         }
-
-//         paragraphs.push(fullText);
-//     }
-//     // return paragraphs;
-//     $('#modal-load-docx').find('.card-body').html(paragraphs);
-//     $('#modal-view-file').modal('hide');
-//     $('#modal-load-docx').modal('show');
+//     );
 // }
 
+// function loadFile(url, callback) {
+//     PizZipUtils.getBinaryContent(url, callback);
+// }
+// function generate(fileUrl) {
+//     loadFile(
+//         fileUrl,
+//         function (error, content) {
+//             if (error) {
+//                 throw error;
+//             }
+//             var zip = new PizZip(content);
+//             var doc = new window.docxtemplater(zip, {
+//                 paragraphLoop: true,
+//                 linebreaks: true,
+//             });
 
+//             // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
+//             // doc.render({
+//             //     first_name: "John",
+//             //     last_name: "Doe",
+//             //     phone: "0652455478",
+//             //     description: "New Website",
+//             // });
+
+//             // var blob = doc.getZip().generate({
+//             //     type: "blob",
+//             //     mimeType:
+//             //         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+//             //     // compression: DEFLATE adds a compression step.
+//             //     // For a 50MB output document, expect 500ms additional CPU time
+//             //     compression: "DEFLATE",
+//             // });
+//             // Output the document using Data-URI
+//             // saveAs(blob, "output.docx");
+//             $('#modal-load-docx').find('.card-body').html(doc.getFullText());
+//             $('#modal-view-file').modal('hide');
+//             $('#modal-load-docx').modal('show');
+//         }
+//     );
+// };
+
+
+// function PreviewWordDoc() {
+//     //Read the Word Document data from the File Upload.
+//     // var doc = document.getElementById("files").files[0];
+//     var ajaxUrl = baseUrl + 'admin/files/getfilefromserver?ajax=1';
+//     $.get(ajaxUrl, function(data, status){
+//         console.log(data);
+//         var doc = data;
+//         if (doc != null) {
+//             //Set the Document options.
+//             var docxOptions = Object.assign(docx.defaultOptions, {
+//                 useMathMLPolyfill: true
+//             });
+//             //Reference the Container DIV.
+//             var container = document.querySelector("#word-preview-cont");
+
+//             //Render the Word Document.
+//             docx.renderAsync(doc, container, null, docxOptions);
+//             $('#modal-view-file').modal('hide');
+//             $('#modal-load-docx').modal('show');
+//         }
+//     });
+
+// }
 
 
 $(document).ready(function() {
@@ -221,9 +205,6 @@ $(document).ready(function() {
                     setMsg(form, model+'_'+key, value); 
                 });
 
-                // if(model.toLowerCase() != "folder") {
-                //     swal("WARNING!", "Terjadi kesalahan input. Mohon periksa ulang data yang anda inputkan.");    
-                // }
             }
         });
 
@@ -284,8 +265,9 @@ $(document).ready(function() {
     $('body').on('click', '#btn-open-file', function() {
         var fileUrl = $(this).data('url');
         var fileFormat = $(this).data('format');
+        
         if(fileFormat == 'docx') {
-            generate(fileUrl);
+            window.open(fileUrl, '_blank');
         } else {
             window.open(fileUrl, '_blank');
         }

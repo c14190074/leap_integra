@@ -134,7 +134,8 @@
     <!-- Dropzone -->
     <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
 
-    
+    <script type="text/javascript" src="https://unpkg.com/jszip/dist/jszip.min.js"></script>
+    <script src="<?= Snl::app()->config()->theme_url ?>plugins/docx_preview/docx-preview.js" type="text/javascript"></script>
     
 
     <!-- Custom Theme JavaScript -->

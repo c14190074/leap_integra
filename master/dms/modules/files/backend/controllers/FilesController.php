@@ -223,4 +223,10 @@
 			echo $this->render('_viewfile', array('model' => $model, 'user' => $user_model));
 		}
 		
+		// public function getfilefromserver() {
+		// 	// $filename="https://localhost/leap_integra/master/dms/uploads/documents/FileDoc.docx";
+		// 	$filename="C:/xampp/htdocs/leap_integra/master/dms/uploads/documents/FileDoc.docx";
+		//   	header("Content-disposition: attachment;filename=$filename");
+		//   	echo($filename);
+		// }
 	}

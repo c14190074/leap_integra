@@ -286,7 +286,7 @@
 	        <div class="modal-content">
 	            <div class="modal-body p-0">
 	                <div class="card card-plain">
-	                    <div class="card-body">
+	                    <div class="card-body" id="word-preview-cont">
 	                    	
 	                    </div>
 	                </div>
