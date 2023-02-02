@@ -6,6 +6,9 @@
    display: none !important; 
 }
 
+span.view-file-attribute:hover {
+    text-decoration: underline;
+}
 /**
  * JSGRID
  */

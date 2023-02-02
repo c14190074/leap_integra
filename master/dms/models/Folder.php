@@ -163,4 +163,18 @@
 			return $ctr;
 		}
 
+		public function getRelatedDocuments() {
+			$related_documents = array();
+			if($this->related_document != NULL && $this->related_document != "") {
+				$related_document_ids = json_decode($this->related_document);
+				
+				foreach($related_document_ids as $id) {
+					$model = Folder::model()->findByPk($id);
+					array_push($related_documents, '<span class="text-sm mb-0 view-file-attribute" role="button" data-folder-id="'.SecurityHelper::encrypt($model->folder_id).'">'.$model->name.'</span>');
+				}
+			}
+
+			return $related_documents;
+		}
+
 	}

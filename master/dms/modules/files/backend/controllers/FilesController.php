@@ -87,6 +87,9 @@
 			if(isset($_POST['Folder'])) {
 				$model->setAttributes($_POST['Folder']);
 				$model->type = "file";
+				$model->related_document = isset($_POST['Folder']['related_document']) ? json_encode($_POST['Folder']['related_document']) : NULL;
+
+
 				if($model->save()) {
 					Snl::app()->setFlashMessage('File baru berhasil ditambahkan.', 'success');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));

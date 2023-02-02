@@ -68,7 +68,7 @@
                         <a href="<?= Snl::app()->baseUrl() ?>admin/files/index?folder=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a>
 
                       <?php else : ?>
-                        <p class="text-sm mb-0 view-file" role="button" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>">
+                        <p class="text-sm mb-0 view-file-attribute" role="button" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>">
                           <?= $folder->name ?>
                         </p>
 

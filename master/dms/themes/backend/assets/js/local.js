@@ -252,10 +252,11 @@ $(document).ready(function() {
         });
     });
 
-    $('body').on('click', '.view-file', function() {
+    $('body').on('click', '.view-file-attribute', function() {
         var folder_id = $(this).data('folder-id');
         var ajaxUrl = baseUrl + 'admin/files/viewfile?ajax=1&folder_id='+folder_id;
         $.get(ajaxUrl, function(data, status){
+            $('#modal-view-file').modal('hide');
             $('#view-file-container').html(data);
             $('#modal-view-file').modal('show');
         });

@@ -167,6 +167,11 @@
 	<?php
 		$model_file = new Folder;
 		$model_file->folder_parent_id = $parentfolderid;
+
+		$document_model = Folder::model()->findAll(array(
+			'condition' => 'is_deleted = 0 AND type = :type AND created_by = :id',
+			'params'	=> array(':id' => Snl::app()->user()->user_id, ':type' => 'file')
+		));
 	?>
 	<!-- Pop up modal untuk upload file -->
 	<div class="me-2" id="upload-file-container">
@@ -245,10 +250,19 @@
 								        </div>
 								    </div>
 
+								    
 								    <div class="form-group">
 								        <label class="col-md-12"><?= $model_file->getLabel('related_document', TRUE); ?></label>
 								        <div class="col-md-12">
-								            <?= Snl::chtml()->activeTextbox($model_file, 'related_document') ?>
+								        	<select class="select2 form-control document-list" name="Folder[related_document][]" multiple="multiple">
+								            	<?php 
+								            		if($document_model != NULL) {
+								            			foreach($document_model as $d) {
+								            				echo "<option value='".$d->folder_id."'>".ucwords(strtolower($d->name))."</option>";
+								            			}
+								            		}
+								            	?>
+											</select>
 								        </div>
 								    </div>
 
@@ -258,6 +272,7 @@
 								            <?= Snl::chtml()->activeTextbox($model_file, 'description') ?>
 								        </div>
 								    </div>
+
 
 	                                <div class="form-group">
 								        <div class="col-md-12 text-center">
