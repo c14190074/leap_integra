@@ -74,7 +74,7 @@
 				$model->user_access = isset($_POST['Folder']['user_access']) ? json_encode($_POST['Folder']['user_access']) : NULL;
 				
 				if($model->save()) {
-					Snl::app()->setFlashMessage($message_result, 'success');
+					Snl::app()->setFlashMessage($message_result, 'info');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_id));
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
@@ -91,7 +91,7 @@
 
 
 				if($model->save()) {
-					Snl::app()->setFlashMessage('File baru berhasil ditambahkan.', 'success');
+					Snl::app()->setFlashMessage('File baru berhasil ditambahkan.', 'info');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
@@ -200,9 +200,9 @@
 
 				if($model->save()) {
 					if($type == 'file') {
-						Snl::app()->setFlashMessage('File '.$model->name.' berhasil dihapus.', 'success');
+						Snl::app()->setFlashMessage('File '.$model->name.' berhasil dihapus.', 'info');
 					} else {
-						Snl::app()->setFlashMessage('Folder '.$model->name.' berhasil dihapus.', 'success');	
+						Snl::app()->setFlashMessage('Folder '.$model->name.' berhasil dihapus.', 'info');	
 					}
 					
 					$result = array(

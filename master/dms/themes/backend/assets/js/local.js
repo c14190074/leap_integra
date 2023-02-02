@@ -174,6 +174,10 @@ function generate(fileUrl) {
 
 $(document).ready(function() {
     Dropzone.autoDiscover = false;
+
+    $("#alert-msg").fadeTo(2000, 500).slideUp(500, function() {
+      $("#alert-msg").slideUp(500);
+    });
             
     var myDropzone = new Dropzone("#my-dropzone", { 
         autoProcessQueue: false,
