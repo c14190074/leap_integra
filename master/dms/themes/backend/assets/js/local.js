@@ -277,5 +277,26 @@ $(document).ready(function() {
         var fileUrl = $(this).data('url');
         window.open(fileUrl, '_blank');
     });
+
+    $('body').on('click', '#btn-delete-file', function() {
+        var folder_id = $(this).data('folder-id');
+
+        Swal.fire({
+          title: 'Apakah anda yakin untuk menghapus file ini?',
+          showCancelButton: true,
+          confirmButtonText: 'Hapus',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            var ajaxUrl = baseUrl + 'admin/files/deletefolder?ajax=1';
+            $.post(ajaxUrl, {folder_id:folder_id, type:'file'}, function(result) {
+                // console.log(result);
+                location.reload();
+            });
+
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info');
+          }
+        });
+    });
     
 });

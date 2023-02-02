@@ -39,9 +39,11 @@
 											<button type="button" class="btn btn-outline-info w-100"><i class="me-2 fa fa-pencil-square-o"></i>Revisi</button>
 										</div>
 
+										<?php if($model->isTheOwner()) : ?>
 										<div class="col-md-6">
-											<button type="button" class="btn btn-outline-danger w-100"><i class="me-2 fa fa-trash"></i>Hapus</button>
+											<button type="button" class="btn btn-outline-danger w-100" id="btn-delete-file" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-trash"></i>Hapus</button>
 										</div>
+										<?php endif; ?>
 									</div>
 								</div>
 							</div>

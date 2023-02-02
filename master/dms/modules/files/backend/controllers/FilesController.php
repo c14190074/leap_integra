@@ -189,13 +189,19 @@
 
 		public function deletefolder() {
 			$folder_id = SecurityHelper::decrypt($_POST['folder_id']);
+			$type = isset($_POST['type']) ? $_POST['type'] : 'folder';
 			$model = Folder::model()->findByPk($folder_id);
 
 			if(!$model->hasChild()) {
 				$model->is_deleted = 1;
 
 				if($model->save()) {
-					Snl::app()->setFlashMessage('Folder '.$model->name.' berhasil dihapus.', 'success');
+					if($type == 'file') {
+						Snl::app()->setFlashMessage('File '.$model->name.' berhasil dihapus.', 'success');
+					} else {
+						Snl::app()->setFlashMessage('Folder '.$model->name.' berhasil dihapus.', 'success');	
+					}
+					
 					$result = array(
 						'valid' => TRUE
 					);
