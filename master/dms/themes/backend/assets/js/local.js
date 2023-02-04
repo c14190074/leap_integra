@@ -207,7 +207,11 @@ $(document).ready(function() {
             console.log(result);
             result = $.parseJSON(result);
             if(result.valid) {
-                myDropzone.processQueue();
+                if (!myDropzone.files || !myDropzone.files.length) {
+                    Swal.fire('Anda belum memilih file untuk diunggah', '', 'info');
+                } else {
+                    myDropzone.processQueue();    
+                }
             } else {
                 destroyLoading();
                 $.each(result.msg, function(key, value) {
