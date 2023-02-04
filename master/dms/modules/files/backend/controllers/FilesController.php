@@ -15,7 +15,7 @@
 			
 			if(Folder::getCountUserFolder(Snl::app()->user()->user_id) > 0) {
 				$model = Folder::model()->findAll(array(
-					'condition' => 'folder_parent_id = :id AND is_deleted = 0 ORDER BY type DESC',
+					'condition' => 'folder_parent_id = :id AND is_deleted = 0 AND is_revision = 0 ORDER BY type DESC',
 					'params'	=> array(':id' => $folder_id)
 				));
 
@@ -46,17 +46,11 @@
 				}
 			}
 
-			$files = File::model()->findAll(array(
-				'condition' => 'folder_id = :folder_id AND is_deleted = 0',
-				'params'	=> array(':folder_id' => $folder_id)
-			));
-			
 			return $this->render('index', array(
 				'toolbar' 	=> $this->toolbar(),
 				'model' 	=> $model,
 				'folder_parent'	=> $folder_parent,
 				'local_breadcrumbs' => array_reverse($local_breadcrumbs),
-				'files'		=> $files
 			));
 		}
 
@@ -132,6 +126,32 @@
 
 				if($model->save()) {
 					Snl::app()->setFlashMessage('File baru berhasil ditambahkan.', 'info');
+					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
+				} else {
+					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
+				}
+			}
+		}
+
+		public function revisidocument() {
+			$model = new Folder;
+			if(isset($_POST['Folder'])) {
+				$model->setAttributes($_POST['Folder']);
+				
+				$original_file =Folder::model()->findByPk($model->original_id);
+				$model->folder_parent_id = $original_file->folder_parent_id;
+				$model->is_revision = 1;
+				$model->no_revision = $original_file->getNoRevisi() + 1;
+				$model->nomor = $original_file->nomor;
+				$model->perihal = $original_file->perihal;
+				$model->unit_kerja = $original_file->unit_kerja;
+				$model->keyword = $original_file->keyword;
+				$model->user_access = $original_file->user_access;
+				$model->type = "file";
+				
+
+				if($model->save()) {
+					Snl::app()->setFlashMessage('File revisi berhasil ditambahkan.', 'info');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
@@ -287,6 +307,16 @@
 			));
 			echo $this->render('_user_role_option', array('model' => $user_model));
 		}
+
+		public function getrevisiform() {
+			$folder_id = SecurityHelper::decrypt($_GET['folder_id']);
+			$folder = Folder::model()->findByPk($folder_id);
+			$model = new Folder;
+			$model->original_id = $folder_id;
+
+			echo $this->render('_upload_file_revisi', array('model' => $model, 'folder' => $folder));
+		}
+		
 
 		// public function getfilefromserver() {
 		// 	// $filename="https://localhost/leap_integra/master/dms/uploads/documents/FileDoc.docx";

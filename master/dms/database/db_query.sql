@@ -65,3 +65,7 @@ CREATE TABLE IF NOT EXISTS `tbl_file` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `tbl_file` ADD `name` VARCHAR(255) DEFAULT 0 AFTER `folder_id`;
+
+ALTER TABLE `tbl_folder` ADD `is_revision` INT(1) DEFAULT 0 AFTER `name`;
+ALTER TABLE `tbl_folder` ADD `no_revision` INT(11) DEFAULT 0 AFTER `is_revision`;
+ALTER TABLE `tbl_folder` ADD `original_id` INT(1) DEFAULT 0 AFTER `no_revision`;

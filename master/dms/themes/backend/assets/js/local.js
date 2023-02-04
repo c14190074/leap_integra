@@ -185,7 +185,8 @@ $(document).ready(function() {
     $("#alert-msg").fadeTo(2000, 500).slideUp(500, function() {
       $("#alert-msg").slideUp(500);
     });
-            
+    
+    var myDropzoneRevisi;
     var myDropzone = new Dropzone("#my-dropzone", { 
         autoProcessQueue: false,
         maxFilesize: 1,
@@ -193,9 +194,9 @@ $(document).ready(function() {
         success : function(file, response){
             // console.log(file);
             $('#upload-file-container').find('#Folder_name').val(file.name);
-            $('#Folder_format').val(getFileExtension(file.name));
-            $('#Folder_size').val(formatBytes(file.size));
-            $('#app_form_upload').submit();
+            $('#upload-file-container').find('#Folder_format').val(getFileExtension(file.name));
+            $('#upload-file-container').find('#Folder_size').val(formatBytes(file.size));
+            $('#upload-file-container').find('#app_form_upload').submit();
         }
     });
 
@@ -204,15 +205,24 @@ $(document).ready(function() {
         var ajaxUrl = baseUrl + 'admin/files/validatefileattribute?ajax=1';
         var post = $('#app_form_upload').serializeArray();
         var model = "File";
+        var is_revisi = $(this).data('is-revisi');
 
         $.post(ajaxUrl, {post:post}, function(result) {
             console.log(result);
             result = $.parseJSON(result);
             if(result.valid) {
-                if (!myDropzone.files || !myDropzone.files.length) {
-                    Swal.fire('Anda belum memilih file untuk diunggah', '', 'info');
+                if(is_revisi == 1) {
+                    if (!myDropzoneRevisi.files || !myDropzoneRevisi.files.length) {
+                        Swal.fire('Anda belum memilih file untuk diunggah', '', 'info');
+                    } else {
+                        myDropzoneRevisi.processQueue();    
+                    }
                 } else {
-                    myDropzone.processQueue();    
+                    if (!myDropzone.files || !myDropzone.files.length) {
+                        Swal.fire('Anda belum memilih file untuk diunggah', '', 'info');
+                    } else {
+                        myDropzone.processQueue();    
+                    }
                 }
             } else {
                 destroyLoading();
@@ -271,7 +281,8 @@ $(document).ready(function() {
         var folder_id = $(this).data('folder-id');
         var ajaxUrl = baseUrl + 'admin/files/viewfile?ajax=1&folder_id='+folder_id;
         $.get(ajaxUrl, function(data, status){
-            $('#modal-view-file').modal('hide');
+            // $('#modal-view-file').modal('hide');
+            $('.modal').modal('hide');
             $('#view-file-container').html(data);
             $('#modal-view-file').modal('show');
         });
@@ -349,5 +360,31 @@ $(document).ready(function() {
             $(this).parent().parent().remove();    
         }
     });
+
+    $('body').on('click', '#btn-revisi-file', function() {
+        var folder_id = $(this).data('folder-id');
+        var ajaxUrl = baseUrl + 'admin/files/getrevisiform?ajax=1&folder_id='+folder_id;
+        $.get(ajaxUrl, function(data, status){
+            $('.modal').modal('hide');
+            $('#revisi-file-container').html(data);
+
+            myDropzoneRevisi = new Dropzone("#my-dropzone-revisi", { 
+                autoProcessQueue: false,
+                maxFilesize: 1,
+                acceptedFiles: ".doc,.docx,.pdf",
+                success : function(file, response){
+                    console.log(file);
+                    $('#modal-revisi-form').find('#Folder_name').val(file.name);
+                    $('#modal-revisi-form').find('#Folder_format').val(getFileExtension(file.name));
+                    $('#modal-revisi-form').find('#Folder_size').val(formatBytes(file.size));
+                    $('#modal-revisi-form').find('#app_form_upload').submit();
+                }
+            });
+
+            $('#modal-revisi-form').modal('show');
+        });
+    });
+
+    
 
 });

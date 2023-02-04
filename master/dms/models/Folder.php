@@ -1,6 +1,6 @@
 <?php
 	class Folder extends SnlActiveRecord {
-		public $folder_id, $folder_parent_id, $name, $nomor, $perihal, $unit_kerja, $keyword, $related_document, $type, $format, $size, $description, $user_access, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $folder_id, $folder_parent_id, $name, $is_revision, $no_revision, $original_id, $nomor, $perihal, $unit_kerja, $keyword, $related_document, $type, $format, $size, $description, $user_access, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 
 		public function __construct() {
 		  $this->classname = 'Folder';
@@ -24,6 +24,9 @@
 				'folder_id' => 'Folder ID',
 				'folder_parent_id' => 'Folder Parent',
 				'name' => 'Nama',
+				'is_revision' => 'Apakah ada revisi?',
+				'no_revision' => 'Revisi Ke',
+				'original_id' => 'Original ID',
 				'nomor' => 'Nomor',
 				'perihal' => 'Perihal',
 				'unit_kerja' => 'Unit Kerja',
@@ -150,6 +153,11 @@
 					}
 				}	
 			}
+
+			if($this->created_by == Snl::app()->user()->user_id) {
+				return TRUE;
+			}
+
 			return false;
 		}
 
@@ -223,6 +231,15 @@
 			}
 
 			return $related_documents;
+		}
+
+		public function getNoRevisi() {
+			$model = Folder::model()->findAll(array(
+				'condition' => 'is_revision = 1 AND is_deleted = 0 AND original_id = :id',
+				'params'		=> array(':id' => $this->folder_id)
+			));
+
+			return count($model);
 		}
 
 	}

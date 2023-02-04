@@ -3,12 +3,6 @@
         <div class="modal-content">
             <div class="modal-body p-0">
                 <div class="card card-plain">
-                    <!-- <div class="card-header pb-0 text-left">
-                        <h3 class="font-weight-bolder text-info text-gradient">
-                        	<i class="fa fa-folder me-1"></i>Buat Folder
-                        </h3>
-                    </div> -->
-
                     <div class="card-body">
                     	<div class="card-body p-3">
 							<div class="row">
@@ -27,6 +21,7 @@
 								</div>
 								<div class="col-md-8">
 									<div class="row">
+										<?php if($model->hasViewAccess()) : ?>
 										<div class="col-md-6">
 											<button type="button" class="btn btn-outline-info w-100" id="btn-open-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>" data-format="<?= $model->format ?>"><i class="me-2 fa fa-eye"></i>Lihat</button>
 										</div>
@@ -34,10 +29,11 @@
 										<div class="col-md-6">
 											<button type="button" class="btn btn-outline-info w-100" id="btn-download-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>"><i class="me-2 fa fa-download"></i>Unduh</button>
 										</div>
+										<?php endif; ?>
 										
 										<?php if($model->hasEditAccess()) : ?>										
 										<div class="col-md-6">
-											<button type="button" class="btn btn-outline-info w-100"><i class="me-2 fa fa-pencil-square-o"></i>Revisi</button>
+											<button type="button" class="btn btn-outline-info w-100" id="btn-revisi-file" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-pencil-square-o"></i>Revisi</button>
 										</div>
 										<?php endif; ?>
 

@@ -322,7 +322,7 @@
 
 	                                <div class="form-group">
 								        <div class="col-md-12 text-center">
-								            <button type="button" class="btn bg-gradient-info mt-4 mb-0" id="upload-file-btn">Submit</button>
+								            <button type="button" class="btn bg-gradient-info mt-4 mb-0" id="upload-file-btn" data-is-revisi="0">Submit</button>
 
 								            <button type="button" class="btn bg-gradient-warning mt-4 mb-0" data-dismiss="modal-upload-form" id="close-upload-form">Cancel</button>
 								        </div>
@@ -337,9 +337,10 @@
 	</div>
 
 	<!-- Pop up modal untuk view attrbute file -->
-	<div class="me-2" id="view-file-container">
+	<div class="me-2" id="view-file-container"></div>
 
-	</div>
+	<!-- Pop up modal untuk view attrbute file -->
+	<div class="me-2" id="revisi-file-container"></div>
 
 	<!-- Pop up modal untuk preview file docs -->
 	<div class="modal fade" id="modal-load-docx" tabindex="-1" role="dialog" aria-labelledby="modal-load-docx" aria-hidden="true">
