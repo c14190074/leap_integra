@@ -220,11 +220,19 @@
 		public function getfolderdata() {
 			$folder_id = SecurityHelper::decrypt($_GET['id']);
 			$model = Folder::model()->findByPk($folder_id);
+			$user_ids = array();
+			if($model->user_access != NULL) {
+				$user_access_data = json_decode($model->user_access);
+				foreach ($user_access_data as $d) {
+					array_push($user_ids, $d->user);
+				}
+			}
+
 			$data = array(
 				'folder_id' => $model->folder_id,
 				'name' 		=> $model->name,
 				'description' => $model->description,
-				'user_access' => $model->user_access != NULL ? json_decode($model->user_access) : [],
+				'user_access' => $user_ids
 			);
 
 			echo json_encode($data);
