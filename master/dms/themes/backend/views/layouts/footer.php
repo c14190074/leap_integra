@@ -290,7 +290,7 @@
 												      <tbody>
 												      	<tr>
 												      		<td class="w-40">
-												      			<select class="form-control file-access-user" name="Folder[user_access][]">
+												      			<select class="form-control file-access-user" name="Folder[user_access][]" multiple="multiple">
 													            	<?php 
 													            		if($user_model != NULL) {
 													            			foreach($user_model as $d) {

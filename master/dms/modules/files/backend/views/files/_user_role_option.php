@@ -1,7 +1,7 @@
 <tr>
 	<td>
-		<select class="form-control user-list" name="Folder[user_access][]">
-    		<?php 
+		<select class="form-control file-access-user" name="Folder[user_access][]" multiple="multiple">
+			<?php 
         		if($model != NULL) {
         			foreach($model as $d) {
         				echo "<option value='".$d->user_id."'>".ucwords(strtolower($d->fullname))."</option>";

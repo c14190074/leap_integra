@@ -169,16 +169,12 @@ function generate(fileUrl) {
 //         }
 //         }
 //     });
-
 // }
 
-// 
 $(document).ready(function() {
     Dropzone.autoDiscover = false;
     $('#user-access-role').find('tbody').find('tr:first-child').find('.role-list').select2();
-
-    // $(".file-access-user").select2({ dropdownParent: $("#modal-upload-form") });
-
+    $(".file-access-user").select2({ maximumSelectionSize: 1 });
 
     $("#alert-msg").fadeTo(2000, 500).slideUp(500, function() {
       $("#alert-msg").slideUp(500);
@@ -303,7 +299,6 @@ $(document).ready(function() {
           if (result.isConfirmed) {
             var ajaxUrl = baseUrl + 'admin/files/deletefolder?ajax=1';
             $.post(ajaxUrl, {folder_id:folder_id, type:'file'}, function(result) {
-                // console.log(result);
                 location.reload();
             });
 
@@ -332,6 +327,9 @@ $(document).ready(function() {
              var ctr = $('#user-access-role').find('tbody').children().length - 1;
              $('#user-access-role').find('tbody').find('tr:last-child').find('.role-list').attr('name', 'Folder[access_role]['+ctr+'][]')
              $('#user-access-role').find('tbody').find('tr:last-child').find('.role-list').select2();
+
+             $('#user-access-role').find('tbody').find('tr:last-child').find('.file-access-user').select2({ maximumSelectionSize: 1 });
+             
            }
         });
     });
@@ -340,7 +338,6 @@ $(document).ready(function() {
         if($('#user-access-role').find('tbody').children().length > 1) {
             $(this).parent().parent().remove();    
         }
-        
     });
 
 });
