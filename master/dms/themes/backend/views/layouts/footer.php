@@ -84,6 +84,7 @@
 	    <!-- End footer -->
 	</div> <!-- end of container-fluid py-4 -->
 
+	<?php if(Snl::app()->getSession(SecurityHelper::encrypt('backendlogin')) != FALSE) : ?>
 	<!-- Pop up modal untuk create folder -->
 	<?php
 		$model_folder = new Folder;
@@ -354,7 +355,7 @@
 	        </div>
 	    </div>
 	</div>
-
+	<?php endif; ?>
 
 </main>
 	<!--   Core JS Files   -->
