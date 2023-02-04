@@ -297,7 +297,17 @@
 			$folder_id = SecurityHelper::decrypt($_GET['folder_id']);
 			$model = Folder::model()->findByPk($folder_id);
 			$user_model = User::model()->findByPk($model->created_by);
-			echo $this->render('_viewfile', array('model' => $model, 'user' => $user_model));
+
+			$model_revisi = Folder::model()->findAll(array(
+				'condition' => 'original_id = :id AND is_revision = 1 AND is_deleted = 0',
+				'params'	=> array(':id' => $model->folder_id)
+			));
+
+			echo $this->render('_viewfile', array(
+				'model' => $model, 
+				'user' => $user_model,
+				'model_revisi' => $model_revisi,
+			));
 		}
 		
 		public function addroleoption() {

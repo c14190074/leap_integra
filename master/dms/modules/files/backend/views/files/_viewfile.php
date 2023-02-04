@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-view-file" tabindex="-1" role="dialog" aria-labelledby="modal-view-file" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
                 <div class="card card-plain">
@@ -48,67 +48,128 @@
 
 							<hr class="horizontal gray-light my-3">
 
-
 							<div class="card">
-							  	<div class="table-responsive">
-								    <table class="table align-items-center mb-0">
-								    	<tbody>
-								    		<tr>
-								    			<td><span class="text-sm text-secondary">Nomor</span></td>
-								    			<td><span class="text-sm text-dark"><?= $model->nomor ?></span></td>
-								    		</tr>
+								<nav>
+								  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+								    <button class="nav-link text-sm active" id="nav-info-tab" data-bs-toggle="tab" data-bs-target="#nav-info" type="button" role="tab" aria-controls="nav-info" aria-selected="true">Informasi</button>
 
-								    		<tr>
-								    			<td><span class="text-sm text-secondary">Perihal</span></td>
-								    			<td><span class="text-sm text-dark"><?= $model->perihal ?></span></td>
-								    		</tr>
+								    <button class="nav-link text-sm" id="nav-revisi-tab" data-bs-toggle="tab" data-bs-target="#nav-revisi" type="button" role="tab" aria-controls="nav-revisi" aria-selected="false">Revisi</button>
 
-								    		<tr>
-								    			<td><span class="text-sm text-secondary">Nama File</span></td>
-								    			<td><span class="text-sm text-dark"><?= $model->name ?></span></td>
-								    		</tr>
+								    <button class="nav-link text-sm" id="nav-log-tab" data-bs-toggle="tab" data-bs-target="#nav-log" type="button" role="tab" aria-controls="nav-log" aria-selected="false">Aktivitas</button>
+								  </div>
+								</nav>
+								<div class="tab-content" id="nav-tabContent">
+									<!-- tab untuk informasi -->
+								  <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
+								  	<div class="table-responsive">
+									    <table class="table align-items-center mb-0">
+									    	<tbody>
+									    		<tr>
+									    			<td><span class="text-sm text-secondary">Nomor</span></td>
+									    			<td><span class="text-sm text-dark"><?= $model->nomor ?></span></td>
+									    		</tr>
 
-								    		<tr>
-								    			<td><span class="text-sm text-secondary">Ukuran</span></td>
-								    			<td><span class="text-sm text-dark"><?= $model->size ?></span></td>
-								    		</tr>
+									    		<tr>
+									    			<td><span class="text-sm text-secondary">Perihal</span></td>
+									    			<td><span class="text-sm text-dark"><?= $model->perihal ?></span></td>
+									    		</tr>
 
-								    		<tr>
-								    			<td><span class="text-sm text-secondary">Deskripsi</span></td>
-								    			<td><span class="text-sm text-dark"><?= $model->description ?></span></td>
-								    		</tr>
+									    		<tr>
+									    			<td><span class="text-sm text-secondary">Nama File</span></td>
+									    			<td><span class="text-sm text-dark"><?= $model->name ?></span></td>
+									    		</tr>
 
-								    		<tr>
-								    			<td><span class="text-sm text-secondary">Unit Kerja</span></td>
-								    			<td><span class="text-sm text-dark"><?= $model->unit_kerja ?></span></td>
-								    		</tr>
+									    		<tr>
+									    			<td><span class="text-sm text-secondary">Ukuran</span></td>
+									    			<td><span class="text-sm text-dark"><?= $model->size ?></span></td>
+									    		</tr>
 
-								    		<tr>
-								    			<td><span class="text-sm text-secondary">Dokumen Terkait</span></td>
-								    			<td><span class="text-sm text-dark"><?= implode($model->getRelatedDocuments(), ', ') ?></span></td>
-								    		</tr>
+									    		<tr>
+									    			<td><span class="text-sm text-secondary">Deskripsi</span></td>
+									    			<td><span class="text-sm text-dark"><?= $model->description ?></span></td>
+									    		</tr>
 
-								    		<tr>
-								    			<td><span class="text-sm text-secondary">Keywords</span></td>
-								    			<td><span class="text-sm text-dark"><?= $model->keyword ?></span></td>
-								    		</tr>
+									    		<tr>
+									    			<td><span class="text-sm text-secondary">Unit Kerja</span></td>
+									    			<td><span class="text-sm text-dark"><?= $model->unit_kerja ?></span></td>
+									    		</tr>
 
-								    		<tr>
-								    			<td><span class="text-sm text-secondary">Diperbaharui</span></td>
-								    			<td><span class="text-sm text-dark"><?= date('d M Y H:i:s', strtotime($model->updated_on)) ?></span></td>
-								    		</tr>
+									    		<tr>
+									    			<td><span class="text-sm text-secondary">Dokumen Terkait</span></td>
+									    			<td><span class="text-sm text-dark"><?= implode($model->getRelatedDocuments(), ', ') ?></span></td>
+									    		</tr>
 
-								    		<tr>
-								    			<td><span class="text-sm text-secondary">Dibuat Oleh</span></td>
-								    			<td><span class="text-sm text-dark"><?= ucwords(strtolower($user->fullname)) ?></span></td>
-								    		</tr>
-								    	</tbody>
-								    </table>
+									    		<tr>
+									    			<td><span class="text-sm text-secondary">Keywords</span></td>
+									    			<td><span class="text-sm text-dark"><?= $model->keyword ?></span></td>
+									    		</tr>
+
+									    		<tr>
+									    			<td><span class="text-sm text-secondary">Diperbaharui</span></td>
+									    			<td><span class="text-sm text-dark"><?= date('d M Y H:i:s', strtotime($model->updated_on)) ?></span></td>
+									    		</tr>
+
+									    		<tr>
+									    			<td><span class="text-sm text-secondary">Dibuat Oleh</span></td>
+									    			<td><span class="text-sm text-dark"><?= ucwords(strtolower($user->fullname)) ?></span></td>
+									    		</tr>
+									    	</tbody>
+									    </table>
+									</div>
+								  </div>
+
+								  	<!-- tab untuk revisi -->
+								  <div class="tab-pane fade" id="nav-revisi" role="tabpanel" aria-labelledby="nav-revisi-tab">
+								  	<?php if($model_revisi == NULL) : ?>
+								  		<p class="text-sm text-secondary">Tidak ada revisi untuk dokumen ini</p>
+
+								  	<?php else : ?>
+
+								  	<div class="table-responsive">
+									    <table class="table align-items-center mb-0">
+									      <thead>
+									        <tr>
+									          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unit Kerja</th>
+									          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
+									          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dibuat Oleh</th>
+									          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tanggal Dibuat</th>
+									          
+									        </tr>
+									      </thead>
+									      <tbody>
+									      	<?php foreach($model_revisi as $file) : ?>
+									      		<?php
+									      			$user_created = User::model()->findByPk($file->created_by);
+									      		?>
+									      		<tr>
+									      			<td>
+									      				<span class="text-xs"><?= $file->name ?></span>
+									      			</td>
+
+									      			<td>
+									      				<span class="text-xs"><?= $file->description ?></span>
+									      			</td>
+
+									      			<td>
+									      				<span class="text-xs"><?= $user_created->fullname ?></span>
+									      			</td>
+
+									      			<td>
+									      				<span class="text-xs"><?= date('d M Y h:i', strtotime($file->created_on)) ?></span>
+									      			</td>
+									      		</tr>
+									      	<?php endforeach;?>
+									      </tbody>
+									  </table>
+									</div>
+									<?php endif; ?>
+								  </div>
+
+								  	<!-- tab untuk logs -->
+								  <div class="tab-pane fade" id="nav-log" role="tabpanel" aria-labelledby="nav-log-tab">...</div>
 								</div>
 							</div>
-							
 						</div>
-
                     </div>
                 </div>
             </div>
