@@ -112,6 +112,10 @@ span.view-file-attribute:hover {
     border-radius: 0 !important;
 }
 
+#modal-upload-form .select2-container {
+    padding: 0.18rem;
+}   
+
 /*
 * TABLE
 */

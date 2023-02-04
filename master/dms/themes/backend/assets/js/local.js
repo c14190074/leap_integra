@@ -333,7 +333,10 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '.remove-user-role', function() {
-        $(this).parent().parent().remove();
+        if($('#user-access-role').find('tbody').children().length > 1) {
+            $(this).parent().parent().remove();    
+        }
+        
     });
 
 });
