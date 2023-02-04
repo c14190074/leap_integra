@@ -132,7 +132,7 @@
 								    <div class="form-group">
 								        <label class="col-md-12"><?= $model_folder->getLabel('description', TRUE); ?></label>
 								        <div class="col-md-12">
-								            <?= Snl::chtml()->activeTextbox($model_folder, 'description') ?>
+								            <?= Snl::chtml()->activeTextarea($model_folder, 'description') ?>
 								        </div>
 								    </div>
 
@@ -270,7 +270,7 @@
 								    <div class="form-group">
 								        <label class="col-md-12"><?= $model_file->getLabel('description', TRUE); ?></label>
 								        <div class="col-md-12">
-								            <?= Snl::chtml()->activeTextbox($model_file, 'description') ?>
+								            <?= Snl::chtml()->activeTextarea($model_file, 'description') ?>
 								        </div>
 								    </div>
 
