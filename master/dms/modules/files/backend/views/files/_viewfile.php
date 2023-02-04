@@ -121,7 +121,7 @@
 								  	<!-- tab untuk revisi -->
 								  <div class="tab-pane fade" id="nav-revisi" role="tabpanel" aria-labelledby="nav-revisi-tab">
 								  	<?php if($model_revisi == NULL) : ?>
-								  		<p class="text-sm text-secondary">Tidak ada revisi untuk dokumen ini</p>
+								  		<p class="text-sm text-secondary p-sm-4">Tidak ada revisi untuk dokumen ini</p>
 
 								  	<?php else : ?>
 
