@@ -116,6 +116,10 @@ span.view-file-attribute:hover {
     padding: 0.18rem;
 }   
 
+#modal-upload-form .select2-container-multi .select2-choices .select2-search-field input {
+    width: 100% !important;
+}
+
 /*
 * TABLE
 */
