@@ -167,13 +167,18 @@ function generate(fileUrl) {
 //             $('#modal-view-file').modal('hide');
 //             $('#modal-load-docx').modal('show');
 //         }
+//         }
 //     });
 
 // }
 
-
+// 
 $(document).ready(function() {
     Dropzone.autoDiscover = false;
+    $('#user-access-role').find('tbody').find('tr:first-child').find('.role-list').select2();
+
+    // $(".file-access-user").select2({ dropdownParent: $("#modal-upload-form") });
+
 
     $("#alert-msg").fadeTo(2000, 500).slideUp(500, function() {
       $("#alert-msg").slideUp(500);
@@ -312,11 +317,23 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '.append-user-role', function() {
-        $('#user-access-role').find('tbody').append("<tr>"+$(this).parent().parent().html()+"</tr>");
+        var ajaxUrl = baseUrl + 'admin/files/addroleoption?ajax=1';
+        $.ajax({
+           url: ajaxUrl,
+           type: 'post',
+           data: {request: 2},
+           success: function(response){
+             // Append element
+             $('#user-access-role').find('tbody').append(response);
+             var ctr = $('#user-access-role').find('tbody').children().length - 1;
+             $('#user-access-role').find('tbody').find('tr:last-child').find('.role-list').attr('name', 'Folder[access_role]['+ctr+'][]')
+             $('#user-access-role').find('tbody').find('tr:last-child').find('.role-list').select2();
+           }
+        });
     });
 
     $('body').on('click', '.remove-user-role', function() {
         $(this).parent().parent().remove();
     });
-    
+
 });

@@ -73,7 +73,21 @@
 				
 				$model->setAttributes($_POST['Folder']);
 				$model->type = "folder";
-				$model->user_access = isset($_POST['Folder']['user_access']) ? json_encode($_POST['Folder']['user_access']) : NULL;
+				$model->user_access = NULL;
+				// $model->user_access = isset($_POST['Folder']['user_access']) ? json_encode($_POST['Folder']['user_access']) : NULL;
+
+				$user_access = array();
+				if(isset($_POST['Folder']['user_access'])) {
+					for($i = 0; $i < count($_POST['Folder']['user_access']); $i++) {
+						$data = array(
+							'user' 	=> $_POST['Folder']['user_access'][$i],
+							'role'	=> array('view')
+						);
+
+						array_push($user_access, $data);
+					}
+					$model->user_access =  json_encode($user_access);
+				}
 				
 				if($model->save()) {
 					Snl::app()->setFlashMessage($message_result, 'info');
@@ -96,9 +110,24 @@
 		public function savedocumentattribute() {
 			$model = new Folder;
 			if(isset($_POST['Folder'])) {
+				// print_r($_POST['Folder']['access_role'][0]);
+				// die();
 				$model->setAttributes($_POST['Folder']);
 				$model->type = "file";
 				$model->related_document = isset($_POST['Folder']['related_document']) ? json_encode($_POST['Folder']['related_document']) : NULL;
+				$model->user_access = NULL;
+				$user_access = array();
+				if(isset($_POST['Folder']['user_access']) && isset($_POST['Folder']['access_role'])) {
+					for($i = 0; $i < count($_POST['Folder']['user_access']); $i++) {
+						$data = array(
+							'user' 	=> $_POST['Folder']['user_access'][$i],
+							'role'	=> $_POST['Folder']['access_role'][$i]
+						);
+
+						array_push($user_access, $data);
+					}
+					$model->user_access =  json_encode($user_access);
+				}
 
 
 				if($model->save()) {
@@ -243,6 +272,14 @@
 			echo $this->render('_viewfile', array('model' => $model, 'user' => $user_model));
 		}
 		
+		public function addroleoption() {
+			$user_model = User::model()->findAll(array(
+				'condition' => 'is_deleted = 0 AND status = 1 AND user_id != :id',
+				'params'	=> array('id' => Snl::app()->user()->user_id)
+			));
+			echo $this->render('_user_role_option', array('model' => $user_model));
+		}
+
 		// public function getfilefromserver() {
 		// 	// $filename="https://localhost/leap_integra/master/dms/uploads/documents/FileDoc.docx";
 		// 	$filename="C:/xampp/htdocs/leap_integra/master/dms/uploads/documents/FileDoc.docx";

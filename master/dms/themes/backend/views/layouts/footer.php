@@ -176,7 +176,7 @@
 	?>
 	<!-- Pop up modal untuk upload file -->
 	<div class="me-2" id="upload-file-container">
-	    <div class="modal fade" id="modal-upload-form" tabindex="-1" role="dialog" aria-labelledby="modal-upload-form" aria-hidden="true">
+	    <div class="modal fade" id="modal-upload-form" role="dialog" aria-labelledby="modal-upload-form" aria-hidden="true">
 	        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 	            <div class="modal-content">
 	                <div class="modal-body p-0">
@@ -289,8 +289,8 @@
 
 												      <tbody>
 												      	<tr>
-												      		<td>
-												      			<select class="form-control user-list" name="Folder[user_access][]">
+												      		<td class="w-40">
+												      			<select class="form-control file-access-user" name="Folder[user_access][]">
 													            	<?php 
 													            		if($user_model != NULL) {
 													            			foreach($user_model as $d) {
@@ -300,8 +300,8 @@
 													            	?>
 																</select>
 												      		</td>
-												      		<td>
-												      			<select class="form-control user-list" name="Folder[access_role][]">
+												      		<td class="w-40">
+												      			<select class="form-control role-list" name="Folder[access_role][0][]" multiple="multiple">
 													            	<option value="view">Lihat</option>
 													            	<option value="edit">Revisi</option>
 																</select>
@@ -336,12 +336,12 @@
 	    </div>
 	</div>
 
-	<!-- Pop up modal untuk view file -->
+	<!-- Pop up modal untuk view attrbute file -->
 	<div class="me-2" id="view-file-container">
 
 	</div>
 
-	<!-- Pop up modal untuk load file docs -->
+	<!-- Pop up modal untuk preview file docs -->
 	<div class="modal fade" id="modal-load-docx" tabindex="-1" role="dialog" aria-labelledby="modal-load-docx" aria-hidden="true">
 	    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 	        <div class="modal-content">

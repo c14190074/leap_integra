@@ -104,13 +104,13 @@
 					}
 
 					if($m->user_access != NULL) {
-                      $user_access = json_decode($m->user_access);
-                      foreach($user_access as $id) {
-                        if($id == $user_id) {
-                        	$folder_ctr++;
-                        }
-                      }                      
-                    } 
+            $user_access = json_decode($m->user_access);
+            foreach($user_access as $id) {
+              if($user_id == $id->user) {
+              	$folder_ctr++;
+              }
+            }                      
+          } 
 				}
 			}
 
@@ -119,12 +119,58 @@
 
 		public function hasAccess() {
 			$user_access = array();
+			$user_ids = array();
 			if($this->user_access != NULL) {
 				$user_access = json_decode($this->user_access);
 			}
 
-			if($this->created_by == Snl::app()->user()->user_id || in_array(Snl::app()->user()->user_id, $user_access)) {
+			foreach($user_access as $d) {
+				array_push($user_ids, $d->user);
+			}
+
+			if($this->created_by == Snl::app()->user()->user_id || in_array(Snl::app()->user()->user_id, $user_ids)) {
 				return true;
+			}
+
+			return false;
+		}
+
+		public function hasViewAccess() {
+			$user_access = array();
+			if($this->user_access != NULL) {
+				$user_access = json_decode($this->user_access);
+			}
+
+			foreach($user_access as $d) {
+				if($d->user == Snl::app()->user()->user_id) {
+					foreach($d->role as $r) {
+						if($r == "view") {
+							return TRUE;
+						}
+					}
+				}	
+			}
+			return false;
+		}
+
+		public function hasEditAccess() {
+			$user_access = array();
+			if($this->user_access != NULL) {
+				$user_access = json_decode($this->user_access);
+			}
+
+			foreach($user_access as $d) {
+				if($d->user == Snl::app()->user()->user_id) {
+					foreach($d->role as $r) {
+						if($r == "edit") {
+							return TRUE;
+						}
+					}
+				}	
+			}
+
+			if($this->created_by == Snl::app()->user()->user_id) {
+				return TRUE;
 			}
 
 			return false;

@@ -126,7 +126,7 @@
     <!-- Select -->
     <script src="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/custom-select/custom-select.min.js" type="text/javascript"></script>
     <script src="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/multiselect/js/jquery.multi-select.js"></script>
+    <script src="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/multiselect/js/jquery.multi-select.js" type="text/javascript"></script>
 
     <!-- Touch Punch -->
     <script src="<?= Snl::app()->config()->theme_url ?>plugins/bower_components/touch-punch/jquery.ui.touch-punch.min.js" type="text/javascript"></script>

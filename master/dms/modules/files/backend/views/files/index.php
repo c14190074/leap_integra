@@ -91,18 +91,24 @@
                 <p class="text-xs text-secondary mb-0"><?= $folder->name ?></p>
               </td>
 
-              <td>
+              <td style="white-space: normal; max-width: 200px;">
                 <p class="text-xs text-secondary mb-0">
                   <?php
                     if($folder->user_access != NULL) {
                       $user_email = array();
                       $user_access = json_decode($folder->user_access);
-                      foreach($user_access as $id) {
-                        $user_access_model = User::model()->findByPk($id);
-                        array_push($user_email, $user_access_model->email);
+                      foreach($user_access as $d) {
+                        $user_access_model = User::model()->findByPk($d->user);
+                        if($folder->type == "file") {
+                          $tmp_str = $user_access_model->email . "(".implode(',', $d->role).")";
+                          array_push($user_email, $tmp_str);
+                        } else {
+                          array_push($user_email, $user_access_model->email);
+                        }
+                        
                       }
 
-                      array_push($user_email, $user_created->email);
+                      array_push($user_email, $user_created->email." (owner)");
                       
                       echo implode( ", ", $user_email);
                     } else {

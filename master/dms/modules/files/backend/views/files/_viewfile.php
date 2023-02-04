@@ -34,10 +34,12 @@
 										<div class="col-md-6">
 											<button type="button" class="btn btn-outline-info w-100" id="btn-download-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>"><i class="me-2 fa fa-download"></i>Unduh</button>
 										</div>
-
+										
+										<?php if($model->hasEditAccess()) : ?>										
 										<div class="col-md-6">
 											<button type="button" class="btn btn-outline-info w-100"><i class="me-2 fa fa-pencil-square-o"></i>Revisi</button>
 										</div>
+										<?php endif; ?>
 
 										<?php if($model->isTheOwner()) : ?>
 										<div class="col-md-6">
