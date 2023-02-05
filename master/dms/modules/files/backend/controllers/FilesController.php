@@ -67,6 +67,7 @@
 				
 				$model->setAttributes($_POST['Folder']);
 				$model->type = "folder";
+				$model->is_revision = 0;
 				$model->user_access = NULL;
 				// $model->user_access = isset($_POST['Folder']['user_access']) ? json_encode($_POST['Folder']['user_access']) : NULL;
 
@@ -84,10 +85,16 @@
 				}
 				
 				if($model->save()) {
+					
+
 					Snl::app()->setFlashMessage($message_result, 'info');
 					if($isNewRecord) {
+						Logs::create_logs($model->folder_id, 'folder', 'membuat folder baru dengan nama '.$model->name);
+
 						$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_id));
 					} else {
+						Logs::create_logs($model->folder_id, 'folder', 'mengubah attribut pada folder '.$model->name);
+
 						if($model->folder_parent_id == 0) {
 							$this->redirect('admin/files/index');
 						} else {
@@ -108,6 +115,7 @@
 				// die();
 				$model->setAttributes($_POST['Folder']);
 				$model->type = "file";
+				$model->is_revision = 0;
 				$model->related_document = isset($_POST['Folder']['related_document']) ? json_encode($_POST['Folder']['related_document']) : NULL;
 				$model->user_access = NULL;
 				$user_access = array();
@@ -125,6 +133,7 @@
 
 
 				if($model->save()) {
+					Logs::create_logs($model->folder_id, 'file', 'mengunggah file baru '.$model->name);
 					Snl::app()->setFlashMessage('File baru berhasil ditambahkan.', 'info');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
 				} else {
@@ -151,6 +160,7 @@
 				
 
 				if($model->save()) {
+					Logs::create_logs($model->folder_id, 'file', 'melakukan revisi dengan file baru '.$model->name);
 					Snl::app()->setFlashMessage('File revisi berhasil ditambahkan.', 'info');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
 				} else {
@@ -268,8 +278,10 @@
 
 				if($model->save()) {
 					if($type == 'file') {
+						Logs::create_logs($model->folder_id, 'file', 'menghapus file '.$model->name);
 						Snl::app()->setFlashMessage('File '.$model->name.' berhasil dihapus.', 'info');
 					} else {
+						Logs::create_logs($model->folder_id, 'folder', 'menghapus folder '.$model->name);
 						Snl::app()->setFlashMessage('Folder '.$model->name.' berhasil dihapus.', 'info');	
 					}
 					
@@ -303,10 +315,16 @@
 				'params'	=> array(':id' => $model->folder_id)
 			));
 
+			$model_logs = Logs::model()->findAll(array(
+				'condition' => 'file_target_id = :id AND is_deleted = 0 ORDER BY created_on DESC',
+				'params'	=> array(':id' => $model->folder_id)
+			));
+
 			echo $this->render('_viewfile', array(
 				'model' => $model, 
 				'user' => $user_model,
-				'model_revisi' => $model_revisi,
+				'model_revisi' 	=> $model_revisi,
+				'model_logs' 	=> $model_logs,
 			));
 		}
 		

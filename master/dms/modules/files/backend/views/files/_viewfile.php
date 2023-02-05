@@ -169,7 +169,38 @@
 								  </div>
 
 								  	<!-- tab untuk logs -->
-								  <div class="tab-pane fade" id="nav-log" role="tabpanel" aria-labelledby="nav-log-tab">...</div>
+								  <div class="tab-pane fade" id="nav-log" role="tabpanel" aria-labelledby="nav-log-tab">
+
+								  	<?php if($model_logs == NULL) : ?>
+								  		<p class="text-sm text-secondary p-sm-4">Tidak ada aktivitas</p>
+
+								  	<?php else : ?>
+
+								  	<div class="table-responsive">
+									    <table class="table align-items-center mb-0">
+									      <tbody>
+									      	<?php foreach($model_logs as $log) : ?>
+									      		<?php
+									      			$log_created = User::model()->findByPk($log->created_by);
+									      		?>
+									      		<tr>
+									      			<td class="text-center link-info" style="font-size: 2rem;">
+														<span><i class="fa fa-user-o"></i></span>
+													</td>
+													<td>
+														<p class="text-dark text-sm mb-1 token important" style="color: #000;"><?= $log_created->fullname ?></p>
+														<p class="text-secondary text-xs mb-2"><?= date('d M Y h:i:s', strtotime($log->created_on)) ?></p>
+														<p class="text-xs mb-0"><?= $log->description ?></p>
+													</td>
+									      		</tr>
+
+									      	<?php endforeach;?>
+									      </tbody>
+									  </table>
+									</div>
+									<?php endif; ?>
+
+								  </div>
 								</div>
 							</div>
 						</div>

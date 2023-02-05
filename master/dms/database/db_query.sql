@@ -69,3 +69,16 @@ ALTER TABLE `tbl_file` ADD `name` VARCHAR(255) DEFAULT 0 AFTER `folder_id`;
 ALTER TABLE `tbl_folder` ADD `is_revision` INT(1) DEFAULT 0 AFTER `name`;
 ALTER TABLE `tbl_folder` ADD `no_revision` INT(11) DEFAULT 0 AFTER `is_revision`;
 ALTER TABLE `tbl_folder` ADD `original_id` INT(1) DEFAULT 0 AFTER `no_revision`;
+
+CREATE TABLE IF NOT EXISTS `tbl_logs` (
+	`logs_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`file_target_id` INT(11),
+	`type` VARCHAR(255),
+	`description` VARCHAR(255),
+	`created_on` DATETIME DEFAULT NULL,
+	`created_by` INT(11) DEFAULT NULL,
+	`updated_on` DATETIME DEFAULT NULL,
+	`updated_by` INT(11) DEFAULT NULL,
+	`is_deleted` TINYINT(1) DEFAULT 0 COMMENT '0=No; 1=Yes',
+	PRIMARY KEY (`logs_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
