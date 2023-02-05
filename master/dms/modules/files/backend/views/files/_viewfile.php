@@ -143,7 +143,10 @@
 									      		?>
 									      		<tr>
 									      			<td>
-									      				<span class="text-xs"><?= $file->name ?></span>
+									      				<span class="text-xs mb-0 ps-2 view-file-attribute" role="button" data-folder-id="<?= SecurityHelper::encrypt($file->folder_id) ?>">
+								                          <?= $file->name ?>
+								                        </span>
+									      				
 									      			</td>
 
 									      			<td>
