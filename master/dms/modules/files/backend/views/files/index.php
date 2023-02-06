@@ -127,7 +127,7 @@
               </td> -->
 
               <td class="align-middle text-center text-sm">
-                <p class="text-xs text-secondary mb-0"><?= date('d M Y h:i', strtotime($user_updated->updated_on)) ?></p>
+                <p class="text-xs text-secondary mb-0"><?= date('d M Y h:i:s', strtotime($user_updated->updated_on)) ?></p>
               </td>
             </tr>
         <?php endif; endforeach; ?>
