@@ -100,7 +100,7 @@ span.view-file-attribute:hover {
     border-spacing: 0;
 }
 
-.edit-folder:hover, .delete-folder:hover {
+.edit-folder:hover, .delete-folder:hover, .info-folder:hover {
     color: #67b108 !important;
 }
 
