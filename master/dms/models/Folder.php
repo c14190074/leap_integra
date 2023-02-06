@@ -37,10 +37,10 @@
 				'size' => 'Size',
 				'description' => 'Deskripsi',
 				'user_access' => 'Siapa yang dapat mengakses?',
-				'created_on' => 'Created On',
-				'created_by' => 'Created By',
-				'updated_on' => 'Updated On',
-				'updated_by' => 'Updated By',
+				'created_on' => 'Tanggal Dibuat',
+				'created_by' => 'Dibuat Oleh',
+				'updated_on' => 'Tanggal Diperbaharui',
+				'updated_by' => 'Diperbaharui Oleh',
 				'is_deleted' => 'Is Deleted',
 			);
 

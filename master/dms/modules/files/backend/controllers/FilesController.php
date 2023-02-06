@@ -344,6 +344,23 @@
 
 			echo $this->render('_upload_file_revisi', array('model' => $model, 'folder' => $folder));
 		}
+
+		public function folderdetail() {
+			$folder_id = SecurityHelper::decrypt($_GET['folder_id']);
+			$model = Folder::model()->findByPk($folder_id);
+			$user_model = User::model()->findByPk($model->created_by);
+
+			$model_logs = Logs::model()->findAll(array(
+				'condition' => 'file_target_id = :id AND is_deleted = 0 ORDER BY created_on DESC',
+				'params'	=> array(':id' => $model->folder_id)
+			));
+
+			echo $this->render('_folder_detail', array(
+				'model' => $model, 
+				'user_model' => $user_model,
+				'model_logs' 	=> $model_logs,
+			));
+		}
 		
 
 		// public function getfilefromserver() {

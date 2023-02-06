@@ -385,6 +385,14 @@ $(document).ready(function() {
         });
     });
 
-    
+    $('body').on('click', '.info-folder', function() {
+        var folder_id = $(this).data('folder-id');
+        var ajaxUrl = baseUrl + 'admin/files/folderdetail?ajax=1&folder_id='+folder_id;
+        $.get(ajaxUrl, function(data, status){
+            $('.modal').modal('hide');
+            $('#folder-attribute-container').html(data);
+            $('#modal-folder-detail').modal('show');
+        });
+    });
 
 });
