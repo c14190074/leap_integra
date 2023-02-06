@@ -131,3 +131,12 @@ span.view-file-attribute:hover {
 #user-access-role .table> :not(caption)>*>* {
     padding-left: 0;
 }
+
+/**
+* PROFILE
+*/
+
+#profile .avatar {
+    color: #000;
+    font-size: 3rem;
+}

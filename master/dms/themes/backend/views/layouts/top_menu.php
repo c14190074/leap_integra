@@ -7,7 +7,11 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">DMS</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page"><?= ucwords(strtolower($module)); ?></li>
           </ol>
-          <h6 class="font-weight-bolder mb-0" id="page_subtitle"><?= ucwords(strtolower($module)); ?></h6>
+          <?php if($module == "user" && $action == "profile") : ?>
+            <h6 class="font-weight-bolder mb-0" id="page_subtitle"><?= ucwords(strtolower($action)); ?></h6>
+          <?php else : ?>
+            <h6 class="font-weight-bolder mb-0" id="page_subtitle"><?= ucwords(strtolower($module)); ?></h6>
+          <?php endif; ?>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center" style="opacity: 0;">
@@ -59,7 +63,7 @@
               </a>
               <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="#">
+                  <a class="dropdown-item border-radius-md" href="<?= Snl::app()->baseUrl() ?>admin/user/profile">
                     <div class="d-flex py-1">
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1">

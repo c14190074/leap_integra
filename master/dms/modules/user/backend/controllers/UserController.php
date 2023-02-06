@@ -41,7 +41,7 @@
 			if(isset($_POST['User'])) {
 				$model->setAttributes($_POST['User']);
 				if($model->save()) {
-					Snl::app()->setFlashMessage('User baru berhasil ditambahkan.', 'success');
+					Snl::app()->setFlashMessage('User baru berhasil ditambahkan.', 'info');
 					$this->redirect('admin/user/login');
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
@@ -49,6 +49,29 @@
 			}
 
 			return $this->render('register', array(
+				'model' => $model
+			));
+		}
+
+		public function profile() {
+			$this->page_title = 'Profil';
+			$this->crumbs = array('User', 'Profil');
+			
+			$model = User::model()->findByPk(Snl::app()->user()->user_id);
+			$model->password_repeat = $model->password;
+
+			if(isset($_POST['User'])) {
+				$model->setAttributes($_POST['User']);
+				if($model->save()) {
+					Snl::app()->setFlashMessage('Data user berhasil diperbaharui.', 'info');
+					$this->redirect('admin/user/profile');
+				} else {
+					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
+				}
+			}
+
+			return $this->render('profile', array(
+				'toolbar' => $this->toolbar(),
 				'model' => $model
 			));
 		}
@@ -82,7 +105,7 @@
 				$model->setAttributes($_POST['User']);
 
 				if($model->save()) {
-					Snl::app()->setFlashMessage('User baru berhasil ditambahkan.', 'success');
+					Snl::app()->setFlashMessage('User baru berhasil ditambahkan.', 'info');
 					$this->redirect('admin/user/index');
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
@@ -110,7 +133,7 @@
 			if(isset($_POST['User'])) {
 				$model->setAttributes($_POST['User']);
 				if($model->save()) {
-					Snl::app()->setFlashMessage('User '.$model->username.' berhasil diubah.', 'success');
+					Snl::app()->setFlashMessage('User '.$model->username.' berhasil diubah.', 'info');
 					$this->redirect('admin/user/index');
 				} else {
 					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
@@ -135,7 +158,7 @@
 			$model = User::model()->findByPk($id);
 			if($model !== NULL) {
 				if($model->delete()) {
-					Snl::app()->setFlashMessage('User dengan email '.$model->email.' berhasil dihapus.', 'success');
+					Snl::app()->setFlashMessage('User dengan email '.$model->email.' berhasil dihapus.', 'info');
 				} else {
 					Snl::app()->setFlashMessage('Internal server error.', 'danger');
 				}
