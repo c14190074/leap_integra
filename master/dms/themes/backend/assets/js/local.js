@@ -28,6 +28,13 @@ var setMsg = function(form, obj, msg) {
 	}
 }
 
+function focused(e) {
+    e.parentElement.classList.contains("input-group") && e.parentElement.classList.add("focused");
+}
+function defocused(e) {
+    e.parentElement.classList.contains("input-group") && e.parentElement.classList.remove("focused");
+}
+
 function submitform(form, model) {
 	initLoading();
 	clearErrorMsg(form);
@@ -198,6 +205,13 @@ $(document).ready(function() {
             $('#upload-file-container').find('#Folder_size').val(formatBytes(file.size));
             $('#upload-file-container').find('#app_form_upload').submit();
         }
+    });
+
+    $("#input-search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#table-data tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
     });
 
     $('body').on('click', '#upload-file-btn', function() {

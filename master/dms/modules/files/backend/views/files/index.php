@@ -21,19 +21,30 @@
 </nav>
 <?php endif; ?>
 
+<div class="row mb-3">
+  <div class="col-md-4">
+    <div class="input-group">
+      <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+      <input type="text" class="form-control" id="input-search" placeholder="Cari file atau folder.." onfocus="focused(this)" onfocusout="defocused(this)">
+    </div>  
+    
+  </div>
+</div>
+
 <?php if($model == NULL || Folder::countNumberOfFile($model) == 0) : ?>
   <p class="text-sm text-secondary p-3">No file or folder</p>
 
 <?php else : ?>
 <div class="card" id="folder_list">
   <div class="table-responsive">
-    <table class="table align-items-center mb-0">
+    <table class="table align-items-center mb-0" id="table-data">
       <thead>
         <tr>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unit Kerja</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nomor</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Perihal</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Akses</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keywords</th>
           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Updated</th>
         </tr>
       </thead>
@@ -121,13 +132,12 @@
                 </p>
               </td>
 
-             <!--  <td>
-                <p class="text-xs font-weight-bold mb-0"><?= $user_created->fullname ?></p>
-                <p class="text-xs text-secondary mb-0"><?= $user_created->email ?></p>
-              </td> -->
+              <td style="white-space: normal; max-width: 200px;">
+                <p class="text-xs font-weight-bold mb-0"><?= $folder->keyword ?></p>
+              </td>
 
               <td class="align-middle text-center text-sm">
-                <p class="text-xs text-secondary mb-0"><?= date('d M Y h:i:s', strtotime($user_updated->updated_on)) ?></p>
+                <p class="text-xs text-secondary mb-0"><?= date('d M Y h:i:s', strtotime($folder->updated_on)) ?></p>
               </td>
             </tr>
         <?php endif; endforeach; ?>
