@@ -214,6 +214,12 @@ $(document).ready(function() {
         });
     });
 
+    $('body').on('click', '#advanced-search', function() {
+        var value = $("#input-search").val().toLowerCase();
+        var searchUrl = baseUrl + 'admin/files/index?q='+value;
+        location.replace(searchUrl);
+    });
+
     $('body').on('click', '#upload-file-btn', function() {
         var form = "app_form_upload";
         var ajaxUrl = baseUrl + 'admin/files/validatefileattribute?ajax=1';

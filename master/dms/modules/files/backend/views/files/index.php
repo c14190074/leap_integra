@@ -21,13 +21,16 @@
 </nav>
 <?php endif; ?>
 
-<div class="row mb-3">
+<div class="row mb-4">
   <div class="col-md-4">
     <div class="input-group">
       <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
       <input type="text" class="form-control" id="input-search" placeholder="Cari file atau folder.." onfocus="focused(this)" onfocusout="defocused(this)">
     </div>  
-    
+  </div>
+
+  <div class="col-md-3">
+      <button type="button" class="btn btn-primary mb-0" id="advanced-search">Cari disemua folder</button>
   </div>
 </div>
 

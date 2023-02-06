@@ -14,10 +14,21 @@
 			$GLOBALS['parentfolderid'] = $folder_id;
 			
 			if(Folder::getCountUserFolder(Snl::app()->user()->user_id) > 0) {
-				$model = Folder::model()->findAll(array(
-					'condition' => 'folder_parent_id = :id AND is_deleted = 0 AND is_revision = 0 ORDER BY type DESC',
-					'params'	=> array(':id' => $folder_id)
-				));
+				if(isset($_GET['q']) && $_GET['q'] != "") {
+					$keyword = strtolower($_GET['q']);
+					
+					$model = Folder::model()->findAll(array(
+						'condition' => 'is_deleted = 0 AND is_revision = 0 AND (name LIKE "%'.$keyword.'%" OR nomor LIKE "%'.$keyword.'%" OR perihal LIKE "%'.$keyword.'%" OR unit_kerja LIKE "%'.$keyword.'%" OR keyword LIKE "%'.$keyword.'%" OR description LIKE "%'.$keyword.'%") ORDER BY type DESC',
+						
+					));
+
+				} else {
+					$model = Folder::model()->findAll(array(
+						'condition' => 'folder_parent_id = :id AND is_deleted = 0 AND is_revision = 0 ORDER BY type DESC',
+						'params'	=> array(':id' => $folder_id)
+					));
+
+				}
 
 				// untuk membuat breadcrumbs
 				if($folder_id > 0) {

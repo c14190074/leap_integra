@@ -1,0 +1,107 @@
+Apa itu DMS?
+DMS adalah sebuah aplikasi yang digunakan sebagai dokumen management. DMS ditujukan untuk internal kantor sebagai dokumen management
+
+DMS ada 2 versi : web dan android
+
+Fitur-fitur / Cara kerja DMS :
+1. Superadmin (User management : Add, Edit, Delete, Daftar User)
+2. Login user (sebagai contoh: karyawan kantor)
+3. Apa yang dapat dilakukan oleh user yang login?
+	a. Ubah password
+
+	b. Folder management :
+		- add, edit, delete, menentukan access folder tersebut
+		- setiap tindakan harus di log
+
+	c. File management :
+		- document yang dapat diupload pdf / docx
+		- upload dokumen sebagai arsip
+		- upload dokumen sebagai approval
+		- untuk approval ketika upload harus menentukan dokumen ters
+
+
+		Agung Wibowo
+
+		agung@email.com
+
+		tsG26M+doZc=
+		081356894563
+
+		6143541754438333
+
+		MXLPR1SYD935TJVFebut ditujukan untuk siapa dan deadline nya kapan
+		- revisi dokumen (upload versi lain, versi yang lama tetep di simpan)
+		- view dokumen
+		- setiap tindakan harus di log
+
+	d. tampilan Email notifikasi untuk user yang dituju (approval document)
+
+4. Untuk versi android hampir sama, cuman ada tambahan fitur, yaitu Deadline integrate ke google calendar
+
+Teknikal :
+1. Untuk web dikerjakan menggunakan framework dari integra sendiri dengan basic php
+2. database menggunakan mysql
+
+Bagian saya :
+hampir semua fitur, cuman saya di advice. 
+untuk email notifikasi saya membuat tampilannya saja
+
+konsep framework :
+model, view, controller
+
+model digunakan untuk class yang menghubungkan ke database
+view digunakan untuk tampilan
+controller untuk fungsi-fungsi
+
+
+Yang sudah saya kerjakan :
+1. mempelajari apa itu dms dan alur sistemnya
+2. mempelajari framework yang digunakan
+3. implementasi tema baru
+4. login (tampilan dan fungsinya)
+5. user management (daftar user, create, edit dan delete)
+6. folder management (create folder dan daftar folder)
+
+
+Fungsi-fungsi yang berhubungan dengan database (lokasi nya ada di model)
+1. findByPk = select ke database berdasarkan Primary key (return / hasilnya 1)
+contoh implementasi : $model = User::model()->findByPk($id) --> select ke table user berdasarkan primary key. hasilnya 1 row
+
+2. findByAttribute = select ke database berdasarkan attribute atau field2 yang ada (return / hasil nya 1)
+contoh implementasi :
+
+$model = User::model()->findByAttribute(array(
+	'condition' => 'email = :email AND status = :status AND is_deleted = 0',
+	'params'	=> array(':email' => $this->email, ':status' => 1)
+));
+
+email, status, is_deleted itu nama2 field yang ada di table. Params itu value yang di passing
+
+3. findAll = hampir sama kayak findByAttribute tapi return / hasilnya banyak row
+$model = User::model()->findByAll(array(
+	'condition' => 'email = :email AND status = :status AND is_deleted = 0',
+	'params'	=> array(':email' => $this->email, ':status' => 1)
+));
+
+
+4. save = fungsi untuk insert ke database
+contoh implementasi :
+$model = new Folder;
+$model->setAttributes($_POST['Folder']);
+$model->save();
+
+5. update = hampir sama kyk save
+6. delete
+
+>>>> 6 fungsi di atas itu fungsi2 yang berhubungan ke database, sudah ada dari frameworknya, tinggal pakai sesuai kebutuhan
+
+
+contoh pembuatan fungsi login
+1. tampilannya (coding html) ada di folder modules/user/backend/views/user/login2.php > untuk design pakai css dari tema
+2. controllernya ada di folder modules/user/backend/controllers/UserContoller.php > nama fungsinya login
+	dari fungsi login itu menampilan atau merender file login2.php (file no 1)
+3. terus user input ke form yang ada di file login2.php
+4. user submit
+5. Usercontroller.php line 14 - 22 itu untuk membaca inputan user
+6. di line 17 itu ada fungsi validate login if($model->validateLogin()) {
+7. fungsi validate login ada di model User line 126-142
