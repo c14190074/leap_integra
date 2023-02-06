@@ -82,6 +82,12 @@
 		}
 
 		public function beforeSave() {
+			if($this->type == 'folder') {
+				if($this->name == "" || $this->name == NULL) {
+					$this->name = "undifined";
+				}
+			}
+
 			if($this->isNewRecord) {
 				$this->created_on = Snl::app()->dateNow();
 				$this->created_by = Snl::app()->user()->user_id;

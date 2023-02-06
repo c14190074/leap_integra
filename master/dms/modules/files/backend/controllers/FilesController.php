@@ -85,8 +85,6 @@
 				}
 				
 				if($model->save()) {
-					
-
 					Snl::app()->setFlashMessage($message_result, 'info');
 					if($isNewRecord) {
 						Logs::create_logs($model->folder_id, 'folder', 'membuat folder baru dengan nama '.$model->name);
