@@ -4,16 +4,16 @@
 
 		<div class="col-md-4 text-center">
 			<h1 class="text-9xl">
-				<?php
-                    if($model->format == "pdf") {
-                      echo "<i class='fa fa-file-pdf-o opacity-6 text-dark me-3'></i>";
-                    } else if($model->format == "doc" || $model->format == "docx" || $model->format == "docs") {
-                      echo "<i class='fa fa-file-word-o opacity-6 text-dark me-3'></i>";
-                    } else {
-                      echo "<i class='fa fa-file opacity-6 text-dark me-3'></i>";
-                    }
-                ?>
-            </h1>
+					<?php
+              if($model->format == "pdf") {
+                echo "<img class='w-90' src='".Snl::app()->baseUrl()."uploads/pdflogo.png' />";
+              } else if($model->format == "doc" || $model->format == "docx" || $model->format == "docs") {
+                echo "<img class='w-90' src='".Snl::app()->baseUrl()."uploads/wordlogo.png' />";
+              } else {
+                echo "<i class='fa fa-folder opacity-6 text-dark me-3'></i>";
+              }
+          ?>
+       </h1>
 		</div>
 		<div class="col-md-7">
 			<div class="row">
