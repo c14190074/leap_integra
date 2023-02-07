@@ -4,11 +4,11 @@
     	<div class="row">
 			<div class="col-md-3 text-center">
 				<h1 class="text-9xl">
-					<i class='fa fa-file opacity-6 text-dark me-3'></i>
+					<i class='fa fa-folder opacity-6 link-info me-3'></i>
                 </h1>
 			</div>
 			<div class="col-md-9">
-				<div class="row ps-3 mt-5">
+				<div class="row ps-4 mt-5">
 					<?php if($model->isTheOwner() && $model->type == "folder") : ?>
 					<div class="col-md-6 pe-0">
 						<button type="button" class="btn btn-outline-info w-100 mb-0 edit-folder text-xs" style="padding: 10px 5px;" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>">
