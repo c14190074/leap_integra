@@ -352,6 +352,12 @@ $(document).ready(function() {
         // myDropzone.disable();
     });
 
+    $('body').on('click', '#close-revisi-form', function() {
+        $('#modal-revisi-form').modal('hide');
+        myDropzoneRevisi.removeAllFiles(true);
+        
+    });
+
     $('body').on('click', '.append-user-role', function() {
         var ajaxUrl = baseUrl + 'admin/files/addroleoption?ajax=1';
         $.ajax({
@@ -425,7 +431,7 @@ $(document).ready(function() {
                 var folder_id = $(this).data('folder-id');
                 var action_url = $(this).data('action');
                 var ajaxUrl = baseUrl + 'admin/files/'+action_url+'?ajax=1&folder_id='+folder_id;
-                
+
                 $.get(ajaxUrl, function(data, status){
                     $('#right-slider-container').find('.card').html(data);
                     fixedPlugin.classList.add('show');    
