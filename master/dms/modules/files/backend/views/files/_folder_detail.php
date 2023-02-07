@@ -53,19 +53,19 @@
 		    <table class="table align-items-center mb-0">
 		    	<tbody>
 		    		<tr>
-		    			<td class="mwc-150"><span class="text-xs text-secondary"><?= $model->getLabel('name', FALSE); ?></span></td>
-		    			<td><span class="text-xs text-dark"><?= $model->name ?></span></td>
+		    			<td class="mwc-150"><span class="text-sm text-secondary"><?= $model->getLabel('name', FALSE); ?></span></td>
+		    			<td><span class="text-sm text-dark"><?= $model->name ?></span></td>
 		    		</tr>
 
 		    		<tr>
-		    			<td class="mwc-150"><span class="text-xs text-secondary"><?= $model->getLabel('description', FALSE); ?></span></td>
-		    			<td><span class="text-xs text-dark"><?= $model->description ?></span></td>
+		    			<td class="mwc-150"><span class="text-sm text-secondary"><?= $model->getLabel('description', FALSE); ?></span></td>
+		    			<td><span class="text-sm text-dark"><?= $model->description ?></span></td>
 		    		</tr>
 
 		    		<tr>
-		    			<td class="mwc-150"><span class="text-xs text-secondary"><?= $model->getLabel('user_access', FALSE); ?></span></td>
+		    			<td class="mwc-150"><span class="text-sm text-secondary"><?= $model->getLabel('user_access', FALSE); ?></span></td>
 		    			<td style="white-space: normal; max-width: 300px;">
-		    				<span class="text-xs text-dark">
+		    				<span class="text-sm text-dark">
 		    					<?php
 				                    if($model->user_access != NULL) {
 				                      $user_email = array();
@@ -94,18 +94,18 @@
 		    		</tr>
 
 		    		<tr>
-		    			<td class="mwc-150"><span class="text-xs text-secondary"><?= $model->getLabel('created_by', FALSE); ?></span></td>
-		    			<td><span class="text-xs text-dark"><?= $user_model->fullname ?></span></td>
+		    			<td class="mwc-150"><span class="text-sm text-secondary"><?= $model->getLabel('created_by', FALSE); ?></span></td>
+		    			<td><span class="text-sm text-dark"><?= $user_model->fullname ?></span></td>
 		    		</tr>
 
 		    		<tr>
-		    			<td class="mwc-150"><span class="text-xs text-secondary"><?= $model->getLabel('created_on', FALSE); ?></span></td>
-		    			<td><span class="text-xs text-dark"><?= date('d M Y h:i:s', strtotime($model->created_on)) ?></span></td>
+		    			<td class="mwc-150"><span class="text-sm text-secondary"><?= $model->getLabel('created_on', FALSE); ?></span></td>
+		    			<td><span class="text-sm text-dark"><?= date('d M Y h:i:s', strtotime($model->created_on)) ?></span></td>
 		    		</tr>
 
 		    		<tr>
-		    			<td class="mwc-150"><span class="text-xs text-secondary"><?= $model->getLabel('updated_on', FALSE); ?></span></td>
-		    			<td><span class="text-xs text-dark"><?= date('d M Y h:i:s', strtotime($model->updated_on)) ?></span></td>
+		    			<td class="mwc-150"><span class="text-sm text-secondary"><?= $model->getLabel('updated_on', FALSE); ?></span></td>
+		    			<td><span class="text-sm text-dark"><?= date('d M Y h:i:s', strtotime($model->updated_on)) ?></span></td>
 		    		</tr>
 		    		
 		    	</tbody>
@@ -118,7 +118,7 @@
 	  <div class="tab-pane fade" id="nav-log" role="tabpanel" aria-labelledby="nav-log-tab">
 
 	  	<?php if($model_logs == NULL) : ?>
-	  		<p class="text-xs text-secondary p-sm-4">Tidak ada aktivitas</p>
+	  		<p class="text-sm text-secondary p-sm-4">Tidak ada aktivitas</p>
 
 	  	<?php else : ?>
 
@@ -134,7 +134,7 @@
 							<span><i class="fa fa-user-o"></i></span>
 						</td>
 						<td>
-							<p class="text-dark text-xs mb-1 token important" style="color: #000;"><?= $log_created->fullname ?></p>
+							<p class="text-dark text-sm mb-1 token important" style="color: #000;"><?= $log_created->fullname ?></p>
 							<p class="text-secondary text-xs mb-2"><?= date('d M Y h:i:s', strtotime($log->created_on)) ?></p>
 							<p class="text-xs mb-0"><?= $log->description ?></p>
 						</td>

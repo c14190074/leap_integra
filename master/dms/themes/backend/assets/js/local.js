@@ -297,16 +297,16 @@ $(document).ready(function() {
         });
     });
 
-    $('body').on('click', '.view-file-attribute', function() {
-        var folder_id = $(this).data('folder-id');
-        var ajaxUrl = baseUrl + 'admin/files/viewfile?ajax=1&folder_id='+folder_id;
-        $.get(ajaxUrl, function(data, status){
-            // $('#modal-view-file').modal('hide');
-            $('.modal').modal('hide');
-            $('#view-file-container').html(data);
-            $('#modal-view-file').modal('show');
-        });
-    });
+    // $('body').on('click', '.view-file-attribute', function() {
+    //     var folder_id = $(this).data('folder-id');
+    //     var ajaxUrl = baseUrl + 'admin/files/viewfile?ajax=1&folder_id='+folder_id;
+    //     $.get(ajaxUrl, function(data, status){
+    //         // $('#modal-view-file').modal('hide');
+    //         $('.modal').modal('hide');
+    //         $('#view-file-container').html(data);
+    //         $('#modal-view-file').modal('show');
+    //     });
+    // });
 
 
     $('body').on('click', '#btn-open-file', function() {
@@ -423,7 +423,9 @@ $(document).ready(function() {
         $('body').on('click', '.show-right-slider', function() {
             if (!fixedPlugin.classList.contains('show')) {
                 var folder_id = $(this).data('folder-id');
-                var ajaxUrl = baseUrl + 'admin/files/folderdetail?ajax=1&folder_id='+folder_id;
+                var action_url = $(this).data('action');
+                var ajaxUrl = baseUrl + 'admin/files/'+action_url+'?ajax=1&folder_id='+folder_id;
+                
                 $.get(ajaxUrl, function(data, status){
                     $('#right-slider-container').find('.card').html(data);
                     fixedPlugin.classList.add('show');    
@@ -439,8 +441,6 @@ $(document).ready(function() {
       $('body').on('click', '.fixed-plugin-close-button', function() {
         fixedPlugin.classList.remove('show');
       });
-
-      
 
       document.querySelector('body').onclick = function(e) {
         if(!$(this).hasClass('modal-open') && $('.swal2-container').length < 1) {

@@ -82,7 +82,7 @@
                         <a href="<?= Snl::app()->baseUrl() ?>admin/files/index?folder=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a>
 
                       <?php else : ?>
-                        <p class="text-sm mb-0 view-file-attribute" role="button" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>">
+                        <p class="text-sm mb-0 show-right-slider" role="button" data-action="viewfile" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>">
                           <?= $folder->name ?>
                         </p>
 
@@ -90,9 +90,8 @@
 
                       <?php if($folder->isTheOwner() && $folder->type == "folder") : ?>
                         
-                        <i role="button" class="fa fa-info-circle text-secondary text-xxs ms-1 show-right-slider" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
-                        <i role="button" class="fa fa-pencil text-secondary text-xxs ms-1 edit-folder hidden" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
-                        <i role="button" class="fa fa-trash text-secondary text-xxs ms-1 delete-folder hidden" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
+                        <i role="button" class="fa fa-info-circle text-secondary text-xxs ms-1 show-right-slider" data-action="folderdetail" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
+
                       <?php endif; ?>
                     </h6>
                   </div>

@@ -154,5 +154,6 @@ span.view-file-attribute:hover {
 .fixed-plugin .card {
     right: -450px;
     width: 450px;
+    overflow: auto;
 }
 
