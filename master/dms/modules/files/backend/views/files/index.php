@@ -64,9 +64,11 @@
                     <?php
                       if($folder->type == "file") {
                         if($folder->format == "pdf") {
-                          echo "<i class='fa fa-file-pdf-o opacity-6 text-dark me-3'></i>";
+                          // echo "<i class='fa fa-file-pdf-o opacity-6 text-dark me-3'></i>";
+                          echo  "<img class='w-100 pe-2' src='https://localhost/leap_integra/master/dms/uploads/pdflogo_list.png' />";
                         } else if($folder->format == "doc" || $folder->format == "docx" || $folder->format == "docs") {
-                          echo "<i class='fa fa-file-word-o opacity-6 text-dark me-3'></i>";
+                          // echo "<i class='fa fa-file-word-o opacity-6 text-dark me-3'></i>";
+                          echo  "<img class='w-100 pe-2' src='https://localhost/leap_integra/master/dms/uploads/wordlogo_list.png' />";
                         } else {
                           echo "<i class='fa fa-file opacity-6 text-dark me-3'></i>";
                         }
