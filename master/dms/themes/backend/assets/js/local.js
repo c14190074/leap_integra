@@ -405,14 +405,49 @@ $(document).ready(function() {
         });
     });
 
-    $('body').on('click', '.info-folder', function() {
-        var folder_id = $(this).data('folder-id');
-        var ajaxUrl = baseUrl + 'admin/files/folderdetail?ajax=1&folder_id='+folder_id;
-        $.get(ajaxUrl, function(data, status){
-            $('.modal').modal('hide');
-            $('#folder-attribute-container').html(data);
-            $('#modal-folder-detail').modal('show');
-        });
-    });
+    // $('body').on('click', '.info-folder', function() {
+    //     var folder_id = $(this).data('folder-id');
+    //     var ajaxUrl = baseUrl + 'admin/files/folderdetail?ajax=1&folder_id='+folder_id;
+    //     $.get(ajaxUrl, function(data, status){
+    //         $('.modal').modal('hide');
+    //         $('#folder-attribute-container').html(data);
+    //         $('#modal-folder-detail').modal('show');
+    //     });
+    // });
 
+    if (document.querySelector('.fixed-plugin')) {
+      var fixedPlugin = document.querySelector('.fixed-plugin');
+      var fixedPluginButton = document.querySelector('.show-right-slider');
+      
+      if (fixedPluginButton) {
+        $('body').on('click', '.show-right-slider', function() {
+            if (!fixedPlugin.classList.contains('show')) {
+                var folder_id = $(this).data('folder-id');
+                var ajaxUrl = baseUrl + 'admin/files/folderdetail?ajax=1&folder_id='+folder_id;
+                $.get(ajaxUrl, function(data, status){
+                    $('#right-slider-container').find('.card').html(data);
+                    fixedPlugin.classList.add('show');    
+                });
+
+                
+            } else {
+                fixedPlugin.classList.remove('show');
+            }            
+        });
+      }
+
+      $('body').on('click', '.fixed-plugin-close-button', function() {
+        fixedPlugin.classList.remove('show');
+      });
+
+      
+
+      document.querySelector('body').onclick = function(e) {
+        if(!$(this).hasClass('modal-open') && $('.swal2-container').length < 1) {
+            if (e.target != fixedPluginButton && e.target != fixedPluginButtonNav && e.target.closest('.fixed-plugin .card') != fixedPluginCard) {
+              fixedPlugin.classList.remove('show');
+            }
+        }
+      }
+    }
 });

@@ -359,7 +359,17 @@
 	        </div>
 	    </div>
 	</div>
+
+	<!-- slide right -->
+	<div class="fixed-plugin" id="right-slider-container">
+	    <div class="card shadow-lg ">
+	      
+	    </div>
+  	</div>
 	<?php endif; ?>
+
+
+
 
 </main>
 	<!--   Core JS Files   -->
@@ -432,7 +442,7 @@
 	    }
     </script>
 	<!-- Local Custom -->
-	<script src="<?= Snl::app()->config()->theme_url ?>assets_soft/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+	<script src="<?= Snl::app()->config()->theme_url ?>assets_soft/js/soft-ui-dashboard.js?v=1.0.7"></script>
     <script src="<?= Snl::app()->config()->theme_url ?>assets/js/local.js"></script>
 </body>
 </html>

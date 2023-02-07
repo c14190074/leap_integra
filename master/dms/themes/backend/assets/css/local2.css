@@ -9,6 +9,12 @@
 span.view-file-attribute:hover {
     text-decoration: underline;
 }
+
+.mwc-150 {
+    max-width: 150px;
+    white-space: normal !important;
+}
+
 /**
  * JSGRID
  */
@@ -140,3 +146,13 @@ span.view-file-attribute:hover {
     color: #000;
     font-size: 3rem;
 }
+
+/**
+* RIGHT SLIDER
+*/
+
+.fixed-plugin .card {
+    right: -450px;
+    width: 450px;
+}
+
