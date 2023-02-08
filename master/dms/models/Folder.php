@@ -248,4 +248,24 @@
 			return count($model);
 		}
 
+		public static function hasSharedFolder($user_id) {
+			$model = Folder::model()->findAll(array(
+				'condition' => 'is_deleted = 0 AND type = "folder" AND user_access IS NOT NULL AND created_by != :id',
+				'params'	=> array(':id' => $user_id)
+			));
+
+			$ctr = 0;
+			if($model == NULL) {
+				return FALSE;
+			} else {
+				foreach($model as $folder) {
+					if($folder->hasAccess()) {
+						$ctr++;
+					}
+				}
+			}
+
+			return $ctr == 0 ? FALSE : TRUE;
+		}
+
 	}

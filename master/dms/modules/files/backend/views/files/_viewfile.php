@@ -201,8 +201,8 @@
 
 		      	<?php endforeach;?>
 		      </tbody>
-		  </table>
-		</div>
+		  	</table>
+			</div>
 		<?php endif; ?>
 
 	  </div>
