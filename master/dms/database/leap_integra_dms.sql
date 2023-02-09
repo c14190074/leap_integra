@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2023 at 06:36 AM
+-- Generation Time: Feb 09, 2023 at 03:23 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.26
 
@@ -59,7 +59,7 @@ INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `is_revision`
 (1, 0, 'UK Petra 2019', 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Data kuliah', NULL, '2023-01-25 12:41:09', 3, '2023-01-25 12:41:09', 3, 0),
 (2, 0, 'Pelindo', 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', NULL, '2023-01-25 12:57:53', 1, '2023-01-26 16:26:40', 1, 1),
 (3, 0, 'Project POS', 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', NULL, '2023-01-25 12:58:52', 3, '2023-01-25 12:58:52', 3, 0),
-(4, 0, 'Project Android - POS', 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', '[{\"user\":\"1\",\"role\":[\"view\"]}]', '2023-01-25 12:59:15', 3, '2023-02-06 12:19:54', 3, 0),
+(4, 0, 'Project Android - POS', 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', '[{\"user\":\"1\",\"role\":[\"view\"]}]', '2023-01-25 12:59:15', 3, '2023-02-08 11:25:07', 3, 0),
 (5, 0, 'Project Android - DMS', 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Project android untuk Leap', NULL, '2023-01-26 10:08:23', 3, '2023-01-26 10:08:23', 3, 0),
 (6, 0, 'SMK N 1 Tuban', 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Data sekolah', NULL, '2023-01-26 16:15:23', 1, '2023-01-26 16:25:11', 1, 1),
 (7, 2, 'Pertemuan 1', 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Diskusi fitur app', NULL, '2023-01-26 16:26:09', 1, '2023-01-26 16:26:31', 1, 1),
@@ -79,14 +79,14 @@ INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `is_revision`
 (22, 18, 'FilePDF.pdf', 0, 0, 0, '34', 'fddf', '45435435', 'dss', '[\"15\"]', 'file', 'pdf', '84.9 KB', 'asdsadsa', '[{\"user\":\"3\",\"role\":[\"view\"]},{\"user\":\"2\",\"role\":[\"view\"]}]', '2023-02-04 13:53:19', 1, '2023-02-04 13:53:19', 1, 0),
 (23, 18, '', NULL, NULL, NULL, '', '', '', '', NULL, 'file', 'pdf', '118.92 KB', '', NULL, '2023-02-04 15:37:35', 1, '2023-02-04 15:37:35', 1, 0),
 (24, 18, 'EF_TestResult.pdf', 1, 1, 19, '125704022023', 'test', '1257', '#tes', NULL, 'file', 'pdf', '118.92 KB', 'Revisi untuk fileDoc jam 15.44', '[{\"user\":\"2\",\"role\":[\"view\"]},{\"user\":\"3\",\"role\":[\"view\",\"edit\"]}]', '2023-02-04 15:44:28', 1, '2023-02-04 15:44:28', 1, 0),
-(25, 0, 'EKK', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'semua materi', NULL, '2023-02-05 09:42:09', 1, '2023-02-05 09:56:28', 1, 0),
+(25, 0, 'Etika Keluarga Kristen', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'semua materi', NULL, '2023-02-05 09:42:09', 1, '2023-02-07 12:00:32', 1, 0),
 (26, 25, 'EF_TestResult.pdf', 0, NULL, NULL, '213', 'test result', '2323', '#test', NULL, 'file', 'pdf', '118.92 KB', '', NULL, '2023-02-05 10:13:10', 1, '2023-02-05 10:13:10', 1, 0),
 (27, 0, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', NULL, '2023-02-05 11:56:00', 1, '2023-02-05 11:56:08', 1, 1),
 (28, 25, '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', NULL, '2023-02-05 13:11:17', 1, '2023-02-05 13:15:11', 1, 1),
 (29, 0, 'EF_TestResult.pdf', 0, NULL, NULL, '', '', '', '', NULL, 'file', 'pdf', '118.92 KB', '', NULL, '2023-02-05 13:26:02', 1, '2023-02-05 13:26:02', 1, 0),
 (30, 0, 'EF_TestResult.pdf', 0, NULL, NULL, '', '', '', '', NULL, 'file', 'pdf', '118.92 KB', '', NULL, '2023-02-05 13:26:49', 1, '2023-02-05 13:26:49', 1, 0),
 (31, 0, 'EF_TestResult.pdf', 0, NULL, NULL, '', '', '', '', NULL, 'file', 'pdf', '118.92 KB', '', NULL, '2023-02-05 13:29:16', 1, '2023-02-05 13:29:16', 1, 0),
-(32, 0, 'Statdas', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', NULL, '2023-02-06 10:32:28', 1, '2023-02-06 10:32:47', 1, 0),
+(32, 0, 'Statistika Dasar', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', NULL, '2023-02-06 10:32:28', 1, '2023-02-07 11:57:35', 1, 0),
 (33, 4, 'Penjelasan DMS.txt', 0, NULL, NULL, '23232', 'dms', '23123', 'dms', NULL, 'file', 'txt', '3.74 KB', '', NULL, '2023-02-06 12:19:32', 3, '2023-02-06 12:19:32', 3, 0);
 
 -- --------------------------------------------------------
@@ -126,7 +126,11 @@ INSERT INTO `tbl_logs` (`logs_id`, `file_target_id`, `type`, `description`, `cre
 (12, 32, 'folder', 'membuat folder baru dengan nama undifined', '2023-02-06 10:32:29', 1, '2023-02-06 10:32:29', 1, 0),
 (13, 32, 'folder', 'mengubah attribut pada folder Statdas', '2023-02-06 10:32:48', 1, '2023-02-06 10:32:48', 1, 0),
 (14, 33, 'file', 'mengunggah file baru Penjelasan DMS.txt', '2023-02-06 12:19:32', 3, '2023-02-06 12:19:32', 3, 0),
-(15, 4, 'folder', 'mengubah attribut pada folder Project Android - POS', '2023-02-06 12:19:55', 3, '2023-02-06 12:19:55', 3, 0);
+(15, 4, 'folder', 'mengubah attribut pada folder Project Android - POS', '2023-02-06 12:19:55', 3, '2023-02-06 12:19:55', 3, 0),
+(16, 32, 'folder', 'mengubah attribut pada folder Statistika Dasar', '2023-02-07 11:57:35', 1, '2023-02-07 11:57:35', 1, 0),
+(17, 25, 'folder', 'mengubah attribut pada folder Etika Keluarga Kristen', '2023-02-07 12:00:33', 1, '2023-02-07 12:00:33', 1, 0),
+(18, 4, 'folder', 'mengubah attribut pada folder Project Android - POS', '2023-02-08 11:24:21', 3, '2023-02-08 11:24:21', 3, 0),
+(19, 4, 'folder', 'mengubah attribut pada folder Project Android - POS', '2023-02-08 11:25:08', 3, '2023-02-08 11:25:08', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -200,7 +204,7 @@ ALTER TABLE `tbl_folder`
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
