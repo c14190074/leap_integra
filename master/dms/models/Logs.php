@@ -1,6 +1,6 @@
 <?php
 	class Logs extends SnlActiveRecord {
-		public $logs_id, $file_target_id, $type, $description, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $logs_id, $file_target_id, $act, $type, $description, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 
 		public function __construct() {
 		  $this->classname = 'Logs';
@@ -23,6 +23,7 @@
 			$labels = array(
 				'logs_id' => 'Log ID',
 				'file_target_id' => 'File',
+				'act' => 'Tindakan',
 				'type' => 'Type',
 				'description' => 'Deskripsi',
 				'created_on' => 'Created On',
@@ -82,12 +83,40 @@
 			return TRUE;
 		}
 
-		public static function create_logs($file_target_id, $type, $description) {
-			$model = new Logs();
-			$model->file_target_id = $file_target_id;
-			$model->type = $type;
-			$model->description = $description;
-			return $model->save() ? TRUE : FALSE;
+		public static function create_logs($file_target_id, $act = 'general', $type, $description) {
+			$needLog = TRUE;
+			$model = Logs::model()->findByAttribute(array(
+				'condition' => 'file_target_id = :id AND is_deleted = 0 AND act = :act AND type = :type AND description = :description ORDER BY created_on DESC',
+				'params'	=> array(
+					':id' => $file_target_id,
+					':act' => $act,
+					':type' => $type,
+					':description' => $description,
+				)
+			));
+
+			if($model != NULL) {
+				if(date('Y-m-d H:i', strtotime(Snl::app()->dateNow())) == date('Y-m-d H:i', strtotime($model->created_on))) {
+					$needLog = FALSE;
+				}
+			}
+
+			if($needLog) {
+				$model = new Logs();
+				$model->file_target_id = $file_target_id;
+				$model->act = $act;
+				$model->type = $type;
+				$model->description = $description;
+
+				if($model->save()) {
+					return TRUE;
+				} else {
+					return FALSE;
+				}
+			} else {
+				return TRUE;
+			}
+
 		}
 
 	}

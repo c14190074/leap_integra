@@ -1,6 +1,6 @@
 <?php
 	class Folder extends SnlActiveRecord {
-		public $folder_id, $folder_parent_id, $name, $is_revision, $no_revision, $original_id, $nomor, $perihal, $unit_kerja, $keyword, $related_document, $type, $format, $size, $description, $user_access, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $folder_id, $folder_parent_id, $name, $is_revision, $no_revision, $original_id, $nomor, $perihal, $unit_kerja, $keyword, $related_document, $type, $format, $size, $description, $user_access, $last_viewed, $last_downloaded, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 
 		public function __construct() {
 		  $this->classname = 'Folder';

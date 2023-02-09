@@ -10,7 +10,7 @@
               } else if($model->format == "doc" || $model->format == "docx" || $model->format == "docs") {
                 echo "<img class='w-90' src='".Snl::app()->baseUrl()."uploads/wordlogo.png' />";
               } else {
-                echo "<i class='fa fa-folder opacity-6 text-dark me-3'></i>";
+                echo "<i class='fa fa-file opacity-6 text-dark me-3'></i>";
               }
           ?>
        </h1>
@@ -19,11 +19,11 @@
 			<div class="row">
 				<?php if($model->hasViewAccess()) : ?>
 					<div class="col-md-6 pe-1 ps-0">
-						<button type="button" class="btn btn-outline-info w-100" style="font-size: 11px;" id="btn-open-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>" data-format="<?= $model->format ?>"><i class="me-2 fa fa-eye"></i>Lihat</button>
+						<button type="button" class="btn btn-outline-info w-100" style="font-size: 11px;" id="btn-open-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>" data-format="<?= $model->format ?>" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-eye"></i>Lihat</button>
 					</div>
 
 					<div class="col-md-6 pe-0 ps-0">
-						<button type="button" class="btn btn-outline-info w-100" style="font-size: 11px;" id="btn-download-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>"><i class="me-2 fa fa-download"></i>Unduh</button>
+						<button type="button" class="btn btn-outline-info w-100" style="font-size: 11px;" id="btn-download-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-download"></i>Unduh</button>
 					</div>
 					<?php endif; ?>
 					

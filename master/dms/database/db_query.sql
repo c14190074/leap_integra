@@ -82,3 +82,7 @@ CREATE TABLE IF NOT EXISTS `tbl_logs` (
 	`is_deleted` TINYINT(1) DEFAULT 0 COMMENT '0=No; 1=Yes',
 	PRIMARY KEY (`logs_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tbl_folder` ADD `last_viewed` DATETIME DEFAULT NULL AFTER `user_access`;
+ALTER TABLE `tbl_folder` ADD `last_downloaded` DATETIME DEFAULT NULL AFTER `last_viewed`;
+ALTER TABLE `tbl_logs` ADD `act` VARCHAR(255) DEFAULT 'general' AFTER `file_target_id`;

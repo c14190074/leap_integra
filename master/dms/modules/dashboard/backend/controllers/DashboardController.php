@@ -8,7 +8,7 @@
 			$this->page_title = 'Dashboard';
 
 			$logs = Logs::model()->findAll(array(
-				'condition' => 'is_deleted = 0 AND created_by = :id ORDER BY updated_on DESC LIMIT 3',
+				'condition' => 'is_deleted = 0 AND created_by = :id AND (act != "open" OR type != "folder") ORDER BY updated_on DESC LIMIT 3',
 				'params'	=> array(':id' => Snl::app()->user()->user_id)
 			));
 
@@ -17,10 +17,17 @@
 				'params'	=> array(':id' => Snl::app()->user()->user_id)
 			));
 
+			$recents = Logs::model()->findAll(array(
+				// 'select'	=> 'logs_id, DISTINCT file_target_id, act, type, description, created_on, created_by, updated_on, updated_by, is_deleted',
+				'condition' => 'is_deleted = 0 AND created_by = :id AND act = "open" AND logs_id IN (SELECT MAX(logs_id) FROM tbl_logs GROUP BY file_target_id) ORDER BY created_on DESC',
+				'params'	=> array(':id' => Snl::app()->user()->user_id)
+			));
+
 			return $this->render('index', array(
 				'toolbar' 	=> $this->toolbar(),
 				'logs'		=> $logs,
-				'folders'	=> $folders
+				'folders'	=> $folders,
+				'recents'	=> $recents,
 			));
 		}
 

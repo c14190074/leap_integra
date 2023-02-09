@@ -33,7 +33,8 @@
 				// untuk membuat breadcrumbs
 				if($folder_id > 0) {
 					$folder_parent = Folder::model()->findByPk($folder_id);
-
+					Logs::create_logs($folder_parent->folder_id, 'open', 'folder', 'membuka folder '.$folder_parent->name);
+					
 					$data = array(
 						'url' 	=> 'index?folder='.SecurityHelper::encrypt($folder_parent->folder_id),
 						'name' 	=> ucwords(strtolower($folder_parent->name))
@@ -98,11 +99,11 @@
 				if($model->save()) {
 					Snl::app()->setFlashMessage($message_result, 'info');
 					if($isNewRecord) {
-						Logs::create_logs($model->folder_id, 'folder', 'membuat folder baru dengan nama '.$model->name);
+						Logs::create_logs($model->folder_id, 'create', 'folder', 'membuat folder baru dengan nama '.$model->name);
 
 						$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_id));
 					} else {
-						Logs::create_logs($model->folder_id, 'folder', 'mengubah attribut pada folder '.$model->name);
+						Logs::create_logs($model->folder_id, 'update', 'folder', 'mengubah attribut pada folder '.$model->name);
 
 						if($model->folder_parent_id == 0) {
 							$this->redirect('admin/files/index');
@@ -142,7 +143,7 @@
 
 
 				if($model->save()) {
-					Logs::create_logs($model->folder_id, 'file', 'mengunggah file baru '.$model->name);
+					Logs::create_logs($model->folder_id, 'upload', 'file', 'mengunggah file baru '.$model->name);
 					Snl::app()->setFlashMessage('File baru berhasil ditambahkan.', 'info');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
 				} else {
@@ -169,7 +170,7 @@
 				
 
 				if($model->save()) {
-					Logs::create_logs($model->folder_id, 'file', 'melakukan revisi dengan file baru '.$model->name);
+					Logs::create_logs($model->folder_id, 'revisi', 'file', 'melakukan revisi dengan file baru '.$model->name);
 					Snl::app()->setFlashMessage('File revisi berhasil ditambahkan.', 'info');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
 				} else {
@@ -287,10 +288,10 @@
 
 				if($model->save()) {
 					if($type == 'file') {
-						Logs::create_logs($model->folder_id, 'file', 'menghapus file '.$model->name);
+						Logs::create_logs($model->folder_id, 'delete', 'file', 'menghapus file '.$model->name);
 						Snl::app()->setFlashMessage('File '.$model->name.' berhasil dihapus.', 'info');
 					} else {
-						Logs::create_logs($model->folder_id, 'folder', 'menghapus folder '.$model->name);
+						Logs::create_logs($model->folder_id, 'delete', 'menghapus folder '.$model->name);
 						Snl::app()->setFlashMessage('Folder '.$model->name.' berhasil dihapus.', 'info');	
 					}
 					
@@ -371,6 +372,17 @@
 			));
 		}
 		
+		public function createlogfile() {
+			$folder_id = SecurityHelper::decrypt($_POST['folder_id']);
+			$act = $_POST['act'];
+			$model = Folder::model()->findByPk($folder_id);
+
+			if($act == 'open') {
+				echo Logs::create_logs($model->folder_id, $act, 'file', 'melihat file '.$model->name);
+			} else {
+				echo Logs::create_logs($model->folder_id, $act, 'file', 'mengunduh file '.$model->name);
+			}
+		}
 
 		// public function getfilefromserver() {
 		// 	// $filename="https://localhost/leap_integra/master/dms/uploads/documents/FileDoc.docx";

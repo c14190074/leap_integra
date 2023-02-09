@@ -312,17 +312,26 @@ $(document).ready(function() {
     $('body').on('click', '#btn-open-file', function() {
         var fileUrl = $(this).data('url');
         var fileFormat = $(this).data('format');
+        var folder_id = $(this).data('folder-id');
+        var ajaxUrl = baseUrl + 'admin/files/createlogfile?ajax=1';
 
-        if(fileFormat == 'docx') {
-            generate(fileUrl);
-        } else {
-            window.open(fileUrl, '_blank');
-        }
+        $.post(ajaxUrl, {folder_id:folder_id, act:'open'}, function(result) {
+            if(fileFormat == 'docx') {
+                generate(fileUrl);
+            } else {
+                window.open(fileUrl, '_blank');
+            }
+        });
     });
 
     $('body').on('click', '#btn-download-file', function() {
         var fileUrl = $(this).data('url');
-        window.open(fileUrl, '_blank');
+        var folder_id = $(this).data('folder-id');
+        var ajaxUrl = baseUrl + 'admin/files/createlogfile?ajax=1';
+
+        $.post(ajaxUrl, {folder_id:folder_id, act:'download'}, function(result) {
+            window.open(fileUrl, '_blank');
+        });
     });
 
     $('body').on('click', '#btn-delete-file', function() {
