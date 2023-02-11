@@ -1,7 +1,6 @@
 <?php
     echo $toolbar;
     echo Snl::app()->getFlashMessage();
-    // print_r($GLOBALS['parentfolderid']);
 ?>
 
 <input type="hidden" id="folder_parent_name" value="<?= $folder_parent != NULL ? ucwords(strtolower($folder_parent->name)) : '' ?>" />

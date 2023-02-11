@@ -369,11 +369,12 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '.append-user-role', function() {
+        var folder_id = $(this).data('folder-id');
         var ajaxUrl = baseUrl + 'admin/files/addroleoption?ajax=1';
         $.ajax({
            url: ajaxUrl,
            type: 'post',
-           data: {request: 2},
+           data: {request: 2, folder_id: folder_id},
            success: function(response){
              // Append element
             $('#user-access-role').find('tbody').append(response);

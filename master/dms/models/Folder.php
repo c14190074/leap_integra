@@ -126,9 +126,14 @@
 			return $folder_ctr;
 		}
 
-		public function hasAccess() {
+		public function hasAccess($id = 0) {
 			$user_access = array();
 			$user_ids = array();
+
+			if($id == 0) {
+				$id = Snl::app()->user()->user_id;
+			}
+
 			if($this->user_access != NULL) {
 				$user_access = json_decode($this->user_access);
 			}
@@ -137,7 +142,7 @@
 				array_push($user_ids, $d->user);
 			}
 
-			if($this->created_by == Snl::app()->user()->user_id || in_array(Snl::app()->user()->user_id, $user_ids)) {
+			if($this->created_by == $id || in_array($id, $user_ids)) {
 				return true;
 			}
 

@@ -294,7 +294,9 @@
 													            	<?php 
 													            		if($user_model != NULL) {
 													            			foreach($user_model as $d) {
-													            				echo "<option value='".$d->user_id."'>".ucwords(strtolower($d->fullname))."</option>";
+													            				if($d->hasFolderAccess($parentfolderid)) {
+													            					echo "<option value='".$d->user_id."'>".ucwords(strtolower($d->fullname))."</option>";	
+													            				}
 													            			}
 													            		}
 													            	?>
@@ -308,7 +310,7 @@
 
 												      		</td>
 												      		<td>
-												      			<i class="fa fa-plus text-sm me-2 link-info append-user-role" role="button"></i>
+												      			<i class="fa fa-plus text-sm me-2 link-info append-user-role" role="button" data-folder-id="<?= $parentfolderid ?>"></i>
 												      			<i class="fa fa-times text-sm me-2 link-danger remove-user-role" role="button"></i>
 												      		</td>
 												      	</tr>

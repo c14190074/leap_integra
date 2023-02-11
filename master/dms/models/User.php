@@ -206,4 +206,13 @@
 
 			return $result;
 		}
+
+		public function hasFolderAccess($folder_id) {
+			$model = Folder::model()->findByPk($folder_id);
+			if($model != NULL) {
+				return $model->hasAccess($this->user_id);
+			}
+			
+			return FALSE;
+		}
 	}

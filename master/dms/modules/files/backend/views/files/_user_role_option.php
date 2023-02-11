@@ -4,7 +4,9 @@
 			<?php 
         		if($model != NULL) {
         			foreach($model as $d) {
-        				echo "<option value='".$d->user_id."'>".ucwords(strtolower($d->fullname))."</option>";
+        				if($d->hasFolderAccess($folder_id)) {
+        					echo "<option value='".$d->user_id."'>".ucwords(strtolower($d->fullname))."</option>";	
+        				}
         			}
         		}
         	?>

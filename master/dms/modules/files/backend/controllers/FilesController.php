@@ -339,11 +339,14 @@
 		}
 		
 		public function addroleoption() {
+			$folder_id = isset($_POST['folder_id']) ? $_POST['folder_id'] : 0;
+
 			$user_model = User::model()->findAll(array(
 				'condition' => 'is_deleted = 0 AND status = 1 AND user_id != :id',
 				'params'	=> array('id' => Snl::app()->user()->user_id)
 			));
-			echo $this->render('_user_role_option', array('model' => $user_model));
+
+			echo $this->render('_user_role_option', array('model' => $user_model, 'folder_id' => $folder_id));
 		}
 
 		public function getrevisiform() {
