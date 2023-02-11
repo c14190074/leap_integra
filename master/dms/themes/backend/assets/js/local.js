@@ -221,6 +221,7 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '#upload-file-btn', function() {
+        initLoading();
         var form = "app_form_upload";
         var ajaxUrl = baseUrl + 'admin/files/validatefileattribute?ajax=1';
         var post = $('#app_form_upload').serializeArray();
@@ -283,7 +284,7 @@ $(document).ready(function() {
         }).then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-            // initLoading();
+            initLoading();
 
             var ajaxUrl = baseUrl + 'admin/files/deletefolder?ajax=1';
             $.post(ajaxUrl, {folder_id:folder_id}, function(result) {
