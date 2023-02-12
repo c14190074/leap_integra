@@ -193,11 +193,26 @@ $(document).ready(function() {
       $("#alert-msg").slideUp(500);
     });
     
+
     var myDropzoneRevisi;
     var myDropzone = new Dropzone("#my-dropzone", { 
         autoProcessQueue: false,
         maxFilesize: 1,
+        uploadMultiple: false,
         acceptedFiles: ".doc,.docx,.pdf,.txt",
+        init: function() {
+          this.on("addedfile", function(file) {
+            var filelogo = baseUrl + 'uploads/wordlogo.png';
+
+            if(getFileExtension(file.name) == 'pdf') {
+                filelogo = baseUrl + 'uploads/pdflogo.png';
+            }
+
+            $('#upload-file-container').find('.dz-image img').attr('src', filelogo);
+            $('#upload-file-container').find('.dz-progress span').html('Loading');
+
+          })
+        },
         success : function(file, response){
             $('#upload-file-container').find('#Folder_name').val(file.name);
             $('#upload-file-container').find('#Folder_format').val(getFileExtension(file.name));
@@ -408,6 +423,19 @@ $(document).ready(function() {
                 autoProcessQueue: false,
                 maxFilesize: 1,
                 acceptedFiles: ".doc,.docx,.pdf",
+                init: function() {
+                  this.on("addedfile", function(file) {
+                    var filelogo = baseUrl + 'uploads/wordlogo.png';
+
+                    if(getFileExtension(file.name) == 'pdf') {
+                        filelogo = baseUrl + 'uploads/pdflogo.png';
+                    }
+
+                    $('#revisi-file-container').find('.dz-image img').attr('src', filelogo);
+                    $('#revisi-file-container').find('.dz-progress span').html('Loading');
+
+                  })
+                },
                 success : function(file, response){
                     console.log(file);
                     $('#modal-revisi-form').find('#Folder_name').val(file.name);

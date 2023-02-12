@@ -101,10 +101,16 @@ span.view-file-attribute:hover {
     margin-right: auto;*/
 }
 
+.dropzone .dz-preview {
+    margin: 30px;
+}
+
 .dropzone .dz-preview .dz-progress {
     border: 3px solid #17c1e8;
-    background-color: #17c1e8;
-    height: 0;
+    background-color: transparent;
+    height: 30px;
+    border-radius: 17px;
+/*    display: none;*/
 }
 
 .dropzone .dz-preview.dz-file-preview .dz-image {
@@ -112,6 +118,32 @@ span.view-file-attribute:hover {
     background: #fff;
     border: 1px solid lightgrey;
     border-style: dashed;
+    border: none;
+    background: none;
+    opacity: 0.7;
+}
+
+.dropzone .dz-preview .dz-image img {
+    max-width: 100%;
+}
+
+.dropzone .dz-preview.dz-file-preview .dz-details {
+    top: 120px;
+    padding: 0;
+}
+
+.dropzone .dz-preview .dz-details .dz-size {
+    margin-bottom: 0;
+}
+
+.dropzone .dz-preview .dz-details .dz-size span, .dropzone .dz-preview .dz-details .dz-filename span {
+    background: none;
+    font-size: 13px;
+    line-height: 0;
+}
+
+.dropzone .dz-preview .dz-progress .dz-upload {
+    width: 100%;
 }
 
 /**

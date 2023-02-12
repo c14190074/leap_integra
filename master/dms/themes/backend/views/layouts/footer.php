@@ -190,7 +190,8 @@
 								        <button type="button" class="btn btn-default">Pilih Dokumen</button>
 								    </div>
 								</form>
-
+								<p class="text-xs text-secondary mb-0">Format File: .docx dan .pdf</p>
+								<p class="text-xs text-secondary">Ukuran Maksimal: 1 MB</p>
 								<hr style="border-top: 1px solid aquamarine !important;" />
 
 								<form role="form text-left" id="app_form_upload" action="<?= Snl::app()->baseUrl() ?>admin/files/savedocumentattribute" method="POST">
@@ -201,7 +202,7 @@
 								        </div>
 								    </div>
 
-									<div class="form-group" style="display: none;">
+									<div class="form-group" style="display: block;">
 								        <label class="col-md-12"><?= $model_file->getLabel('name', TRUE); ?></label>
 								        <div class="col-md-12">
 								            <?= Snl::chtml()->activeTextbox($model_file, 'name') ?>
