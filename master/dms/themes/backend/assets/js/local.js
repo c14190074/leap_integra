@@ -199,7 +199,6 @@ $(document).ready(function() {
         maxFilesize: 1,
         acceptedFiles: ".doc,.docx,.pdf,.txt",
         success : function(file, response){
-            // console.log(file);
             $('#upload-file-container').find('#Folder_name').val(file.name);
             $('#upload-file-container').find('#Folder_format').val(getFileExtension(file.name));
             $('#upload-file-container').find('#Folder_size').val(formatBytes(file.size));
@@ -242,7 +241,7 @@ $(document).ready(function() {
                     if (!myDropzone.files || !myDropzone.files.length) {
                         Swal.fire('Anda belum memilih file untuk diunggah', '', 'info');
                     } else {
-                        myDropzone.processQueue();    
+                        myDropzone.processQueue(); 
                     }
                 }
             } else {

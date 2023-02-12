@@ -120,6 +120,7 @@
 
 		public function savedocumentattribute() {
 			$model = new Folder;
+			$ids = array();
 			if(isset($_POST['Folder'])) {
 				// print_r($_POST['Folder']['access_role'][0]);
 				// die();
@@ -131,6 +132,7 @@
 				$user_access = array();
 				if(isset($_POST['Folder']['user_access']) && isset($_POST['Folder']['access_role'])) {
 					for($i = 0; $i < count($_POST['Folder']['user_access']); $i++) {
+						array_push($ids, $_POST['Folder']['user_access'][$i]);
 						$data = array(
 							'user' 	=> $_POST['Folder']['user_access'][$i],
 							'role'	=> $_POST['Folder']['access_role'][$i]
@@ -138,9 +140,25 @@
 
 						array_push($user_access, $data);
 					}
-					$model->user_access =  json_encode($user_access);
+
 				}
 
+				// otomatis menambahkan akses kepada pemilik folder
+				$folder_parent = Folder::model()->findByPk($model->folder_parent_id);
+				if($folder_parent != NULL) {
+					if(!in_array($folder_parent->created_by, $ids)) {
+						$data = array(
+							'user' 	=> $folder_parent->created_by,
+							'role'	=> array('view')
+						);
+
+						array_push($user_access, $data);
+					}
+				}
+
+				if(count($user_access) > 0) {
+					$model->user_access =  json_encode($user_access);
+				}
 
 				if($model->save()) {
 					Logs::create_logs($model->folder_id, 'upload', 'file', 'mengunggah file baru '.$model->name);
