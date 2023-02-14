@@ -4,6 +4,8 @@
 ?>
 
 <input type="hidden" id="folder_parent_name" value="<?= $folder_parent != NULL ? ucwords(strtolower($folder_parent->name)) : '' ?>" />
+<input type="hidden" id="folder_id" value="<?= $folder_id ?>" />
+
 
 <?php if(count($local_breadcrumbs) > 0) : ?>
 <nav aria-label="breadcrumb" class="p-3 pt-0">
@@ -20,7 +22,7 @@
 </nav>
 <?php endif; ?>
 
-<div class="row mb-4">
+<div class="row mb-4 hidden">
   <div class="col-md-4">
     <div class="input-group">
       <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
@@ -42,108 +44,29 @@
     <table class="table align-items-center mb-0" id="table-data">
       <thead>
         <tr>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unit Kerja</th>
+          <th class="pe-0 ps-3"><input type="text" class="form-control type-enter" id="search-name" placeholder="Nama" /></th>
+          <th class="pe-0 ps-1"><input type="text" class="form-control type-enter" id="search-nomor" placeholder="Nomor" /></th>
+          <th class="pe-0 ps-1"><input type="text" class="form-control type-enter" id="search-perihal" placeholder="Perihal" /></th>
+          <th class="pe-0 ps-1"><input type="text" class="form-control type-enter" id="search-email" placeholder="Email" /></th>
+          <th class="pe-3 ps-1">
+            <input type="date" class="form-control me-2 w-70 float-start" id="search-date" placeholder="Tanggal" />
+
+            <button class="btn btn-icon btn-2 btn-primary mb-0" type="button" id="btn-search">
+              <i class="fa fa-search"></i>
+            </button>
+          </th>
+        </tr>
+        <tr>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nomor</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Perihal</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Akses</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keywords</th>
+          <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keywords</th> -->
           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Updated</th>
         </tr>
       </thead>
       <tbody>
-        <?php foreach($model as $folder) : if($folder->hasAccess()) : ?>
-            <?php
-              $user_created = User::model()->findByPk($folder->created_by);
-              $user_updated = User::model()->findByPk($folder->updated_by);
-            ?>
-            <tr>
-              <td>
-                <div class="d-flex px-2 py-1">
-                  <div>
-                    <?php
-                      if($folder->type == "file") {
-                        if($folder->format == "pdf") {
-                          // echo "<i class='fa fa-file-pdf-o opacity-6 text-dark me-3'></i>";
-                          echo  "<img class='w-100 pe-2' src='https://localhost/leap_integra/master/dms/uploads/pdflogo_list.png' />";
-                        } else if($folder->format == "doc" || $folder->format == "docx" || $folder->format == "docs") {
-                          // echo "<i class='fa fa-file-word-o opacity-6 text-dark me-3'></i>";
-                          echo  "<img class='w-100 pe-2' src='https://localhost/leap_integra/master/dms/uploads/wordlogo_list.png' />";
-                        } else {
-                          echo "<i class='fa fa-file opacity-6 text-dark me-3'></i>";
-                        }
-                      } else {
-                        echo "<i class='fa fa-folder opacity-6 link-info me-3'></i>";
-                      }
-                    ?>
-                  </div>
-                  
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-secondary text-sm text-dark">
-                      <?php if($folder->type == "folder") : ?>
-                        <a href="<?= Snl::app()->baseUrl() ?>admin/files/index?folder=<?= SecurityHelper::encrypt($folder->folder_id) ?>"><?= $folder->name ?></a>
-
-                      <?php else : ?>
-                        <p class="text-sm mb-0 show-right-slider" role="button" data-action="viewfile" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>">
-                          <?= $folder->name ?>
-                        </p>
-
-                      <?php endif; ?>
-
-                      <?php if($folder->isTheOwner() && $folder->type == "folder") : ?>
-                        
-                        <i role="button" class="fa fa-info-circle text-secondary text-xxs ms-1 show-right-slider" data-action="folderdetail" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
-
-                      <?php endif; ?>
-                    </h6>
-                  </div>
-                </div>
-              </td>
-
-              <td>
-                <p class="text-xs text-secondary mb-0"><?= $folder->nomor ?></p>
-              </td>
-
-              <td>
-                <p class="text-xs text-secondary mb-0"><?= $folder->name ?></p>
-              </td>
-
-              <td style="white-space: normal; max-width: 200px;">
-                <p class="text-xs text-secondary mb-0">
-                  <?php
-                    if($folder->user_access != NULL) {
-                      $user_email = array();
-                      $user_access = json_decode($folder->user_access);
-                      foreach($user_access as $d) {
-                        $user_access_model = User::model()->findByPk($d->user);
-                        if($folder->type == "file") {
-                          $tmp_str = $user_access_model->email . "(".implode(',', $d->role).")";
-                          array_push($user_email, $tmp_str);
-                        } else {
-                          array_push($user_email, $user_access_model->email);
-                        }
-                        
-                      }
-
-                      array_push($user_email, $user_created->email." (owner)");
-                      
-                      echo implode( ", ", $user_email);
-                    } else {
-                      echo "Only you";
-                    }
-                  ?>
-
-                </p>
-              </td>
-
-              <td style="white-space: normal; max-width: 200px;">
-                <p class="text-xs font-weight-bold mb-0"><?= $folder->keyword ?></p>
-              </td>
-
-              <td class="align-middle text-center text-sm">
-                <p class="text-xs text-secondary mb-0"><?= date('d M Y h:i:s', strtotime($folder->updated_on)) ?></p>
-              </td>
-            </tr>
-        <?php endif; endforeach; ?>
+        <!--  DIISI LEWAT AJAX -->
         
       </tbody>
     </table>
@@ -153,14 +76,59 @@
 
 <hr />
 
-
-
-
 <script type="text/javascript">
     $(document).ready(function() {
       if($("#folder_parent_name").val() != "") {
         $("#page_subtitle").html($("#folder_parent_name").val());
       }
+
+      var folder_id = $('#folder_id').val();
+      var getDataUrl = baseUrl + 'admin/files/getData?ajax=1&folder='+folder_id;
+
+      $.ajax({
+        url: getDataUrl,
+      })
+      .done(function( data ) {
+        $('#folder_list').find('tbody').html(data);
+      
+      });
+
+      $('body').on('click', '#btn-search', function() {
+          var name = $('#search-name').val();
+          var nomor = $('#search-nomor').val();
+          var perihal = $('#search-perihal').val();
+          var email = $('#search-email').val();
+          var date = $('#search-date').val();
+
+          getDataUrl = baseUrl + 'admin/files/getData?ajax=1&folder='+folder_id+'&name='+name+'&nomor='+nomor+'&perihal='+perihal+'&email='+email+'&date='+date;
+
+          $.ajax({
+            url: getDataUrl,
+          })
+          .done(function( data ) {
+            $('#folder_list').find('tbody').html(data);
+          });
+      });
+
+      $('body').on('keyup', '.type-enter', function(e) {
+        var code = e.key;
+        if(code == 'Enter') {
+          var name = $('#search-name').val();
+          var nomor = $('#search-nomor').val();
+          var perihal = $('#search-perihal').val();
+          var email = $('#search-email').val();
+          var date = $('#search-date').val();
+
+          getDataUrl = baseUrl + 'admin/files/getData?ajax=1&folder='+folder_id+'&name='+name+'&nomor='+nomor+'&perihal='+perihal+'&email='+email+'&date='+date;
+
+          $.ajax({
+            url: getDataUrl,
+          })
+          .done(function( data ) {
+            $('#folder_list').find('tbody').html(data);
+          });
+        }
+      });
 
     });
 </script>

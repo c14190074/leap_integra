@@ -463,7 +463,7 @@ $(document).ready(function() {
       var fixedPlugin = document.querySelector('.fixed-plugin');
       var fixedPluginButton = document.querySelector('.show-right-slider');
       
-      if (fixedPluginButton) {
+      // if (fixedPluginButton) {
         $('body').on('click', '.show-right-slider', function() {
             if (!fixedPlugin.classList.contains('show')) {
                 var folder_id = $(this).data('folder-id');
@@ -480,7 +480,7 @@ $(document).ready(function() {
                 fixedPlugin.classList.remove('show');
             }            
         });
-      }
+      // }
 
       $('body').on('click', '.fixed-plugin-close-button', function() {
         fixedPlugin.classList.remove('show');

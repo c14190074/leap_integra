@@ -63,6 +63,7 @@
 				'model' 	=> $model,
 				'folder_parent'	=> $folder_parent,
 				'local_breadcrumbs' => array_reverse($local_breadcrumbs),
+				'folder_id'	=> $folder_id,
 			));
 		}
 
@@ -405,10 +406,86 @@
 			}
 		}
 
-		// public function getfilefromserver() {
-		// 	// $filename="https://localhost/leap_integra/master/dms/uploads/documents/FileDoc.docx";
-		// 	$filename="C:/xampp/htdocs/leap_integra/master/dms/uploads/documents/FileDoc.docx";
-		//   	header("Content-disposition: attachment;filename=$filename");
-		//   	echo($filename);
-		// }
+		public function getData() {
+			$folder_id = isset($_GET['folder']) ? $_GET['folder'] : 0;
+			$name = isset($_GET['name']) ? $_GET['name'] : "";
+			$nomor = isset($_GET['nomor']) ? $_GET['nomor'] : "";
+			$perihal = isset($_GET['perihal']) ? $_GET['perihal'] : "";
+			$email = isset($_GET['email']) ? $_GET['email'] : "";
+			$date = isset($_GET['date']) ? $_GET['date'] : "";
+
+
+			if(Folder::getCountUserFolder(Snl::app()->user()->user_id) > 0) {
+				if($name != "" || $nomor != "" || $perihal != "" || $email != "" || $date != "") {
+					$keyword = '';
+					if($name != "") {
+						$keyword = $keyword . " AND name LIKE '%".$name."%'";
+					}
+
+					if($nomor != "") {
+						$keyword = $keyword . " AND nomor LIKE '%".$nomor."%'";
+					}
+
+					if($perihal != "") {
+						$keyword = $keyword . " AND perihal LIKE '%".$perihal."%'";
+					}
+
+					if($date != "") {
+						$keyword = $keyword . " AND date_format(updated_on, '%Y-%m-%d') = '".$date."'";
+					}
+
+					if($email != "") {
+						$ids = array();
+						$users = User::model()->findAll(array(
+							'condition' => 'is_deleted = 0 AND status = 1 AND status_email = 1 AND email LIKE "%'.$email.'%"'
+						));
+
+						if($users != NULL) {
+							$data = Folder::model()->findAll(array(
+								'condition' => 'folder_parent_id = :id AND is_deleted = 0 AND is_revision = 0 ORDER BY type DESC',
+								'params'	=> array(':id' => $folder_id)
+							));
+
+							foreach($users as $usr) {
+								foreach($data as $d) {
+									if($d->hasAccess($usr->user_id)) {
+										array_push($ids, $d->folder_id);
+									}
+								}
+							}
+
+							if(count($ids) > 0) {
+								$keyword = $keyword . ' AND folder_id IN('.implode($ids, ', ').')';
+							}
+						}
+					}
+
+					$model = Folder::model()->findAll(array(
+						'condition' => 'is_deleted = 0 AND is_revision = 0'.$keyword.' ORDER BY type DESC',
+						
+					));
+
+					// $model = Folder::model()->findAll(array(
+					// 	'condition' => 'is_deleted = 0 AND is_revision = 0 AND (name LIKE "%'.$keyword.'%" OR nomor LIKE "%'.$keyword.'%" OR perihal LIKE "%'.$keyword.'%" OR unit_kerja LIKE "%'.$keyword.'%" OR keyword LIKE "%'.$keyword.'%" OR description LIKE "%'.$keyword.'%") ORDER BY type DESC',
+					// ));
+
+				} else {
+					$model = Folder::model()->findAll(array(
+						'condition' => 'folder_parent_id = :id AND is_deleted = 0 AND is_revision = 0 ORDER BY type DESC',
+						'params'	=> array(':id' => $folder_id)
+					));
+
+				}
+			}
+
+			if($model != NULL) {
+				if(Folder::countNumberOfFile($model) == 0) {
+					$model = NULL;
+				}
+			}
+
+			echo $this->render('_index', array(
+				'model' 	=> $model,
+			));
+		}
 	}

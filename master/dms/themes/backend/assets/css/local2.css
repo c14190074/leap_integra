@@ -209,3 +209,11 @@ span.view-file-attribute:hover {
     overflow: auto;
 }
 
+
+/**
+ * SEARCH BOX
+ */
+
+#search-box table thead th {
+    padding: 0;
+}
