@@ -273,4 +273,43 @@
 			return $ctr == 0 ? FALSE : TRUE;
 		}
 
+		public function getLocation() {
+			$location = array();
+			$location_elm = "";
+
+			if($this->folder_parent_id > 0) {
+				$id = $this->folder_parent_id;
+
+				while ($id > 0) {
+					$model = Folder::model()->findByPk($id);
+					if($model != NULL) {
+						$data = array(
+							'url' 	=> 'index?folder='.SecurityHelper::encrypt($model->folder_id),
+							'name' 	=> ucwords(strtolower($model->name))
+						);
+
+						array_push($location, $data);
+						$id = $model->folder_parent_id;
+
+					}
+				}
+
+				$location = array_reverse($location);
+			}
+
+			if(count($location) > 0) {
+				$location_elm .= "<p class='mb-0 file-location-label' style='font-size: 0.7rem; color: #ff0000bd;'>Location: ";
+				foreach($location as $l) {
+					if(end($location) == $l) {
+						$location_elm .= "<a class='text-secondary' href='".$l['url']."'>".$l['name']."</a>";
+					} else {
+						$location_elm .= "<a class='text-secondary' href='".$l['url']."'>".$l['name']."</a> / ";
+					}
+				}
+				$location_elm .= "</p>";
+			}
+
+			return $location_elm;
+		}
+
 	}

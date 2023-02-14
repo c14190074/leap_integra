@@ -413,6 +413,7 @@
 			$perihal = isset($_GET['perihal']) ? $_GET['perihal'] : "";
 			$email = isset($_GET['email']) ? $_GET['email'] : "";
 			$date = isset($_GET['date']) ? $_GET['date'] : "";
+			$is_search_result = FALSE;
 
 
 			if(Folder::getCountUserFolder(Snl::app()->user()->user_id) > 0) {
@@ -462,8 +463,9 @@
 
 					$model = Folder::model()->findAll(array(
 						'condition' => 'is_deleted = 0 AND is_revision = 0'.$keyword.' ORDER BY type DESC',
-						
 					));
+
+					$is_search_result = TRUE;
 
 					// $model = Folder::model()->findAll(array(
 					// 	'condition' => 'is_deleted = 0 AND is_revision = 0 AND (name LIKE "%'.$keyword.'%" OR nomor LIKE "%'.$keyword.'%" OR perihal LIKE "%'.$keyword.'%" OR unit_kerja LIKE "%'.$keyword.'%" OR keyword LIKE "%'.$keyword.'%" OR description LIKE "%'.$keyword.'%") ORDER BY type DESC',
@@ -485,7 +487,8 @@
 			}
 
 			echo $this->render('_index', array(
-				'model' 	=> $model,
+				'model' => $model,
+				'is_search_result' => $is_search_result,
 			));
 		}
 	}

@@ -34,7 +34,6 @@
                   <p class="text-sm mb-0 show-right-slider" role="button" data-action="viewfile" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>">
                     <?= $folder->name ?>
                   </p>
-
                 <?php endif; ?>
 
                 <?php if($folder->isTheOwner() && $folder->type == "folder") : ?>
@@ -42,6 +41,13 @@
                   <i role="button" class="fa fa-info-circle text-secondary text-xxs ms-1 show-right-slider" data-action="folderdetail" data-folder-id="<?= SecurityHelper::encrypt($folder->folder_id) ?>"></i>
 
                 <?php endif; ?>
+
+                <?php
+                  if($is_search_result) {
+                    echo $folder->getLocation();
+                  }
+                ?>
+
               </h6>
             </div>
           </div>

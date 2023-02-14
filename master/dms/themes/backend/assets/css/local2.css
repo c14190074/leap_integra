@@ -35,6 +35,10 @@ span.view-file-attribute:hover {
     margin: auto;
 }
 
+.file-location-label a:hover {
+    text-decoration: underline;
+}
+
 /**
  * JSGRID
  */
