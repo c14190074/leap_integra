@@ -180,9 +180,9 @@
 				$model->folder_parent_id = $original_file->folder_parent_id;
 				$model->is_revision = 1;
 				$model->no_revision = $original_file->getNoRevisi() + 1;
-				$model->nomor = $original_file->nomor;
-				$model->perihal = $original_file->perihal;
-				$model->unit_kerja = $original_file->unit_kerja;
+				// $model->nomor = $original_file->nomor;
+				// $model->perihal = $original_file->perihal;
+				// $model->unit_kerja = $original_file->unit_kerja;
 				$model->keyword = $original_file->keyword;
 				$model->user_access = $original_file->user_access;
 				$model->type = "file";

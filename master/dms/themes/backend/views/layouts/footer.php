@@ -202,7 +202,7 @@
 								        </div>
 								    </div>
 
-									<div class="form-group" style="display: block;">
+									<div class="form-group" style="display: none;">
 								        <label class="col-md-12"><?= $model_file->getLabel('name', TRUE); ?></label>
 								        <div class="col-md-12">
 								            <?= Snl::chtml()->activeTextbox($model_file, 'name') ?>
@@ -238,7 +238,7 @@
 								    </div>
 
 								    
-								    <div class="form-group">
+								    <div class="form-group hidden">
 								        <label class="col-md-12"><?= $model_file->getLabel('unit_kerja', TRUE); ?></label>
 								        <div class="col-md-12">
 								            <?= Snl::chtml()->activeTextbox($model_file, 'unit_kerja') ?>
