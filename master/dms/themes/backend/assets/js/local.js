@@ -459,6 +459,47 @@ $(document).ready(function() {
     //     });
     // });
 
+    $('body').on('click', '#btn-file-setting', function() {
+        var folder_id = $(this).data('folder-id');
+        var ajaxUrl = baseUrl + 'admin/files/getfilesetting?ajax=1&folder_id='+folder_id;
+        $.get(ajaxUrl, function(data, status){
+            $('.modal').modal('hide');
+            $('#file-setting-container').html(data);
+            $('#modal-file-setting').modal('show');
+
+        });
+    });
+
+    $('body').on('click', '#close-setting-from', function() {
+        $('#modal-file-setting').modal('hide');
+    });
+
+    
+    $('body').on('click', '.btn-rollback', function() {
+        var target_file_id = $(this).data('folder-id');
+        var active_file_id = $(this).data('active-file');
+
+        Swal.fire({
+          title: 'Apakah anda yakin untuk melakukan rollback pada dokumen ini?',
+          showCancelButton: true,
+          confirmButtonText: 'Ya, Rollback',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            initLoading();
+
+            var ajaxUrl = baseUrl + 'admin/files/rollback?ajax=1';
+            $.post(ajaxUrl, {target_file_id:target_file_id, active_file_id:active_file_id}, function(result) {
+                location.reload();
+            });
+
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info');
+          }
+        });
+
+    });
+    
+
     if (document.querySelector('.fixed-plugin')) {
       var fixedPlugin = document.querySelector('.fixed-plugin');
       var fixedPluginButton = document.querySelector('.show-right-slider');

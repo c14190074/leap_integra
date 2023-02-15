@@ -348,6 +348,9 @@
 	<!-- Pop up modal untuk view attrbute folder -->
 	<div class="me-2" id="folder-attribute-container"></div>
 
+	<!-- Pop up modal untuk file setting -->
+	<div class="me-2" id="file-setting-container"></div>
+
 	<!-- Pop up modal untuk preview file docs -->
 	<div class="modal fade" id="modal-load-docx" tabindex="-1" role="dialog" aria-labelledby="modal-load-docx" aria-hidden="true">
 	    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

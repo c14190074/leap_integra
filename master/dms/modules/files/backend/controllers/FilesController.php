@@ -147,13 +147,15 @@
 				// otomatis menambahkan akses kepada pemilik folder
 				$folder_parent = Folder::model()->findByPk($model->folder_parent_id);
 				if($folder_parent != NULL) {
-					if(!in_array($folder_parent->created_by, $ids)) {
-						$data = array(
-							'user' 	=> $folder_parent->created_by,
-							'role'	=> array('view')
-						);
+					if(Snl::app()->user()->user_id != $folder_parent->created_by) {
+						if(!in_array($folder_parent->created_by, $ids)) {
+							$data = array(
+								'user' 	=> $folder_parent->created_by,
+								'role'	=> array('view')
+							);
 
-						array_push($user_access, $data);
+							array_push($user_access, $data);
+						}
 					}
 				}
 
@@ -178,8 +180,9 @@
 				
 				$original_file =Folder::model()->findByPk($model->original_id);
 				$model->folder_parent_id = $original_file->folder_parent_id;
-				$model->is_revision = 1;
+				$model->is_revision = 0;
 				$model->no_revision = $original_file->getNoRevisi() + 1;
+				$model->new_file_id = 0;
 				// $model->nomor = $original_file->nomor;
 				// $model->perihal = $original_file->perihal;
 				// $model->unit_kerja = $original_file->unit_kerja;
@@ -189,6 +192,11 @@
 				
 
 				if($model->save()) {
+					$original_file->is_revision = 1;
+					$original_file->new_file_id = $model->folder_id;
+					$original_file->save();
+					$original_file->setNewFileToAll();
+
 					Logs::create_logs($model->folder_id, 'revisi', 'file', 'melakukan revisi dengan file baru '.$model->name);
 					Snl::app()->setFlashMessage('File revisi berhasil ditambahkan.', 'info');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
@@ -344,6 +352,7 @@
 				'params'	=> array(':id' => $model->folder_id)
 			));
 
+
 			$model_logs = Logs::model()->findAll(array(
 				'condition' => 'file_target_id = :id AND is_deleted = 0 ORDER BY created_on DESC',
 				'params'	=> array(':id' => $model->folder_id)
@@ -490,5 +499,62 @@
 				'model' => $model,
 				'is_search_result' => $is_search_result,
 			));
+		}
+
+		public function getfilesetting() {
+			$folder_id = SecurityHelper::decrypt($_GET['folder_id']);
+			$model = Folder::model()->findByPk($folder_id);
+			$revisions = Folder::model()->findAll(array(
+				'condition' => 'is_deleted = 0 AND new_file_id = :id ORDER BY folder_id DESC',
+				'params'	=> array(':id' => $model->folder_id)
+			));
+			
+			echo $this->render('_file_setting', array(
+				'model' => $model,
+				'revisions' => $revisions,
+			));
+		}
+
+		public function rollback() {
+			$active_file_id = SecurityHelper::decrypt($_POST['active_file_id']);
+			$target_file_id = SecurityHelper::decrypt($_POST['target_file_id']);
+
+
+			$active_model = Folder::model()->findByPk($active_file_id);
+			$active_model->is_revision = 1;
+			$active_model->new_file_id = $target_file_id;
+			$active_model->is_deleted = $active_model->folder_id > $target_file_id ? 1 : 0;
+			$active_model->save();
+
+
+			$model = Folder::model()->findAll(array(
+				'condition' => 'is_deleted = 0 AND new_file_id = :id ORDER BY folder_id DESC',
+				'params'	=> array(':id' => $active_file_id)
+			));
+
+			if($model != NULL) {
+				foreach($model as $folder) {
+					$folder->new_file_id = $target_file_id;
+
+					if($folder->folder_id > $target_file_id) {
+						$folder->is_deleted = 1;
+					}
+
+					if($folder->folder_id == $target_file_id) {
+						$folder->is_revision = 0;
+						$folder->new_file_id = NULL;
+					}
+
+
+					$folder->save();
+				}
+			}
+
+			
+			Snl::app()->setFlashMessage('Rollback telah berhasil dilakukan', 'info');
+			echo Logs::create_logs($target_file_id, 'rollback', 'file', 'melakukan rollback pada file '.$active_model->name);
+
+			echo true;
+			
 		}
 	}

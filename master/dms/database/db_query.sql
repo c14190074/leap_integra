@@ -86,3 +86,5 @@ CREATE TABLE IF NOT EXISTS `tbl_logs` (
 ALTER TABLE `tbl_folder` ADD `last_viewed` DATETIME DEFAULT NULL AFTER `user_access`;
 ALTER TABLE `tbl_folder` ADD `last_downloaded` DATETIME DEFAULT NULL AFTER `last_viewed`;
 ALTER TABLE `tbl_logs` ADD `act` VARCHAR(255) DEFAULT 'general' AFTER `file_target_id`;
+
+ALTER TABLE `tbl_folder` ADD `new_file_id` INT(11) DEFAULT 0 AFTER `original_id`;

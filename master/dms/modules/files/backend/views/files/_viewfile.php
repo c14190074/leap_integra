@@ -14,22 +14,27 @@
               }
           ?>
        </h1>
+
+       <?php if($model->hasViewAccess()) : ?>
+					<button type="button" class="btn btn-outline-info w-70 mb-0" id="btn-open-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>" data-format="<?= $model->format ?>" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-eye"></i>Lihat</button>
+					
+				<?php endif; ?>
 		</div>
 		<div class="col-md-7">
 			<div class="row">
 				<?php if($model->hasViewAccess()) : ?>
-					<div class="col-md-6 pe-1 ps-0">
-						<button type="button" class="btn btn-outline-info w-100" style="font-size: 11px;" id="btn-open-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>" data-format="<?= $model->format ?>" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-eye"></i>Lihat</button>
-					</div>
-
-					<div class="col-md-6 pe-0 ps-0">
-						<button type="button" class="btn btn-outline-info w-100" style="font-size: 11px;" id="btn-download-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-download"></i>Unduh</button>
+					<div class="col-md-6 pe-1 ps-0 pt-3">
+						<button type="button" class="btn btn-outline-info w-100 mb-1" style="font-size: 11px;" id="btn-download-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$model->name?>" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-download"></i>Unduh</button>
 					</div>
 					<?php endif; ?>
 					
 					<?php if($model->hasEditAccess()) : ?>										
+					<div class="col-md-6 pe-0 ps-0 pt-3">
+						<button type="button" class="btn btn-outline-info w-100 mb-1" style="font-size: 11px;" id="btn-revisi-file" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-pencil-square-o"></i>Revisi</button>
+					</div>
+
 					<div class="col-md-6 pe-1 ps-0">
-						<button type="button" class="btn btn-outline-info w-100" style="font-size: 11px;" id="btn-revisi-file" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-pencil-square-o"></i>Revisi</button>
+						<button type="button" class="btn btn-outline-info w-100" style="font-size: 11px;" id="btn-file-setting" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"><i class="me-2 fa fa-cog"></i>Atur</button>
 					</div>
 					<?php endif; ?>
 
@@ -58,7 +63,7 @@
 	  <div class="nav nav-tabs" id="nav-tab" role="tablist">
 	    <button class="nav-link text-sm active" id="nav-info-tab" data-bs-toggle="tab" data-bs-target="#nav-info" type="button" role="tab" aria-controls="nav-info" aria-selected="true">Informasi</button>
 
-	    <button class="nav-link text-sm" id="nav-revisi-tab" data-bs-toggle="tab" data-bs-target="#nav-revisi" type="button" role="tab" aria-controls="nav-revisi" aria-selected="false">Revisi</button>
+	   
 
 	    <button class="nav-link text-sm" id="nav-log-tab" data-bs-toggle="tab" data-bs-target="#nav-log" type="button" role="tab" aria-controls="nav-log" aria-selected="false">Aktivitas</button>
 	  </div>
@@ -123,57 +128,8 @@
 		</div>
 	  </div>
 
-	  	<!-- tab untuk revisi -->
-	  <div class="tab-pane fade" id="nav-revisi" role="tabpanel" aria-labelledby="nav-revisi-tab">
-	  	<?php if($model_revisi == NULL) : ?>
-	  		<p class="text-sm text-secondary p-sm-4">Tidak ada revisi untuk dokumen ini</p>
-
-	  	<?php else : ?>
-
-	  	<div class="table-responsive">
-		    <table class="table align-items-center mb-0">
-		      <thead>
-		        <tr>
-		          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unit Kerja</th>
-		          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
-		          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dibuat Oleh</th>
-		          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tanggal Dibuat</th>
-		          
-		        </tr>
-		      </thead>
-		      <tbody>
-		      	<?php foreach($model_revisi as $file) : ?>
-		      		<?php
-		      			$user_created = User::model()->findByPk($file->created_by);
-		      		?>
-		      		<tr>
-		      			<td>
-		      				<span class="text-xs mb-0 ps-2 view-file-attribute" role="button" data-folder-id="<?= SecurityHelper::encrypt($file->folder_id) ?>">
-	                          <?= $file->name ?>
-	                        </span>
-		      				
-		      			</td>
-
-		      			<td>
-		      				<span class="text-xs"><?= $file->description ?></span>
-		      			</td>
-
-		      			<td>
-		      				<span class="text-xs"><?= $user_created->fullname ?></span>
-		      			</td>
-
-		      			<td>
-		      				<span class="text-xs"><?= date('d M Y h:i', strtotime($file->created_on)) ?></span>
-		      			</td>
-		      		</tr>
-		      	<?php endforeach;?>
-		      </tbody>
-		  </table>
-		</div>
-		<?php endif; ?>
-	  </div>
-
-	  	<!-- tab untuk logs -->
+	  	
+	  <!-- tab untuk logs -->
 	  <div class="tab-pane fade" id="nav-log" role="tabpanel" aria-labelledby="nav-log-tab">
 
 	  	<?php if($model_logs == NULL) : ?>

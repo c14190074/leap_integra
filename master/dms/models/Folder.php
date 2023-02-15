@@ -1,6 +1,6 @@
 <?php
 	class Folder extends SnlActiveRecord {
-		public $folder_id, $folder_parent_id, $name, $is_revision, $no_revision, $original_id, $nomor, $perihal, $unit_kerja, $keyword, $related_document, $type, $format, $size, $description, $user_access, $last_viewed, $last_downloaded, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $folder_id, $folder_parent_id, $name, $is_revision, $no_revision, $original_id, $new_file_id, $nomor, $perihal, $unit_kerja, $keyword, $related_document, $type, $format, $size, $description, $user_access, $last_viewed, $last_downloaded, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 
 		public function __construct() {
 		  $this->classname = 'Folder';
@@ -27,6 +27,7 @@
 				'is_revision' => 'Apakah ada revisi?',
 				'no_revision' => 'Revisi Ke',
 				'original_id' => 'Original ID',
+				'new_file_id' => 'File Baru',
 				'nomor' => 'Nomor',
 				'perihal' => 'Perihal',
 				'unit_kerja' => 'Unit Kerja',
@@ -245,12 +246,17 @@
 		}
 
 		public function getNoRevisi() {
-			$model = Folder::model()->findAll(array(
-				'condition' => 'is_revision = 1 AND is_deleted = 0 AND original_id = :id',
-				'params'		=> array(':id' => $this->folder_id)
-			));
+			$original_id = $this->original_id;
+			$ctr = 0;
+			while($original_id > 0 && $original_id != NULL) {
+				$model = Folder::model()->findByPk($original_id);
+				if($model != NULL) {
+					$ctr++;
+					$original_id = $model->original_id;
+				}
+			}
 
-			return count($model);
+			return $ctr;
 		}
 
 		public static function hasSharedFolder($user_id) {
@@ -310,6 +316,20 @@
 			}
 
 			return $location_elm;
+		}
+
+		public function setNewFileToAll() {
+			$original_id = $this->original_id;
+
+			while($original_id > 0 && $original_id != NULL) {
+				$model = Folder::model()->findByPk($original_id);
+				if($model != NULL) {
+					$model->new_file_id = $this->new_file_id;
+					$model->save();
+					$original_id = $model->original_id;
+				}
+			}
+
 		}
 
 	}
