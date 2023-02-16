@@ -31,6 +31,10 @@
 			));
 		}
 
+		public function test() {
+			return $this->render('test');
+		}
+
 		// All ajax function
 		
 	}
