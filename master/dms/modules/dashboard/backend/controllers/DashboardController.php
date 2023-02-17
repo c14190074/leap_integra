@@ -35,6 +35,10 @@
 			return $this->render('test');
 		}
 
+		public function testpdf() {
+			return $this->render('test_pdf');
+		}
+		
 		// All ajax function
 		
 	}
