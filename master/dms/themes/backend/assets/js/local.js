@@ -328,15 +328,22 @@ $(document).ready(function() {
         var fileUrl = $(this).data('url');
         var fileFormat = $(this).data('format');
         var folder_id = $(this).data('folder-id');
-        var ajaxUrl = baseUrl + 'admin/files/createlogfile?ajax=1';
+        // var ajaxUrl = baseUrl + 'admin/files/createlogfile?ajax=1';
 
-        $.post(ajaxUrl, {folder_id:folder_id, act:'open'}, function(result) {
-            if(fileFormat == 'docx') {
-                generate(fileUrl);
-            } else {
-                window.open(fileUrl, '_blank');
-            }
-        });
+        if(fileFormat == 'docx') {
+            fileUrl = baseUrl + 'admin/files/open?word='+folder_id;
+            window.open(fileUrl, '_blank');
+        } else {
+            window.open(fileUrl, '_blank');
+        }
+
+        // $.post(ajaxUrl, {folder_id:folder_id, act:'open'}, function(result) {
+        //     if(fileFormat == 'docx') {
+        //         generate(fileUrl);
+        //     } else {
+        //         window.open(fileUrl, '_blank');
+        //     }
+        // });
     });
 
     $('body').on('click', '#btn-download-file', function() {

@@ -206,6 +206,56 @@
 			}
 		}
 
+		public function open() {
+			$folder_id = isset($_GET['word']) ? SecurityHelper::decrypt($_GET['word']) : 0;
+
+			$model = Folder::model()->findByPk($folder_id);
+			if($model == NULL) {
+				$this->redirect('admin/dashboard/index');
+			}
+
+			$filename = $model->name;
+			$local_breadcrumbs = array();
+
+			$data = array(
+				'url' 	=> '#',
+				'name' 	=> ucwords(strtolower($filename))
+			);
+			array_push($local_breadcrumbs, $data);
+
+			$folder_parent = Folder::model()->findByPk($model->folder_parent_id);
+			if($folder_parent != NULL) {
+				$data = array(
+					'url' 	=> 'index?folder='.SecurityHelper::encrypt($folder_parent->folder_id),
+					'name' 	=> ucwords(strtolower($folder_parent->name))
+				);
+				array_push($local_breadcrumbs, $data);
+
+
+				$local_parent_id = $folder_parent->folder_parent_id;
+				while($local_parent_id > 0) {
+					$folder_parent = Folder::model()->findByPk($local_parent_id);
+					if($folder_parent != NULL) {
+						$data = array(
+							'url' 	=> 'index?folder='.SecurityHelper::encrypt($folder_parent->folder_id),
+							'name' 	=> ucwords(strtolower($folder_parent->name))
+						);
+						array_push($local_breadcrumbs, $data);
+
+						$local_parent_id = $folder_parent->folder_parent_id;
+					}
+				}				
+			}
+
+			Logs::create_logs($model->folder_id, 'open', 'file', 'membuka file '.$model->name);
+
+			return $this->render('loadfile', array(
+				'filename' 	=> $filename,
+				'local_breadcrumbs' => array_reverse($local_breadcrumbs),
+				
+			));
+		}
+
 		// All ajax function
 		public function upload() {
 			if (!empty($_FILES)) {
