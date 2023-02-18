@@ -106,7 +106,7 @@
 
 		    		<tr>
 		    			<td><span class="text-sm text-secondary">Dokumen Terkait</span></td>
-		    			<td><span class="text-sm text-dark"><?= implode($model->getRelatedDocuments(), ', ') ?></span></td>
+		    			<td><span class="text-sm text-dark"><?= implode(', ', $model->getRelatedDocuments()) ?></span></td>
 		    		</tr>
 
 		    		<tr>
