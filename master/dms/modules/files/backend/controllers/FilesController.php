@@ -55,6 +55,12 @@
 							$local_parent_id = $local_parent_model->folder_parent_id;
 						}
 					}
+
+					$data = array(
+						'url' 	=> 'index',
+						'name' 	=> 'Files'
+					);
+					array_push($local_breadcrumbs, $data);
 				}
 			}
 
@@ -258,7 +264,13 @@
 
 						$local_parent_id = $folder_parent->folder_parent_id;
 					}
-				}				
+				}
+
+				$data = array(
+					'url' 	=> 'index',
+					'name' 	=> 'Files'
+				);
+				array_push($local_breadcrumbs, $data);				
 			}
 
 			Logs::create_logs($model->folder_id, 'open', 'file', 'membuka file '.$model->name);
