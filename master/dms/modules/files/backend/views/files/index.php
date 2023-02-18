@@ -45,8 +45,8 @@
       <thead>
         <tr>
           <th class="pe-0 ps-3"><input type="text" class="form-control type-enter" id="search-name" placeholder="Nama" /></th>
-          <th class="pe-0 ps-1"><input type="text" class="form-control type-enter" id="search-nomor" placeholder="Nomor" /></th>
           <th class="pe-0 ps-1"><input type="text" class="form-control type-enter" id="search-perihal" placeholder="Perihal" /></th>
+          <th class="pe-0 ps-1"><input type="text" class="form-control type-enter" id="search-nomor" placeholder="Nomor" /></th>
           <th class="pe-0 ps-1"><input type="text" class="form-control type-enter" id="search-email" placeholder="Email" /></th>
           <th class="pe-3 ps-1">
             <input type="date" class="form-control me-2 w-70 float-start" id="search-date" placeholder="Tanggal" />
@@ -58,8 +58,8 @@
         </tr>
         <tr>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nomor</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Perihal</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nomor</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Akses</th>
           <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keywords</th> -->
           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Updated</th>

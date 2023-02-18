@@ -53,14 +53,15 @@
           </div>
         </td>
 
-        <td>
-          <p class="text-xs text-secondary mb-0"><?= $folder->nomor ?></p>
-        </td>
 
         <td>
           <p class="text-xs text-secondary mb-0"><?= $folder->perihal ?></p>
         </td>
 
+        <td>
+          <p class="text-xs text-secondary mb-0"><?= $folder->nomor ?></p>
+        </td>
+        
         <td style="white-space: normal; max-width: 200px;">
           <p class="text-xs text-secondary mb-0">
             <?php
