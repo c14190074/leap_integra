@@ -432,6 +432,9 @@
 			$folder = Folder::model()->findByPk($folder_id);
 			$model = new Folder;
 			$model->original_id = $folder_id;
+			$model->nomor = $folder->nomor;
+			$model->perihal = $folder->perihal;
+			$model->description = $folder->description;
 
 			echo $this->render('_upload_file_revisi', array('model' => $model, 'folder' => $folder));
 		}

@@ -54,12 +54,6 @@
 						        </div>
 						    </div>
 
-						    <div class="form-group">
-						        <label class="col-md-12"><?= $model->getLabel('nomor', TRUE); ?></label>
-						        <div class="col-md-12">
-						            <?= Snl::chtml()->activeTextbox($model, 'nomor') ?>
-						        </div>
-						    </div>
 
 						    <div class="form-group">
 						        <label class="col-md-12"><?= $model->getLabel('perihal', TRUE); ?></label>
@@ -68,7 +62,14 @@
 						        </div>
 						    </div>
 
+						    <div class="form-group">
+						        <label class="col-md-12"><?= $model->getLabel('nomor', TRUE); ?></label>
+						        <div class="col-md-12">
+						            <?= Snl::chtml()->activeTextbox($model, 'nomor') ?>
+						        </div>
+						    </div>
 
+						 
 							<div class="form-group">
 	                            <label class="col-md-12"><?= $model->getLabel('description', TRUE); ?></label>
 	                            <div class="col-md-12">

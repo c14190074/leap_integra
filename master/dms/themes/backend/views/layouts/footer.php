@@ -223,13 +223,6 @@
 								        </div>
 								    </div>
 
-	                                <div class="form-group">
-								        <label class="col-md-12"><?= $model_file->getLabel('nomor', TRUE); ?></label>
-								        <div class="col-md-12">
-								            <?= Snl::chtml()->activeTextbox($model_file, 'nomor') ?>
-								        </div>
-								    </div>
-
 								    <div class="form-group">
 								        <label class="col-md-12"><?= $model_file->getLabel('perihal', TRUE); ?></label>
 								        <div class="col-md-12">
@@ -237,6 +230,12 @@
 								        </div>
 								    </div>
 
+	                                <div class="form-group">
+								        <label class="col-md-12"><?= $model_file->getLabel('nomor', TRUE); ?></label>
+								        <div class="col-md-12">
+								            <?= Snl::chtml()->activeTextbox($model_file, 'nomor') ?>
+								        </div>
+								    </div>
 								    
 								    <div class="form-group hidden">
 								        <label class="col-md-12"><?= $model_file->getLabel('unit_kerja', TRUE); ?></label>
