@@ -19,7 +19,7 @@
 		</div>
 	</td>
 	<td>
-		<i class="fa fa-plus text-sm me-2 link-info append-user-role" role="button" data-folder-id="<?= $folder_id ?>"></i>
-		<i class="fa fa-times text-sm me-2 link-danger remove-user-role" role="button"></i>
+		<i class="fa fa-plus text-sm me-2 link-info append-user-role" role="button" data-folder-id="<?= $folder_id ?>" data-form-type="<?= $form_type ?>"></i>
+		<i class="fa fa-times text-sm me-2 link-danger remove-user-role" role="button" data-form-type="<?= $form_type ?>"></i>
 	</td>
 </tr>

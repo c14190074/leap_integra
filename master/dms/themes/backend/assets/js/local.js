@@ -90,102 +90,11 @@ function getFileExtension(filename) {
     return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
 }
 
-// function loadFile(url, callback) {
-//     PizZipUtils.getBinaryContent(url, callback);
-// }
-
-// function gettext(fileurl) {
-//     loadFile(
-//         fileurl,
-//         function (error, content) {
-//             if (error) {
-//                 throw error;
-//             }
-//             var zip = new PizZip(content);
-//             var doc = new window.docxtemplater(zip, {linebreaks: true});
-//             var text = doc.getFullText();
-//             $('#modal-load-docx').find('.card-body').html(text);
-//             $('#modal-view-file').modal('hide');
-//             $('#modal-load-docx').modal('show');
-//             // $('#showdocx').html(text);
-//         }
-//     );
-// }
-
-function loadFile(url, callback) {
-    PizZipUtils.getBinaryContent(url, callback);
-}
-function generate(fileUrl) {
-    loadFile(
-        fileUrl,
-        function (error, content) {
-            if (error) {
-                throw error;
-            }
-            var zip = new PizZip(content);
-            var doc = new window.docxtemplater(zip, {
-                paragraphLoop: true,
-                linebreaks: true,
-            });
-
-            // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
-            // doc.render({
-            //     first_name: "John",
-            //     last_name: "Doe",
-            //     phone: "0652455478",
-            //     description: "New Website",
-            // });
-
-            // var blob = doc.getZip().generate({
-            //     type: "blob",
-            //     mimeType:
-            //         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            //     // compression: DEFLATE adds a compression step.
-            //     // For a 50MB output document, expect 500ms additional CPU time
-            //     compression: "DEFLATE",
-            // });
-            // Output the document using Data-URI
-            // saveAs(blob, "output.docx");
-            $('#modal-load-docx').find('.card-body').html(doc.getFullText());
-            $('#modal-view-file').modal('hide');
-            $('#modal-load-docx').modal('show');
-        }
-    );
-};
-
-
-// function PreviewWordDoc() {
-//     //Read the Word Document data from the File Upload.
-//     // var doc = document.getElementById("files").files[0];
-//     var ajaxUrl = baseUrl + 'admin/files/getfilefromserver?ajax=1';
-//     $.get(ajaxUrl, function(data, status){
-//         console.log(data);
-//         var doc = data;
-//         if (doc != null) {
-//             //Set the Document options.
-//             var docxOptions = Object.assign(docx.defaultOptions, {
-//                 useMathMLPolyfill: true
-//             });
-//             //Reference the Container DIV.
-//             var container = document.querySelector("#word-preview-cont");
-
-//             //Render the Word Document.
-//             docx.renderAsync(doc, container, null, docxOptions);
-//             $('#modal-view-file').modal('hide');
-//             $('#modal-load-docx').modal('show');
-//         }
-//         }
-//     });
-// }
 
 $(document).ready(function() {
     Dropzone.autoDiscover = false;
-    // $('#user-access-role').find('tbody').find('tr:first-child').find('.role-list').select2({
-    //     searchInputPlaceholder: 'Search Role'
-    // });
 
-    $(".file-access-user").select2({ 
-        //maximumSelectionSize: 1, 
+    $('#user-access-role').find('tbody').find('tr:last-child').find('.file-access-user').select2({ 
         searchInputPlaceholder: 'Search User'
     });
 
@@ -193,7 +102,6 @@ $(document).ready(function() {
       $("#alert-msg").slideUp(500);
     });
     
-
     var myDropzoneRevisi;
     var myDropzone = new Dropzone("#my-dropzone", { 
         autoProcessQueue: false,
@@ -221,19 +129,8 @@ $(document).ready(function() {
         }
     });
 
-    $("#input-search").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#table-data tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-
-    $('body').on('click', '#advanced-search', function() {
-        var value = $("#input-search").val().toLowerCase();
-        var searchUrl = baseUrl + 'admin/files/index?q='+value;
-        location.replace(searchUrl);
-    });
-
+    
+    // UPLOAD FILE
     $('body').on('click', '#upload-file-btn', function() {
         initLoading();
         var form = "app_form_upload";
@@ -270,6 +167,18 @@ $(document).ready(function() {
 
     });
 
+    $('body').on('click', '#close-upload-form', function() {
+        $('#modal-upload-form').modal('hide');
+        // myDropzone.off('error');
+        myDropzone.removeAllFiles(true);
+        // myDropzone.disable();
+
+        $('#user-access-role').find('tbody').find("tr:gt(0)").remove();
+        $('#user-access-role').find('tbody').find('tr:last-child').find('.file-access-user').select2("val", "");
+    });
+
+
+    // FUNGSI-FUNGSI TERKAIT FOLDER
     $('body').on('click', '.edit-folder', function() {
         var folder_id = $(this).data('folder-id');
         var ajaxUrl = baseUrl + 'admin/files/getfolderdata?ajax=1&id='+folder_id;
@@ -312,38 +221,22 @@ $(document).ready(function() {
         });
     });
 
-    // $('body').on('click', '.view-file-attribute', function() {
-    //     var folder_id = $(this).data('folder-id');
-    //     var ajaxUrl = baseUrl + 'admin/files/viewfile?ajax=1&folder_id='+folder_id;
-    //     $.get(ajaxUrl, function(data, status){
-    //         // $('#modal-view-file').modal('hide');
-    //         $('.modal').modal('hide');
-    //         $('#view-file-container').html(data);
-    //         $('#modal-view-file').modal('show');
-    //     });
-    // });
 
-
+    // FUNGSI-FUNGSI TERKAIT FILE
     $('body').on('click', '#btn-open-file', function() {
         var fileUrl = $(this).data('url');
         var fileFormat = $(this).data('format');
         var folder_id = $(this).data('folder-id');
-        // var ajaxUrl = baseUrl + 'admin/files/createlogfile?ajax=1';
+        var ajaxUrl = baseUrl + 'admin/files/createlogfile?ajax=1';
 
         if(fileFormat == 'docx') {
             fileUrl = baseUrl + 'admin/files/open?word='+folder_id;
             window.location.replace(fileUrl);
         } else {
-            window.open(fileUrl, '_blank');
+            $.post(ajaxUrl, {folder_id:folder_id, act:'open'}, function(result) {
+                window.open(fileUrl, '_blank');
+            });
         }
-
-        // $.post(ajaxUrl, {folder_id:folder_id, act:'open'}, function(result) {
-        //     if(fileFormat == 'docx') {
-        //         generate(fileUrl);
-        //     } else {
-        //         window.open(fileUrl, '_blank');
-        //     }
-        // });
     });
 
     $('body').on('click', '#btn-download-file', function() {
@@ -376,54 +269,87 @@ $(document).ready(function() {
         });
     });
 
-    $('body').on('click', '#close-upload-form', function() {
-        $('#modal-upload-form').modal('hide');
-        // myDropzone.off('error');
-        myDropzone.removeAllFiles(true);
-        // myDropzone.disable();
 
-        $('#user-access-role').find('tbody').find("tr:gt(0)").remove();
-        $('#user-access-role').find('tbody').find('tr:last-child').find('.file-access-user').select2("val", "");
+    // EDIT USER ACCESS
+    $('body').on('click', '#btn-edit-user-access', function() {
+        var folder_id = $(this).data('folder-id');
+        var ajaxUrl = baseUrl + 'admin/files/getuseraccessform?ajax=1&folder_id='+folder_id;
+        $.get(ajaxUrl, function(data, status){
+            $('.modal').modal('hide');
+            $('#user-access-form-container').html(data);
+
+            var edit_access_ids = $('#edit-access-ids').val();
+            var view_access_ids = $('#view-access-ids').val();
+
+            // alert(edit_access_ids);
+            $('#form_edit_access').find('.file-access-user').each(function(i, obj) {
+                $(this).select2();
+            });
+
+            if(edit_access_ids != "") {
+                edit_access_ids = JSON.parse("[" + edit_access_ids + "]");
+                $('#form_edit_access').find('tbody').find('tr:first-child').find('.file-access-user').val(edit_access_ids).trigger('change');
+            }
+
+            if(view_access_ids != "") {
+                view_access_ids = JSON.parse("[" + view_access_ids + "]");
+                $('#form_edit_access').find('tbody').find('tr:last-child').find('.file-access-user').val(view_access_ids).trigger('change');
+            }
+
+            $('#modal-user-access-form').modal('show');
+        });
     });
 
-    $('body').on('click', '#close-revisi-form', function() {
-        $('#modal-revisi-form').modal('hide');
-        myDropzoneRevisi.removeAllFiles(true);
-        
+    $('body').on('click', '#close-edit-access-form', function() {
+        $('#modal-user-access-form').modal('hide');
+        $('#user-access-form-container').html('');
     });
+
 
     $('body').on('click', '.append-user-role', function() {
         var folder_id = $(this).data('folder-id');
         var ajaxUrl = baseUrl + 'admin/files/addroleoption?ajax=1';
+        var form_type = $(this).data('form-type');
+
         $.ajax({
            url: ajaxUrl,
            type: 'post',
-           data: {request: 2, folder_id: folder_id},
+           data: {request: 2, folder_id: folder_id, form_type: form_type},
            success: function(response){
-             // Append element
-            $('#user-access-role').find('tbody').append(response);
-            var ctr = $('#user-access-role').find('tbody').children().length - 1;
-            $('#user-access-role').find('tbody').find('tr:last-child').find('.file-access-user').attr('name', 'Folder[user_access]['+ctr+'][]');
-            $('#user-access-role').find('tbody').find('tr:last-child').find('.role-list').attr('name', 'Folder[access_role]['+ctr+'][]');
+                // Append element
+                form_id = 'user-access-role';
 
-            // $('#user-access-role').find('tbody').find('tr:last-child').find('.role-list').select2({
-            //     searchInputPlaceholder: 'Search Role'
-            // });
+                if(form_type == 'edit') {
+                    form_id = 'form_edit_access';
+                }
 
-            $('#user-access-role').find('tbody').find('tr:last-child').find('.file-access-user').select2({ 
-                searchInputPlaceholder: 'Search User'
-            });
+                $('#'+form_id).find('tbody').append(response);
+                var ctr = $('#'+form_id).find('tbody').children().length - 1;
+                $('#'+form_id).find('tbody').find('tr:last-child').find('.file-access-user').attr('name', 'Folder[user_access]['+ctr+'][]');
+                $('#'+form_id).find('tbody').find('tr:last-child').find('.role-list').attr('name', 'Folder[access_role]['+ctr+'][]');
+
+                $('#'+form_id).find('tbody').find('tr:last-child').find('.file-access-user').select2({ 
+                    searchInputPlaceholder: 'Search User'
+                });
              
            }
         });
     });
 
     $('body').on('click', '.remove-user-role', function() {
-        if($('#user-access-role').find('tbody').children().length > 1) {
+        var form_type = $(this).data('form-type');
+        form_id = 'user-access-role';
+
+        if(form_type == 'edit') {
+            form_id = 'form_edit_access';
+        }
+
+        if($('#'+form_id).find('tbody').children().length > 1) {
             $(this).parent().parent().remove();    
         }
     });
-
+    
+    // FUNGSI-FUNGSI UNTUK REVISI FILE
     $('body').on('click', '#btn-revisi-file', function() {
         var folder_id = $(this).data('folder-id');
         var ajaxUrl = baseUrl + 'admin/files/getrevisiform?ajax=1&folder_id='+folder_id;
@@ -461,16 +387,13 @@ $(document).ready(function() {
         });
     });
 
-    // $('body').on('click', '.info-folder', function() {
-    //     var folder_id = $(this).data('folder-id');
-    //     var ajaxUrl = baseUrl + 'admin/files/folderdetail?ajax=1&folder_id='+folder_id;
-    //     $.get(ajaxUrl, function(data, status){
-    //         $('.modal').modal('hide');
-    //         $('#folder-attribute-container').html(data);
-    //         $('#modal-folder-detail').modal('show');
-    //     });
-    // });
+    $('body').on('click', '#close-revisi-form', function() {
+        $('#modal-revisi-form').modal('hide');
+        myDropzoneRevisi.removeAllFiles(true);
+        
+    });
 
+    // FUNGSI-FUNGSI TERKAIT FILE SETTING / ATUR FILE
     $('body').on('click', '#btn-file-setting', function() {
         var folder_id = $(this).data('folder-id');
         var ajaxUrl = baseUrl + 'admin/files/getfilesetting?ajax=1&folder_id='+folder_id;
@@ -511,7 +434,7 @@ $(document).ready(function() {
 
     });
     
-
+    // FUNGSI UNTUK MENAMPILKAN RIGHT SLIDER
     if (document.querySelector('.fixed-plugin')) {
       var fixedPlugin = document.querySelector('.fixed-plugin');
       var fixedPluginButton = document.querySelector('.show-right-slider');

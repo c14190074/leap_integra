@@ -105,6 +105,31 @@
 		    		</tr>
 
 		    		<tr>
+		    			<td><span class="text-sm text-secondary">User Akses <i class="fa fa-pencil-square-o me-3 link-info" id="btn-edit-user-access" role="button" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"></i></span></td>
+		    			<td style="white-space: normal; max-width: 200px;">
+		    				<span class="text-sm text-dark">
+		    					<?php
+			              if($model->user_access != NULL) {
+			                $user_email = array();
+			                $user_access = json_decode($model->user_access);
+			                foreach($user_access as $d) {
+			                  $user_access_model = User::model()->findByPk($d->user);
+			                  $tmp_str = $user_access_model->email . "(".implode(',', $d->role).")";
+			                  array_push($user_email, $tmp_str);
+			                }
+
+			                array_push($user_email, $user->email." (owner)");
+			                
+			                echo implode( ", ", $user_email);
+			              } else {
+			                echo "Only you";
+			              }
+			            ?>
+		    				</span>
+		    			</td>
+		    		</tr>
+
+		    		<tr>
 		    			<td><span class="text-sm text-secondary">Diperbaharui</span></td>
 		    			<td><span class="text-sm text-dark"><?= date('d M Y H:i:s', strtotime($model->updated_on)) ?></span></td>
 		    		</tr>

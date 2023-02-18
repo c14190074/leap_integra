@@ -307,8 +307,8 @@
 
 												      		</td>
 												      		<td>
-												      			<i class="fa fa-plus text-sm me-2 link-info append-user-role" role="button" data-folder-id="<?= $parentfolderid ?>"></i>
-												      			<i class="fa fa-times text-sm me-2 link-danger remove-user-role" role="button"></i>
+												      			<i class="fa fa-plus text-sm me-2 link-info append-user-role" role="button" data-folder-id="<?= $parentfolderid ?>" data-form-type="new"></i>
+												      			<i class="fa fa-times text-sm me-2 link-danger remove-user-role" role="button" data-form-type="new"></i>
 												      		</td>
 												      	</tr>
 												      </tbody>
@@ -346,6 +346,9 @@
 
 	<!-- Pop up modal untuk file setting -->
 	<div class="me-2" id="file-setting-container"></div>
+
+	<!-- Pop up modal untuk edit file user akses -->
+	<div class="me-2" id="user-access-form-container"></div>
 
 	<!-- Pop up modal untuk preview file docs -->
 	<div class="modal fade" id="modal-load-docx" tabindex="-1" role="dialog" aria-labelledby="modal-load-docx" aria-hidden="true">

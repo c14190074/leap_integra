@@ -444,13 +444,14 @@
 		
 		public function addroleoption() {
 			$folder_id = isset($_POST['folder_id']) ? $_POST['folder_id'] : 0;
+			$form_type = isset($_POST['form_type']) ? $_POST['form_type'] : 'new';
 
 			$user_model = User::model()->findAll(array(
 				'condition' => 'is_deleted = 0 AND status = 1 AND user_id != :id',
 				'params'	=> array('id' => Snl::app()->user()->user_id)
 			));
 
-			echo $this->render('_user_role_option', array('model' => $user_model, 'folder_id' => $folder_id));
+			echo $this->render('_user_role_option', array('model' => $user_model, 'folder_id' => $folder_id, 'form_type' => $form_type));
 		}
 
 		public function getrevisiform() {
@@ -635,5 +636,89 @@
 
 			echo true;
 			
+		}
+
+		public function getuseraccessform() {
+			$folder_id = SecurityHelper::decrypt($_GET['folder_id']);
+			$model = Folder::model()->findByPk($folder_id);
+			$view_access = array();
+			$edit_access = array();
+
+
+			if($model->user_access != NULL) {
+				$user_access = json_decode($model->user_access);
+				foreach($user_access as $data) {
+					foreach($data->role as $role) {
+						if($role == 'view') {
+							array_push($view_access, $data->user);
+						}
+
+						if($role == 'edit') {
+							array_push($edit_access, $data->user);
+						}
+					}
+				}
+
+				foreach($view_access as $ctr => $id) {
+					if(in_array($id, $edit_access)) {
+						unset($view_access[$ctr]);
+					}
+				}
+			}
+
+			$view_access = array_values($view_access);
+
+			$user_model = User::model()->findAll(array(
+				'condition' => 'is_deleted = 0 AND status = 1 AND user_id != :id',
+				'params'	=> array('id' => Snl::app()->user()->user_id)
+			));
+			
+			echo $this->render('_user_access_form', array(
+				'model' => $model,
+				'user_model' => $user_model,
+				'edit_access' => $edit_access,
+				'view_access' => $view_access,
+				'ctr' => 0,
+			));
+		}
+
+		public function submitedituseraccess() {
+			if(isset($_POST['Folder']['user_access'])) {
+				$ids = array();
+				$user_access = array();
+
+				$model = Folder::model()->findByPk($_POST['Folder']['folder_id']);
+				for($i = 0; $i < count($_POST['Folder']['user_access']); $i++) {
+					foreach($_POST['Folder']['user_access'][$i] as $user_id) {
+						array_push($ids, $user_id);	
+						$array_role = array();
+						array_push($array_role, 'view');
+
+						if(isset($_POST['Folder']['access_role'][$i])) {
+							array_push($array_role, 'edit');
+						}
+
+						$data = array(
+							'user' 	=> $user_id,
+							'role'	=> $array_role,
+						);
+
+						array_push($user_access, $data);
+					}
+					
+				}
+
+				if(count($user_access) > 0) {
+					$model->user_access =  json_encode($user_access);
+				}
+
+				if($model->save()) {
+					Logs::create_logs($model->folder_id, 'edit', 'file', 'mengubah user akses pada file '.$model->name);
+					Snl::app()->setFlashMessage('User akses telah berhasil diubah.', 'info');
+					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
+				} else {
+					Snl::app()->setFlashMessage('Kesalahan input.', 'danger');
+				}
+			}
 		}
 	}
