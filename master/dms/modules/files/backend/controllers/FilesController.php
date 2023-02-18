@@ -430,7 +430,7 @@
 
 
 			$model_logs = Logs::model()->findAll(array(
-				'condition' => 'file_target_id = :id AND is_deleted = 0 ORDER BY created_on DESC',
+				'condition' => 'file_target_id = :id AND is_deleted = 0 ORDER BY created_on DESC LIMIT 5',
 				'params'	=> array(':id' => $model->folder_id)
 			));
 
@@ -471,7 +471,7 @@
 			$user_model = User::model()->findByPk($model->created_by);
 
 			$model_logs = Logs::model()->findAll(array(
-				'condition' => 'file_target_id = :id AND is_deleted = 0 ORDER BY created_on DESC',
+				'condition' => 'file_target_id = :id AND is_deleted = 0 ORDER BY created_on DESC LIMIT 5',
 				'params'	=> array(':id' => $model->folder_id)
 			));
 
