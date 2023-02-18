@@ -123,6 +123,8 @@
 			$model = new Folder;
 			$ids = array();
 			if(isset($_POST['Folder'])) {
+				// print_r($_POST['Folder']['user_access'][0]);
+				// echo "<br />";
 				// print_r($_POST['Folder']['access_role'][0]);
 				// die();
 				$model->setAttributes($_POST['Folder']);
@@ -131,15 +133,27 @@
 				$model->related_document = isset($_POST['Folder']['related_document']) ? json_encode($_POST['Folder']['related_document']) : NULL;
 				$model->user_access = NULL;
 				$user_access = array();
-				if(isset($_POST['Folder']['user_access']) && isset($_POST['Folder']['access_role'])) {
-					for($i = 0; $i < count($_POST['Folder']['user_access']); $i++) {
-						array_push($ids, $_POST['Folder']['user_access'][$i]);
-						$data = array(
-							'user' 	=> $_POST['Folder']['user_access'][$i],
-							'role'	=> $_POST['Folder']['access_role'][$i]
-						);
 
-						array_push($user_access, $data);
+
+				if(isset($_POST['Folder']['user_access'])) {
+					for($i = 0; $i < count($_POST['Folder']['user_access']); $i++) {
+						foreach($_POST['Folder']['user_access'][$i] as $user_id) {
+							array_push($ids, $user_id);	
+							$array_role = array();
+							array_push($array_role, 'view');
+
+							if(isset($_POST['Folder']['access_role'][$i])) {
+								array_push($array_role, 'edit');
+							}
+
+							$data = array(
+								'user' 	=> $user_id,
+								'role'	=> $array_role,
+							);
+
+							array_push($user_access, $data);
+						}
+						
 					}
 
 				}

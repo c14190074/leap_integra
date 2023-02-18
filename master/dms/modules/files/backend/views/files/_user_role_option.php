@@ -1,6 +1,6 @@
 <tr>
 	<td>
-		<select class="form-control file-access-user" name="Folder[user_access][]" multiple="multiple">
+		<select class="form-control file-access-user" name="Folder[user_access][0][]" multiple="multiple">
 			<?php 
         		if($model != NULL) {
         			foreach($model as $d) {
@@ -13,13 +13,13 @@
 		</select>
 	</td>
 	<td>
-		<select class="form-control role-list" name="Folder[access_role][][]" multiple="multiple">
-        	<option value="view">Lihat</option>
-        	<option value="edit">Revisi</option>
-		</select>
+		<div class="form-check">
+		  <input class="form-check-input role-list" type="checkbox" value="1" name="Folder[access_role][0][]">
+		  <label class="custom-control-label">Akses untuk edit?</label>
+		</div>
 	</td>
 	<td>
-		<i class="fa fa-plus text-sm me-2 link-info append-user-role" role="button"></i>
+		<i class="fa fa-plus text-sm me-2 link-info append-user-role" role="button" data-folder-id="<?= $folder_id ?>"></i>
 		<i class="fa fa-times text-sm me-2 link-danger remove-user-role" role="button"></i>
 	</td>
 </tr>

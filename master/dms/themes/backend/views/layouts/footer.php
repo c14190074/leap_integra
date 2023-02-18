@@ -282,7 +282,7 @@
 												      <tbody>
 												      	<tr>
 												      		<td class="w-40">
-												      			<select class="form-control file-access-user" name="Folder[user_access][]" multiple="multiple">
+												      			<select class="form-control file-access-user" name="Folder[user_access][0][]" multiple="multiple">
 													            	<?php 
 													            		if($user_model != NULL) {
 													            			foreach($user_model as $d) {
@@ -295,10 +295,15 @@
 																</select>
 												      		</td>
 												      		<td class="w-40">
-												      			<select class="form-control role-list" name="Folder[access_role][0][]" multiple="multiple">
+												      			<div class="form-check">
+																  <input class="form-check-input role-list" type="checkbox" value="1" name="Folder[access_role][0][]">
+																  <label class="custom-control-label">Akses untuk edit?</label>
+																</div>
+																
+												      			<!-- <select class="form-control role-list" name="Folder[access_role][0][]" multiple="multiple">
 													            	<option value="view">Lihat</option>
 													            	<option value="edit">Revisi</option>
-																</select>
+																</select> -->
 
 												      		</td>
 												      		<td>

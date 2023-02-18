@@ -180,12 +180,12 @@ function generate(fileUrl) {
 
 $(document).ready(function() {
     Dropzone.autoDiscover = false;
-    $('#user-access-role').find('tbody').find('tr:first-child').find('.role-list').select2({
-        searchInputPlaceholder: 'Search Role'
-    });
+    // $('#user-access-role').find('tbody').find('tr:first-child').find('.role-list').select2({
+    //     searchInputPlaceholder: 'Search Role'
+    // });
 
     $(".file-access-user").select2({ 
-        maximumSelectionSize: 1, 
+        //maximumSelectionSize: 1, 
         searchInputPlaceholder: 'Search User'
     });
 
@@ -332,7 +332,7 @@ $(document).ready(function() {
 
         if(fileFormat == 'docx') {
             fileUrl = baseUrl + 'admin/files/open?word='+folder_id;
-            window.open(fileUrl, '_blank');
+            window.location.replace(fileUrl);
         } else {
             window.open(fileUrl, '_blank');
         }
@@ -381,6 +381,9 @@ $(document).ready(function() {
         // myDropzone.off('error');
         myDropzone.removeAllFiles(true);
         // myDropzone.disable();
+
+        $('#user-access-role').find('tbody').find("tr:gt(0)").remove();
+        $('#user-access-role').find('tbody').find('tr:last-child').find('.file-access-user').select2("val", "");
     });
 
     $('body').on('click', '#close-revisi-form', function() {
@@ -400,13 +403,15 @@ $(document).ready(function() {
              // Append element
             $('#user-access-role').find('tbody').append(response);
             var ctr = $('#user-access-role').find('tbody').children().length - 1;
-            $('#user-access-role').find('tbody').find('tr:last-child').find('.role-list').attr('name', 'Folder[access_role]['+ctr+'][]')
-            $('#user-access-role').find('tbody').find('tr:last-child').find('.role-list').select2({
-                searchInputPlaceholder: 'Search Role'
-            });
+            $('#user-access-role').find('tbody').find('tr:last-child').find('.file-access-user').attr('name', 'Folder[user_access]['+ctr+'][]');
+            $('#user-access-role').find('tbody').find('tr:last-child').find('.role-list').attr('name', 'Folder[access_role]['+ctr+'][]');
+
+            // $('#user-access-role').find('tbody').find('tr:last-child').find('.role-list').select2({
+            //     searchInputPlaceholder: 'Search Role'
+            // });
 
             $('#user-access-role').find('tbody').find('tr:last-child').find('.file-access-user').select2({ 
-                maximumSelectionSize: 1, searchInputPlaceholder: 'Search User'
+                searchInputPlaceholder: 'Search User'
             });
              
            }
