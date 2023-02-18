@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2023 at 06:56 AM
+-- Generation Time: Feb 18, 2023 at 06:11 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.26
 
@@ -347,7 +347,20 @@ INSERT INTO `tbl_logs` (`logs_id`, `file_target_id`, `act`, `type`, `description
 (194, 67, 'upload', 'file', 'mengunggah file baru Document 4.pdf', '2023-02-15 12:51:53', 1, '2023-02-15 12:51:53', 1, 0),
 (195, 68, 'revisi', 'file', 'melakukan revisi dengan file baru FilePDF.pdf', '2023-02-15 12:52:19', 1, '2023-02-15 12:52:19', 1, 0),
 (196, 63, 'open', 'folder', 'membuka folder Revisi 2', '2023-02-15 12:52:19', 1, '2023-02-15 12:52:19', 1, 0),
-(197, 64, 'rollback', 'file', 'melakukan rollback pada file FilePDF.pdf', '2023-02-15 12:52:35', 1, '2023-02-15 12:52:35', 1, 0);
+(197, 64, 'rollback', 'file', 'melakukan rollback pada file FilePDF.pdf', '2023-02-15 12:52:35', 1, '2023-02-15 12:52:35', 1, 0),
+(198, 4, 'open', 'folder', 'membuka folder Project Android - POS', '2023-02-16 08:59:40', 1, '2023-02-16 08:59:40', 1, 0),
+(199, 13, 'open', 'file', 'melihat file FileDoc.docx', '2023-02-16 08:59:47', 1, '2023-02-16 08:59:47', 1, 0),
+(200, 13, 'open', 'file', 'membuka file FileDoc.docx', '2023-02-17 11:47:32', 1, '2023-02-17 11:47:32', 1, 0),
+(201, 4, 'open', 'folder', 'membuka folder Project Android - POS', '2023-02-17 11:47:37', 1, '2023-02-17 11:47:37', 1, 0),
+(202, 4, 'open', 'folder', 'membuka folder Project Android - POS', '2023-02-17 11:49:55', 1, '2023-02-17 11:49:55', 1, 0),
+(203, 10, 'download', 'file', 'mengunduh file Document 1.pdf', '2023-02-17 11:52:18', 1, '2023-02-17 11:52:18', 1, 0),
+(204, 13, 'download', 'file', 'mengunduh file FileDoc.docx', '2023-02-17 11:52:31', 1, '2023-02-17 11:52:31', 1, 0),
+(205, 4, 'open', 'folder', 'membuka folder Project Android - POS', '2023-02-17 12:43:18', 1, '2023-02-17 12:43:18', 1, 0),
+(206, 10, 'download', 'file', 'mengunduh file Document 1.pdf', '2023-02-17 12:45:24', 1, '2023-02-17 12:45:24', 1, 0),
+(207, 63, 'open', 'folder', 'membuka folder Revisi 2', '2023-02-18 12:02:47', 1, '2023-02-18 12:02:47', 1, 0),
+(208, 40, 'open', 'folder', 'membuka folder PKN', '2023-02-18 12:03:37', 1, '2023-02-18 12:03:37', 1, 0),
+(209, 40, 'open', 'folder', 'membuka folder PKN', '2023-02-18 12:05:43', 1, '2023-02-18 12:05:43', 1, 0),
+(210, 37, 'open', 'folder', 'membuka folder Alpro', '2023-02-18 12:05:52', 1, '2023-02-18 12:05:52', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -422,7 +435,7 @@ ALTER TABLE `tbl_folder`
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
