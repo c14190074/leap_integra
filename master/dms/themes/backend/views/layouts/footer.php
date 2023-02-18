@@ -246,14 +246,6 @@
 								    </div>
 
 								    <div class="form-group">
-								        <label class="col-md-12"><?= $model_file->getLabel('keyword', TRUE); ?></label>
-								        <div class="col-md-12">
-								            <?= Snl::chtml()->activeTextbox($model_file, 'keyword') ?>
-								        </div>
-								    </div>
-
-								    
-								    <div class="form-group">
 								        <label class="col-md-12"><?= $model_file->getLabel('related_document', TRUE); ?></label>
 								        <div class="col-md-12">
 								        	<select class="select2 form-control document-list" name="Folder[related_document][]" multiple="multiple">

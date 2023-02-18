@@ -100,18 +100,8 @@
 		    		</tr>
 
 		    		<tr>
-		    			<td><span class="text-sm text-secondary">Unit Kerja</span></td>
-		    			<td><span class="text-sm text-dark"><?= $model->unit_kerja ?></span></td>
-		    		</tr>
-
-		    		<tr>
 		    			<td><span class="text-sm text-secondary">Dokumen Terkait</span></td>
 		    			<td><span class="text-sm text-dark"><?= implode(', ', $model->getRelatedDocuments()) ?></span></td>
-		    		</tr>
-
-		    		<tr>
-		    			<td><span class="text-sm text-secondary">Keywords</span></td>
-		    			<td><span class="text-sm text-dark"><?= $model->keyword ?></span></td>
 		    		</tr>
 
 		    		<tr>
