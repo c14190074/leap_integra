@@ -34,6 +34,7 @@
 										</td>
 										<td>
 											<button type="button" class="btn btn-warning btn-rollback" data-active-file="<?= SecurityHelper::encrypt($model->folder_id) ?>" data-folder-id="<?= SecurityHelper::encrypt($revisi_model->folder_id) ?>"><i class="fa fa-refresh me-2"></i>Rollback</button>
+											<button type="button" class="btn btn-info" id="btn-download-file" data-url="<?= Snl::app()->baseUrl() . 'uploads/documents/'.$revisi_model->name ?>" data-folder-id="<?= SecurityHelper::encrypt($revisi_model->folder_id) ?>"><i class="fa fa-download me-2"></i>Unduh</button>
 										</td>
 						      		</tr>
 						      	
