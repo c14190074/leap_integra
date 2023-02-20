@@ -38,6 +38,10 @@
 		public function testpdf() {
 			return $this->render('test_pdf');
 		}
+
+		public function testemail() {
+			return $this->render('test_email');	
+		}
 		
 		// All ajax function
 		

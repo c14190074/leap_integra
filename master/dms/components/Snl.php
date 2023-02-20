@@ -574,7 +574,7 @@
 HTML;
 		}
 
-		public function getVerificationEmailTemplate($verification_link) {
+		public function getVerificationEmailTemplate($verification_link, $name="Delvo Anderson") {
 			return <<<HTML
 <table style="background:#f9f9f9; color:#373737; font-size:17px; line-height:24px; margin:0; padding:0; width:100%" border="0">
     <tbody>
@@ -582,19 +582,19 @@ HTML;
             <td>
                 <table style="background:white; margin-bottom:1rem" align="center" border="0" cellpadding="32">
                     <tbody>
-                    	<tr style="background: #009041;">
-                    		<td style="padding-top: 10px; padding-bottom: 10px; color: #FFF;">Angkajaya Agro</td>
+                    	<tr>
+                    		<td style="padding-top: 10px; padding-bottom: 10px; color: #000; font-weight: 700; font-family: 'Google Sans';">ITS | DMS</td>
                     	</tr>
                         <tr>
                             <td style="padding-top: 15px;">
                                 <div style="max-width:600px;margin:0 auto">
                                     <div style="background:white;border-radius:0.5rem;margin-bottom:1rem">
-                                        <p style="font-size:15px;line-height:24px;margin:0 0 20px;">
-                                            Hi, <br />
-                                            Terima kasih telah mendaftar di AngkajayaAgro! Mohon untuk melakukan verifikasi alamat email dengan cara membuka tautan di bawah ini.
+                                        <p style="font-size:15px;line-height:24px;margin:0 0 20px; font-family: 'Google Sans';">
+                                            Hi, {$name}<br />
+                                            Email anda telah terdaftar pada aplikasi DMS (Document Management System). Mohon untuk melakukan verifikasi alamat email dengan cara membuka tautan di bawah ini.
                                         </p>
-                                        <p style="line-height:24px;margin:0 0 16px; text-align: center;">
-                                            <a style="text-decoration: none; border: 1px solid #D82922; background: #D82922; color: #FFF; padding: 6px 18px;" href="{$verification_link}">
+                                        <p style="line-height:24px;margin:0 0 16px; text-align: center; margin-top: 40px;">
+                                            <a style="text-decoration: none; border: 1px solid #468fcc; background: #468fcc; color: #FFF; padding: 6px 18px; font-family: 'Google Sans'" href="{$verification_link}">
                                             	Verifikasi
                                             </a>
                                         </p>
@@ -606,8 +606,8 @@ HTML;
 
                         <tr>
                             <td style="padding-top: 0;">
-                                <p style="font-weight: bold;">Hormat kami,</p>
-                                <p>Angkajaya Agro</p>
+                                <p style="font-weight: bold; font-family: 'Google Sans';">Hormat kami,</p>
+                                <p style="font-family: 'Google Sans';">ITS</p>
                             </td>
                         </tr>
                     </tbody>
