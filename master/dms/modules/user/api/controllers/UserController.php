@@ -3,14 +3,14 @@
 		public function login() {
 			if($this->request_type == 'POST') {
 				$model = new User;
-				$model->username = isset($this->params['username']) ? $this->params['username'] : '';
+				$model->email = isset($this->params['email']) ? $this->params['email'] : '';
 				$model->password = isset($this->params['password']) ? $this->params['password'] : '';
 				$valid_user = $model->validateApiLogin();
 
 				if($valid_user == 1) {
 					$model = User::model()->findByPk($model->user_id);
 
-					$last_login = UserApiLoginHistory::model()->findByAttribute(array(
+					$last_login = UserApiLogin::model()->findByAttribute(array(
 						'condition' => 'user_id = :user_id AND clock_out IS NULL ORDER BY clock_in DESC',
 						'params'	=> array(':user_id' => $model->user_id)
 					));
@@ -20,14 +20,14 @@
 						$last_login->save();
 					}
 
-					$log = new UserApiLoginHistory;
+					$log = new UserApiLogin;
 					$log->user_id 	= $model->user_id;
 					$log->clock_in 	= Snl::app()->dateNow();
 					$log->save();
 
 					$result = array(
 						'status'        => 200,
-						'user_token'    => SecurityHelper::encrypt($log->api_login_history_id),
+						'user_token'    => SecurityHelper::encrypt($log->api_login_id),
 						'data'			=> $model->getApiLoginInformation()
 					);
 
@@ -59,7 +59,7 @@
 					$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage(array('user_token' => 'User Token not found.'))));
 				} else {
 					$login_id = (int) SecurityHelper::decrypt($user_token);
-					$model = UserApiLoginHistory::model()->findByPk($login_id);
+					$model = UserApiLogin::model()->findByPk($login_id);
 					if($model != NULL) {
 						$model->clock_out = Snl::app()->dateNow();
 						$model->save();
@@ -85,9 +85,8 @@
 					
 					$result = array(
 						'status' => 200,
-						'username'	=> $user->username,
 						'email' 	=> $user->email,
-						'firstname' => $user->firstname,
+						'fullname' => $user->fullname						
 					);
 
 					$this->renderJSON($result);

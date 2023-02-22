@@ -88,3 +88,11 @@ ALTER TABLE `tbl_folder` ADD `last_downloaded` DATETIME DEFAULT NULL AFTER `last
 ALTER TABLE `tbl_logs` ADD `act` VARCHAR(255) DEFAULT 'general' AFTER `file_target_id`;
 
 ALTER TABLE `tbl_folder` ADD `new_file_id` INT(11) DEFAULT 0 AFTER `original_id`;
+
+CREATE TABLE `tbl_user_api_login` (
+  `api_login_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `clock_in` datetime DEFAULT NULL,
+  `clock_out` datetime DEFAULT NULL,
+  PRIMARY KEY (`api_login_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

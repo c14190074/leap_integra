@@ -43,7 +43,7 @@
 				$this->valid_user_token = FALSE;
 			} else {
 				$log_id = (int) SecurityHelper::decrypt($this->user_token);
-				$log = UserApiLoginHistory::model()->findByPk($log_id);
+				$log = UserApiLogin::model()->findByPk($log_id);
 				if($log == NULL) {
 					$this->valid_user_token = FALSE;
 				} else {
