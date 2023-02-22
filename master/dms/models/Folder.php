@@ -85,18 +85,24 @@
 		public function beforeSave() {
 			if($this->type == 'folder') {
 				if($this->name == "" || $this->name == NULL) {
-					$this->name = "undifined";
+					$this->name = "New Folder";
 				}
 			}
 
 			if($this->isNewRecord) {
 				$this->created_on = Snl::app()->dateNow();
-				$this->created_by = Snl::app()->user()->user_id;
 				$this->updated_on = Snl::app()->dateNow();
-				$this->updated_by = Snl::app()->user()->user_id;
+
+				if(isset(Snl::app()->user()->user_id)) {
+					$this->created_by = Snl::app()->user()->user_id;
+					$this->updated_by = Snl::app()->user()->user_id;
+				}
 			} else {
 				$this->updated_on = Snl::app()->dateNow();
-				$this->updated_by = Snl::app()->user()->user_id;
+
+				if(isset(Snl::app()->user()->user_id)) {
+					$this->updated_by = Snl::app()->user()->user_id;
+				}
 			}
 			return TRUE;
 		}

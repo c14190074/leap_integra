@@ -112,7 +112,7 @@
 						foreach ($users as $user) {
 							$data[] = array(
 								'user_id' 	=> $user->user_id,
-								'fullname' 	=> ucwords(strtolower($user->user_id)),
+								'fullname' 	=> ucwords(strtolower($user->fullname)),
 								'email' 	=> $user->email,
 								
 							);
