@@ -97,5 +97,40 @@
 				$this->renderInvalidUserToken();
 			}
 		}
+
+		public function getallusers() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$users = User::model()->findAll(array(
+						'condition' => 'is_deleted = 0 AND user_id != :id',
+						'params'	=> array('id' => $this->user_id)
+					));
+					
+					$data = array();
+
+					if($users != NULL) {
+						foreach ($users as $user) {
+							$data[] = array(
+								'user_id' 	=> $user->user_id,
+								'fullname' 	=> ucwords(strtolower($user->user_id)),
+								'email' 	=> $user->email,
+								
+							);
+						}
+					}
+
+					$result = array(
+						'status' 	=> 200,
+						'users'	=> $data,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
 		
 	}

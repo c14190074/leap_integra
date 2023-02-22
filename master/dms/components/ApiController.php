@@ -42,7 +42,8 @@
 			if($this->user_token == '' || empty($this->user_token)) {
 				$this->valid_user_token = FALSE;
 			} else {
-				$log_id = (int) SecurityHelper::decrypt($this->user_token);
+				// $log_id = (int) SecurityHelper::decrypt($this->user_token);
+				$log_id = SecurityHelper::decrypt($this->user_token);
 				$log = UserApiLogin::model()->findByPk($log_id);
 				if($log == NULL) {
 					$this->valid_user_token = FALSE;
