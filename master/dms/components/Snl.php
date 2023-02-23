@@ -580,7 +580,7 @@
 HTML;
 		}
 
-		public function getVerificationEmailTemplate($verification_link, $name="Delvo Anderson") {
+		public function getVerificationEmailTemplate($verification_link, $name="User") {
 			return <<<HTML
 <table style="background:#f9f9f9; color:#373737; font-size:17px; line-height:24px; margin:0; padding:0; width:100%" border="0">
     <tbody>

@@ -220,6 +220,6 @@
 			$url = Snl::app()->baseUrl() . 'admin/user/verify?user='.SecurityHelper::encrypt($this->user_id);
 			$mailObject = new MailHandler();
 			$mailObject->init();
-			return $mailObject->send($this->email, 'DMS Email Verification', Snl::app()->getVerificationEmailTemplate($url));
+			return $mailObject->send($this->email, 'DMS Email Verification', Snl::app()->getVerificationEmailTemplate($url, ucwords(strtolower($this->fullname))));
 		}
 	}
