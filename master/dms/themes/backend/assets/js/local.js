@@ -98,10 +98,12 @@ $(document).ready(function() {
         searchInputPlaceholder: 'Search User'
     });
 
-    $("#alert-msg").fadeTo(2000, 500).slideUp(500, function() {
-      $("#alert-msg").slideUp(500);
-    });
-    
+    if($("#alert-msg").hasClass('auto-hide')) {
+        $("#alert-msg").fadeTo(2000, 500).slideUp(500, function() {
+          $("#alert-msg").slideUp(500);
+        });
+    }
+
     var myDropzoneRevisi;
     var myDropzone = new Dropzone("#my-dropzone", { 
         autoProcessQueue: false,

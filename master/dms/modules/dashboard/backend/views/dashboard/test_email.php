@@ -24,8 +24,8 @@
 	$mail->Port = 465;                          // TCP port to connect to 
 	 
 	// Sender info 
-	$mail->setFrom('sender@example.com', 'Agung'); 
-	$mail->addReplyTo('reply@example.com', 'Agung'); 
+	$mail->setFrom('agungw1310@gmail.com', 'Agung'); 
+	$mail->addReplyTo('agungw1310@gmail.com', 'Agung'); 
 	 
 	// Add a recipient 
 	$mail->addAddress('c14190074@john.petra.ac.id'); 

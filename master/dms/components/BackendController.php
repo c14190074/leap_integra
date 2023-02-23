@@ -4,8 +4,15 @@
 		public $basicParams = array('module', 'action', 'ajax', 'pageIndex', 'pageSize', 'sortField', 'sortOrder');
 
 		public function init() {
+			$current_module = isset($_GET['module']) ? $_GET['module'] : '';
+			$current_action = isset($_GET['action']) ? $_GET['action'] : '';
 		    if(!Snl::app()->isAdmin()) {
-		    	$this->redirect('admin/user/login');
+		    	if($current_module == 'user' && $current_action == 'verify') {
+		    		
+		    	} else {
+		    		$this->redirect('admin/user/login');
+		    	}
+		    	
 		    }
 		}
 

@@ -258,15 +258,21 @@
 		
 		// FLASH MESSSAGE
 
-		public function setFlashMessage($msg, $type = 'info') {
+		public function setFlashMessage($msg, $type = 'info', $name = 'flashmessage', $dismissible = TRUE) {
 			// $msg_element = '<div class="row"><div class="col-sm-12"><div role="alert" class="alert text-white alert-'.$type.'">'.$msg.' </div></div></div>';
-			$msg_element = '<div id="alert-msg" role="alert" class="alert alert-'.$type.' alert-dismissible fade show text-white"><span class="alert-text">'.$msg.'</span><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button></div>';
-			$this->createSession('flashmessage', $msg_element);
+			$additional_class = ' auto-hide';
+			if(!$dismissible) {
+				$additional_class = '';
+			}
+
+			$msg_element = '<div id="alert-msg" role="alert" class="alert alert-'.$type.' alert-dismissible fade show text-white'.$additional_class.'" style="padding-top: 5px; padding-bottom: 5px;"><span class="alert-text">'.$msg.'</span><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="padding: 5px 1rem;"><span aria-hidden="true">×</span></button></div>';
+
+			$this->createSession($name, $msg_element);
 		}
 
-		public function getFlashMessage() {
-			$msg = $this->getSession('flashmessage');
-			$this->unsetSession('flashmessage');
+		public function getFlashMessage($name = 'flashmessage') {
+			$msg = $this->getSession($name);
+			$this->unsetSession($name);
 			return $msg;
 		}
 		// END OF FLASH MESSAGE

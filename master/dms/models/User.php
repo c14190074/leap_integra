@@ -215,4 +215,11 @@
 			
 			return FALSE;
 		}
+
+		public function sendEmailVerification() {
+			$url = Snl::app()->baseUrl() . 'admin/user/verify?user='.SecurityHelper::encrypt($this->user_id);
+			$mailObject = new MailHandler();
+			$mailObject->init();
+			return $mailObject->send($this->email, 'DMS Email Verification', Snl::app()->getVerificationEmailTemplate($url));
+		}
 	}

@@ -40,7 +40,10 @@
 		}
 
 		public function testemail() {
-			return $this->render('test_email');	
+			return $this->render('test_email');
+			// $model = User::model()->findByPk(Snl::app()->user()->user_id);
+			// echo $model->sendEmailVerification();
+			// echo Config::baseConfig()->email_sender;
 		}
 		
 		// All ajax function

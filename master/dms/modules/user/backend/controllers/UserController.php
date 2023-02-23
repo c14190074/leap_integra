@@ -26,7 +26,7 @@
 					Snl::app()->setFlashMessage('Email atau password salah!', 'danger');
 				}
 			}
-
+			
 			return $this->render('login2', array(
 				'model' => $model
 			));
@@ -105,6 +105,7 @@
 				$model->setAttributes($_POST['User']);
 
 				if($model->save()) {
+					$model->sendEmailVerification();
 					Snl::app()->setFlashMessage('User baru berhasil ditambahkan.', 'info');
 					$this->redirect('admin/user/index');
 				} else {
@@ -165,6 +166,33 @@
 			}
 
 			$this->redirect('admin/user/index');
+		}
+
+		public function verify() {
+			$id = isset($_GET['user']) ? SecurityHelper::decrypt($_GET['user']) : 0;
+			if($id == 0) {
+				Snl::app()->setFlashMessage('Link sudah digunakan!', 'danger', 'flashmessage', FALSE);
+				$this->redirect('admin/user/login');
+			}
+
+			$model = User::model()->findByPk($id);
+			if($model !== NULL) {
+				if($model->status_email == 1) {
+					Snl::app()->setFlashMessage('Link sudah digunakan!', 'danger', 'flashmessage', FALSE);
+					$this->redirect('admin/user/login');
+				}
+
+				$model->status_email = 1;
+				if($model->save()) {
+					Snl::app()->setFlashMessage('Selamat! Email anda telah terverifikasi.', 'info', 'flashmessage', FALSE);
+				} else {
+					Snl::app()->setFlashMessage('Link sudah digunakan!', 'danger', 'flashmessage', FALSE);
+				}
+
+				$this->redirect('admin/user/login');
+			}
+
+			$this->redirect('admin/user/login');
 		}
 
 		// All ajax function
