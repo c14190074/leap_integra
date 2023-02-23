@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2023 at 06:11 AM
+-- Generation Time: Feb 23, 2023 at 04:46 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.26
 
@@ -125,7 +125,10 @@ INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `is_revision`
 (65, 63, 'Document 2.pdf', 1, 1, 64, 64, '8657454', 'pdf2', NULL, '', NULL, 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-02-15 10:46:42', 1, '2023-02-15 12:28:29', 1, 1),
 (66, 63, 'Document 3.pdf', 1, 2, 65, 65, '7566343', 'pdf3', NULL, '', NULL, 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-02-15 10:47:21', 1, '2023-02-15 12:24:26', 1, 1),
 (67, 63, 'Document 4.pdf', 0, NULL, NULL, NULL, '45345656', '', '', '', NULL, 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-02-15 12:51:52', 1, '2023-02-15 12:51:52', 1, 0),
-(68, 63, 'FilePDF.pdf', 1, 1, 64, 64, '3434343', '', NULL, '', NULL, 'file', 'pdf', '84.9 KB', '', NULL, NULL, NULL, '2023-02-15 12:52:17', 1, '2023-02-15 12:52:35', 1, 1);
+(68, 63, 'FilePDF.pdf', 1, 1, 64, 64, '3434343', '', NULL, '', NULL, 'file', 'pdf', '84.9 KB', '', NULL, NULL, NULL, '2023-02-15 12:52:17', 1, '2023-02-15 12:52:35', 1, 1),
+(69, 0, 'Android Folder 1', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Folder test', '[{\"user\":\"3\",\"role\":[\"view\"]},{\"user\":\"4\",\"role\":[\"view\"]}]', NULL, NULL, '2023-02-22 11:41:27', 1, '2023-02-23 10:44:57', 1, 0),
+(70, 0, 'Android Folder 2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Folder test dibuat melalui API', '[{\"user\":3,\"role\":[\"view\"]},{\"user\":4,\"role\":[\"view\"]}]', NULL, NULL, '2023-02-22 11:48:39', NULL, '2023-02-22 11:48:39', NULL, 0),
+(71, 0, 'Android Folder 3', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Folder test', '[{\"user\":\"3\",\"role\":[\"view\"]},{\"user\":\"4\",\"role\":[\"view\"]}]', NULL, NULL, '2023-02-22 11:53:44', 1, '2023-02-23 10:45:11', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -360,7 +363,10 @@ INSERT INTO `tbl_logs` (`logs_id`, `file_target_id`, `act`, `type`, `description
 (207, 63, 'open', 'folder', 'membuka folder Revisi 2', '2023-02-18 12:02:47', 1, '2023-02-18 12:02:47', 1, 0),
 (208, 40, 'open', 'folder', 'membuka folder PKN', '2023-02-18 12:03:37', 1, '2023-02-18 12:03:37', 1, 0),
 (209, 40, 'open', 'folder', 'membuka folder PKN', '2023-02-18 12:05:43', 1, '2023-02-18 12:05:43', 1, 0),
-(210, 37, 'open', 'folder', 'membuka folder Alpro', '2023-02-18 12:05:52', 1, '2023-02-18 12:05:52', 1, 0);
+(210, 37, 'open', 'folder', 'membuka folder Alpro', '2023-02-18 12:05:52', 1, '2023-02-18 12:05:52', 1, 0),
+(211, 71, 'open', 'folder', 'membuka folder Android Folder 3', '2023-02-22 11:54:57', 1, '2023-02-22 11:54:57', 1, 0),
+(212, 69, 'update', 'folder', 'mengubah attribut pada folder Android Folder 1', '2023-02-23 10:44:58', 1, '2023-02-23 10:44:58', 1, 0),
+(213, 71, 'update', 'folder', 'mengubah attribut pada folder Android Folder 3', '2023-02-23 10:45:12', 1, '2023-02-23 10:45:12', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -399,6 +405,29 @@ INSERT INTO `tbl_user` (`user_id`, `is_superadmin`, `fullname`, `email`, `passwo
 (3, 0, 'jonas andreas', 'jonas@email.com', 'yYROW/X4cLI=', '081358126547', NULL, NULL, 1, 1, NULL, '3783289032730952', 'CNY0GMIWE6DUK4FR', '2023-01-25 12:40:25', 3, '2023-02-06 11:28:03', 3, 0),
 (4, NULL, 'Kevin', 'kevin@email.com', 'hhnajCW4FFI=', '5465465', NULL, NULL, 1, 1, NULL, '7122781872373108', 'YZTI658FBMCNSH21', '2023-02-14 10:03:30', 1, '2023-02-14 10:03:30', 1, 0);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user_api_login`
+--
+
+CREATE TABLE `tbl_user_api_login` (
+  `api_login_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `clock_in` datetime DEFAULT NULL,
+  `clock_out` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_user_api_login`
+--
+
+INSERT INTO `tbl_user_api_login` (`api_login_id`, `user_id`, `clock_in`, `clock_out`) VALUES
+(1, 1, '2023-02-22 09:30:54', '2023-02-22 09:31:43'),
+(2, 1, '2023-02-22 09:31:44', '2023-02-22 09:33:21'),
+(3, 1, '2023-02-22 09:36:10', '2023-02-22 11:35:37'),
+(4, 1, '2023-02-22 11:35:37', NULL);
+
 --
 -- Indexes for dumped tables
 --
@@ -422,6 +451,12 @@ ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`user_id`);
 
 --
+-- Indexes for table `tbl_user_api_login`
+--
+ALTER TABLE `tbl_user_api_login`
+  ADD PRIMARY KEY (`api_login_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -429,19 +464,25 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_folder`
 --
 ALTER TABLE `tbl_folder`
-  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=214;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tbl_user_api_login`
+--
+ALTER TABLE `tbl_user_api_login`
+  MODIFY `api_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
