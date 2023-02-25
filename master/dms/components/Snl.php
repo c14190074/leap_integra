@@ -625,6 +625,51 @@ HTML;
 HTML;
 		}
 
+		public function getSharedNotificationTemplate($file_url, $sender_name, $sender_email, $recipient_name, $type) {
+			return <<<HTML
+<table style="background:#f9f9f9; color:#373737; font-size:17px; line-height:24px; margin:0; padding:0; width:100%" border="0">
+    <tbody>
+        <tr>
+            <td>
+                <table style="background:white; margin-bottom:1rem" align="center" border="0" cellpadding="32">
+                    <tbody>
+                    	<tr>
+                    		<td style="padding-top: 10px; padding-bottom: 10px; color: #000; font-weight: 700; font-family: 'Google Sans';">{$sender_name} membagikan {$type}</td>
+                    	</tr>
+                        <tr>
+                            <td style="padding-top: 15px;">
+                                <div style="max-width:600px;margin:0 auto">
+                                    <div style="background:white;border-radius:0.5rem;margin-bottom:1rem">
+                                        <p style="font-size:15px;line-height:24px;margin:0 0 20px; font-family: 'Google Sans';">
+                                            Hi, {$recipient_name}<br />
+                                            {$sender_name} ({$sender_email}) membagikan {$type} kepada anda. Klik link di bawah ini untuk membuka.
+                                        </p>
+                                        <p style="line-height:24px;margin:0 0 16px; text-align: center; margin-top: 40px;">
+                                            <a style="text-decoration: none; border: 1px solid #468fcc; background: #468fcc; color: #FFF; padding: 6px 18px; font-family: 'Google Sans'" href="{$file_url}">
+                                            	Buka {$type}
+                                            </a>
+                                        </p>
+                                        
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding-top: 0;">
+                                <p style="font-weight: bold; font-family: 'Google Sans';">Hormat kami,</p>
+                                <p style="font-family: 'Google Sans';">ITS</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+HTML;
+		}
+
 		public function getInvoiceEmailTemplate($order_id, $order_date, $payment_status, $payment_method, $remarks, $recipient_name, $mobile_phone, $shipping_address, $items, $subtotal, $delivery_fee, $grand_total) {
 			return <<<HTML
 <table style="background:#f9f9f9; color:#373737; font-size:17px; line-height:24px; margin:0; padding:0; width:100%" border="0">

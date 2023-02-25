@@ -338,4 +338,38 @@
 
 		}
 
+		public function sendEmailNotification() {
+			$id = $this->folder_id;
+			$ctr = 0;
+			if($this->type == 'file') {
+				$id = $this->folder_parent_id;
+			}
+
+			$url = Snl::app()->baseUrl() . 'admin/files/index?folder='.SecurityHelper::encrypt($id);
+			$sender_name = Snl::app()->user()->fullname;
+			$sender_email = Snl::app()->user()->email;
+
+			
+			if($this->user_access != NULL) {
+				$users = json_decode($this->user_access);
+				if(is_array($users) && count($users) > 0) {
+					$mailObject = new MailHandler();
+					$mailObject->init();
+
+					foreach($users as $id) {
+						$user_model = User::model()->findByPk($id->user);
+						$recipient_name = ucwords(strtolower($user_model->fullname));
+
+						$is_send = $mailObject->send($user_model->email, 'Sebuah '.ucwords(strtolower($this->type)).' dibagikan kepada anda: '.$this->name, Snl::app()->getSharedNotificationTemplate($url, $sender_name, $sender_email, $recipient_name, ucwords(strtolower($this->type))));
+
+						if($is_send) {
+							$ctr++;
+						}
+					}
+				}
+			}
+
+			return $ctr;
+		}
+
 	}

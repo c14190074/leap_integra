@@ -105,6 +105,7 @@
 				
 				if($model->save()) {
 					Snl::app()->setFlashMessage($message_result, 'info');
+					$model->sendEmailNotification();
 					if($isNewRecord) {
 						Logs::create_logs($model->folder_id, 'create', 'folder', 'membuat folder baru dengan nama '.$model->name);
 
@@ -184,6 +185,7 @@
 				}
 
 				if($model->save()) {
+					$model->sendEmailNotification();
 					Logs::create_logs($model->folder_id, 'upload', 'file', 'mengunggah file baru '.$model->name);
 					Snl::app()->setFlashMessage('File baru berhasil ditambahkan.', 'info');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
@@ -713,6 +715,7 @@
 				}
 
 				if($model->save()) {
+					$model->sendEmailNotification();
 					Logs::create_logs($model->folder_id, 'edit', 'file', 'mengubah user akses pada file '.$model->name);
 					Snl::app()->setFlashMessage('User akses telah berhasil diubah.', 'info');
 					$this->redirect('admin/files/index?folder='.SecurityHelper::encrypt($model->folder_parent_id));
