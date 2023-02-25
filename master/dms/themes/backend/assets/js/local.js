@@ -443,6 +443,10 @@ $(document).ready(function() {
       
       // if (fixedPluginButton) {
         $('body').on('click', '.show-right-slider', function() {
+            if($(this).hasClass('is-related')) {
+                fixedPlugin.classList.remove('show');    
+            }
+            
             if (!fixedPlugin.classList.contains('show')) {
                 var folder_id = $(this).data('folder-id');
                 var action_url = $(this).data('action');

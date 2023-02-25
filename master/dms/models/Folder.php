@@ -243,7 +243,7 @@
 				foreach($related_document_ids as $id) {
 					$model = Folder::model()->findByPk($id);
 					if($model->is_deleted == 0) {
-						array_push($related_documents, '<span class="text-sm mb-0 view-file-attribute" role="button" data-folder-id="'.SecurityHelper::encrypt($model->folder_id).'">'.$model->name.'</span>');
+						array_push($related_documents, '<span class="text-sm mb-0 show-right-slider is-related" data-action="viewfile" role="button" data-folder-id="'.SecurityHelper::encrypt($model->folder_id).'">'.$model->name.'</span>');
 					}
 				}
 			}
