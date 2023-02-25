@@ -105,7 +105,14 @@
 		    		</tr>
 
 		    		<tr>
-		    			<td><span class="text-sm text-secondary">User Akses <i class="fa fa-pencil-square-o me-3 link-info" id="btn-edit-user-access" role="button" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"></i></span></td>
+		    			<td>
+		    				<span class="text-sm text-secondary">
+		    					User Akses 
+		    					<?php if($model->isTheOwner()) : ?>
+		    						<i class="fa fa-pencil-square-o me-3 link-info" id="btn-edit-user-access" role="button" data-folder-id="<?= SecurityHelper::encrypt($model->folder_id) ?>"></i>
+		    					<?php endif; ?>
+		    				</span>
+		    			</td>
 		    			<td style="white-space: normal; max-width: 200px;">
 		    				<span class="text-sm text-dark">
 		    					<?php
