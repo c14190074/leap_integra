@@ -148,4 +148,57 @@
 				$this->renderInvalidUserToken();
 			}
 		}
+
+		public function viewfolderattribute() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$model = Folder::model()->findByPk($folder_id);
+					$data = array();
+					$user_access_string = "";
+
+					if($model != NULL) {
+						$user_model = User::model()->findByPk($model->created_by);
+						if($model->user_access != NULL) {
+	                      $user_email = array();
+	                      $user_access = json_decode($model->user_access);
+
+	                      foreach($user_access as $d) {
+	                        $user_access_model = User::model()->findByPk($d->user);
+	                        if($model->type == "file") {
+	                          $tmp_str = $user_access_model->email . "(".implode(',', $d->role).")";
+	                          array_push($user_email, $tmp_str);
+	                        } else {
+	                          array_push($user_email, $user_access_model->email);
+	                        }
+	                        
+	                      }
+
+	                      array_push($user_email, $user_model->email." (owner)");
+	                      $user_access_string = implode( ", ", $user_email);
+	                    } 
+
+						$data = array(
+							'name' 			=> $model->name,
+							'description' 	=> $model->description,
+							'user_access' 	=> $user_access_string,
+							'created_by' 	=> ucwords(strtolower($user_model->fullname)),
+							'created_on' 	=> date('d M Y H:i:s', strtotime($model->created_on)),
+							'updated_on' 	=> date('d M Y H:i:s', strtotime($model->updated_on)),
+						);
+					}
+					
+					$result = array(
+						'status' => 200,
+						'data'	 => $data,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
 	}
