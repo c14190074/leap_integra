@@ -222,11 +222,11 @@
 			}
 		}
 
-		public static function countNumberOfFile($model = NULL) {
+		public static function countNumberOfFile($model = NULL, $user_id = 0) {
 			$ctr = 0;
 			if($model != NULL) {
 				foreach($model as $folder) {
-					if($folder->hasAccess()) {
+					if($folder->hasAccess($user_id)) {
 						$ctr++;
 					}
 				}
