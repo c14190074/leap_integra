@@ -80,11 +80,11 @@
 						));
 					}
 
-					if($model != NULL) {
-						if(Folder::countNumberOfFile($model, $this->user_id) == 0) {
-							$model = NULL;
-						}
-					}
+					// if($model != NULL) {
+					// 	if(Folder::countNumberOfFile($model, $this->user_id) == 0) {
+					// 		$model = NULL;
+					// 	}
+					// }
 
 					if($model != NULL) {
 						foreach($model as $folder) {
@@ -182,6 +182,67 @@
 							'name' 			=> $model->name,
 							'description' 	=> $model->description,
 							'user_access' 	=> $user_access_string,
+							'created_by' 	=> ucwords(strtolower($user_model->fullname)),
+							'created_on' 	=> date('d M Y H:i:s', strtotime($model->created_on)),
+							'updated_on' 	=> date('d M Y H:i:s', strtotime($model->updated_on)),
+						);
+					}
+					
+					$result = array(
+						'status' => 200,
+						'data'	 => $data,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
+
+		public function viewfileattribute() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$folder_id = isset($this->params['file_id']) ? $this->params['file_id'] : 0;
+
+					$model = Folder::model()->findByPk($folder_id);
+					$data = array();
+					$user_access_string = "";
+
+					if($model != NULL) {
+						$user_model = User::model()->findByPk($model->created_by);
+						if($model->user_access != NULL) {
+	                      $user_email = array();
+	                      $user_access = json_decode($model->user_access);
+
+	                      foreach($user_access as $d) {
+	                        $user_access_model = User::model()->findByPk($d->user);
+	                        if($model->type == "file") {
+	                          $tmp_str = $user_access_model->email . "(".implode(',', $d->role).")";
+	                          array_push($user_email, $tmp_str);
+	                        } else {
+	                          array_push($user_email, $user_access_model->email);
+	                        }
+	                        
+	                      }
+
+	                      array_push($user_email, $user_model->email." (owner)");
+	                      $user_access_string = implode( ", ", $user_email);
+	                    } 
+
+						$data = array(
+							'nomor' 	=> $model->nomor,
+							'perihal' 	=> $model->perihal,
+							'name' 		=> $model->name,
+							'size' 		=> $model->size,
+							'format' 	=> $model->format,
+							'description' 	=> $model->description,
+							'related_document' 	=> implode(', ', $model->getRelatedDocuments()),
+							'user_access' 	=> $user_access_string,
+							'delete_access' => $model->created_by == $this->user_id ? 1 : 0,
+							'view_access' => $model->hasViewAccess($this->user_id) ? 1 : 0,
 							'created_by' 	=> ucwords(strtolower($user_model->fullname)),
 							'created_on' 	=> date('d M Y H:i:s', strtotime($model->created_on)),
 							'updated_on' 	=> date('d M Y H:i:s', strtotime($model->updated_on)),
