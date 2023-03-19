@@ -117,7 +117,7 @@
 									'name' 		=> $folder->name,
 									'nomor' 	=> $folder->nomor,
 									'perihal' 	=> $folder->perihal,
-									'type' 		=> $folder->type,
+									'type' 		=> ucwords(strtolower($folder->type)),
 									'format' 	=> $folder->format,
 									'size' 		=> $folder->size,
 									'description' 	=> $folder->description,
