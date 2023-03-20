@@ -262,4 +262,111 @@
 				$this->renderInvalidUserToken();
 			}
 		}
+
+		public function getrecentfiles() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					// $folder_parent_id = isset($this->params['folder_parent_id']) ? $this->params['folder_parent_id'] : 0;
+					$recents = NULL;
+					$data = array();
+
+					$recents = Logs::model()->findAll(array(
+						// 'select'	=> 'logs_id, DISTINCT file_target_id, act, type, description, created_on, created_by, updated_on, updated_by, is_deleted',
+						'condition' => 'is_deleted = 0 AND created_by = :id AND act = "open" AND logs_id IN (SELECT MAX(logs_id) FROM tbl_logs GROUP BY file_target_id) AND file_target_id IN (SELECT folder_id FROM tbl_folder WHERE is_deleted = 0) ORDER BY created_on DESC LIMIT 5',
+						'params'	=> array(':id' => $this->user_id)
+					));
+
+
+					if($recents != NULL) {
+						foreach($recents as $recent) {
+							$model = Folder::model()->findByPk($recent->file_target_id);
+							if($model->hasAccess($this->user_id)) {
+								$user_created = User::model()->findByPk($model->created_by);
+                            	$user_updated = User::model()->findByPk($model->updated_by);
+
+                            	$data[] = array(
+									'folder_id' 		=> $model->folder_id,
+									'folder_parent_id' 	=> $model->folder_parent_id,
+									'name' 		=> $model->name,
+									'nomor' 	=> $model->nomor,
+									'perihal' 	=> $model->perihal,
+									'type' 		=> ucwords(strtolower($model->type)),
+									'format' 	=> $model->format,
+									'size' 		=> $model->size,
+									'description' 	=> $model->description,
+									'created_by' 	=> ucwords(strtolower($user_created->fullname)),
+									'created_on' 	=> date('d M Y H:i:s', strtotime($model->created_on)),
+									'updated_on' 	=> date('d M Y H:i:s', strtotime($model->updated_on)),
+									'updated_by' 	=> ucwords(strtolower($user_updated->fullname)),
+									// 'user_access'	=> $user_access_string,
+									//'related_document' => implode(', ', $folder->getRelatedDocuments()),
+								);
+							}
+						}
+
+					}
+
+					
+					// if($model != NULL) {
+					// 	foreach($model as $folder) {
+					// 		if($folder->hasAccess($this->user_id)) {
+					// 			$user_created = User::model()->findByPk($folder->created_by);
+					//         	$user_updated = User::model()->findByPk($folder->updated_by);
+					//         	$user_access_string = '';
+
+					//         	if($folder->user_access != NULL) {
+					//                 $user_email = array();
+					//                 $user_access = json_decode($folder->user_access);
+					//                 foreach($user_access as $d) {
+					//                   $user_access_model = User::model()->findByPk($d->user);
+					//                   if($folder->type == "file") {
+					//                     $tmp_str = $user_access_model->email . "(".implode(',', $d->role).")";
+					//                     array_push($user_email, $tmp_str);
+					//                   } else {
+					//                     array_push($user_email, $user_access_model->email);
+					//                   }
+					                  
+					//                 }
+
+					//                 array_push($user_email, $user_created->email." (owner)");
+					//                 $user_access_string = implode( ", ", $user_email);
+					//               } 
+
+					//         	$data[] = array(
+					// 				'folder_id' 		=> $folder->folder_id,
+					// 				'folder_parent_id' 	=> $folder->folder_parent_id,
+					// 				'name' 		=> $folder->name,
+					// 				'nomor' 	=> $folder->nomor,
+					// 				'perihal' 	=> $folder->perihal,
+					// 				'type' 		=> ucwords(strtolower($folder->type)),
+					// 				'format' 	=> $folder->format,
+					// 				'size' 		=> $folder->size,
+					// 				'description' 	=> $folder->description,
+					// 				'created_by' 	=> ucwords(strtolower($user_created->fullname)),
+					// 				'created_on' 	=> date('d M Y H:i:s', strtotime($folder->created_on)),
+					// 				'updated_on' 	=> date('d M Y H:i:s', strtotime($folder->updated_on)),
+					// 				'updated_by' 	=> ucwords(strtolower($user_updated->fullname)),
+					// 				'user_access'	=> $user_access_string,
+					// 				//'related_document' => implode(', ', $folder->getRelatedDocuments()),
+					// 			);
+
+					// 		}
+					// 	}
+					// } 
+
+
+					$result = array(
+						'status' => 200,
+						'total_data' => count($data),
+						'data'	 => $data,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
 	}
