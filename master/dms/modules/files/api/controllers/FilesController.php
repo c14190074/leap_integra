@@ -418,4 +418,56 @@
 				$this->renderInvalidUserToken();
 			}
 		}
+
+		public function delete() {
+			if($this->request_type == 'POST') {
+				if($this->valid_user_token) {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$model = Folder::model()->findByPk($folder_id);
+					$type = 'Unknown';
+					$msg = '';
+
+					if($model != NULL) {
+						$type = $model->type;
+						if(!$model->hasChild()) {
+							$model->is_deleted = 1;
+
+							if($model->save()) {
+								if($type == 'file') {
+									$msg = 'File berhasil dihapus';
+								} else {
+									$msg = 'Folder berhasil dihapus';
+								}
+								
+								$result = array(
+									'status' 	=> 200,
+									'message' 	=> $msg
+								);
+
+								$this->renderJSON($result);
+							} else {
+								$this->renderErrorMessage(403, 'DeleteFailed', array(
+									'error' => $this->parseErrorMessage(array($type => $model->errors))
+								));
+							}				
+						} else {
+							$this->renderErrorMessage(403, 'DeleteFailed', array(
+									'error' => $this->parseErrorMessage(array($type => 'Folder ini tidak dapat dihapus karena terdapat file didalamnya'))
+								)
+							);
+						}
+
+					} else {
+						$this->renderErrorMessage(403, 'DeleteFailed', array(
+									'error' => $this->parseErrorMessage(array($type => 'Data tidak ditemukan'))
+								));
+					}
+
+				} else {
+					$this->renderInvalidUserToken();
+				}
+			} else {
+				$this->renderErrorMessage(405, 'MethodNotAllowed');
+			}
+		}
 	}
