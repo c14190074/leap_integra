@@ -422,7 +422,7 @@
 		public function delete() {
 			if($this->request_type == 'POST') {
 				if($this->valid_user_token) {
-					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$folder_id = isset($this->params['file_id']) ? $this->params['file_id'] : 0;
 					$model = Folder::model()->findByPk($folder_id);
 					$type = 'Unknown';
 					$msg = '';
