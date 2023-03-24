@@ -280,7 +280,7 @@
 				return FALSE;
 			} else {
 				foreach($model as $folder) {
-					if($folder->hasAccess()) {
+					if($folder->hasAccess($user_id)) {
 						$ctr++;
 					}
 				}
