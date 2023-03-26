@@ -45,6 +45,32 @@
 			// echo $model->sendEmailVerification();
 			// echo Config::baseConfig()->email_sender;
 		}
+
+		public function converttojson() {
+			$data = array();
+			$tmp = array(
+				'user' => '3',
+				'role' => array('view', 'edit')
+			);
+
+			array_push($data, $tmp);
+
+			// $tmp = array(
+			// 	'user' => '2',
+			// 	'role' => array('view')
+			// );
+
+			// array_push($data, $tmp);
+
+			
+			echo json_encode($data);
+
+			// foreach ($data as $key => $value) {
+			// 	echo $value['user'];
+			// 	echo '<br />';
+			// }
+
+		}
 		
 		// All ajax function
 		

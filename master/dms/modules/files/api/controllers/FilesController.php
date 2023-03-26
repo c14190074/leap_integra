@@ -550,4 +550,184 @@
 				$this->renderInvalidUserToken();
 			}
 		}
+
+		public function getuseraccessbyfolder() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$user_model = User::model()->findAll(array(
+						'condition' => 'is_deleted = 0 AND status = 1 AND user_id != :id',
+						'params'	=> array('id' => $this->user_id)
+					));
+
+					$users = array();
+
+					if($user_model != NULL) {
+            			foreach($user_model as $d) {
+            				if($d->hasFolderAccess($folder_id)) {
+            					$data = array(
+            						'user_id' 	=> $d->user_id,
+            						'fullname' 	=> $d->fullname,
+            						'email' 	=> $d->email,
+            					);
+            					array_push($users, $data);
+            				}
+            			}
+            		}
+
+            		$result = array(
+						'status' => 200,
+						'data'	 => $users,
+					);
+
+					$this->renderJSON($result);
+
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
+
+		public function getrelateddocumentbyuser() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$model = Folder::model()->findAll(array(
+						'condition' => 'is_deleted = 0 AND type = :type AND created_by = :id',
+						'params'	=> array(':id' => $this->user_id, ':type' => 'file')
+					));
+
+					$documents = array();
+
+					if($model != NULL) {
+            			foreach($model as $d) {
+            				$data = array(
+            					'file_id' 	=> $d->folder_id,
+            					'name'		=> ucwords(strtolower($d->name))
+            				);
+
+            				array_push($documents, $data);
+            			}
+            		}
+
+            		$result = array(
+						'status' => 200,
+						'data'	 => $documents,
+					);
+
+					$this->renderJSON($result);
+
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
+
+		public function upload() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'POST') {
+					$tempFile = $_FILES['file']['tmp_name'];
+				    $targetPath = Snl::app()->rootDirectory() . 'uploads/documents/';
+				    $targetFile =  $targetPath. $_FILES['file']['name'];
+				    $upload_status = move_uploaded_file($tempFile,$targetFile);
+				    $file_name = $_FILES['file']['name'];
+				    $file_size = Snl::app()->formatSizeUnits($_FILES['file']['size']);
+				    $file_format = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+
+				    $parent_folder = isset($this->params['parent_folder']) ? $this->params['parent_folder'] : 0;
+					$perihal = isset($this->params['perihal']) ? $this->params['perihal'] : '';
+					$nomor = isset($this->params['nomor']) ? $this->params['nomor'] : '';
+					$description = isset($this->params['description']) ? $this->params['description'] : '';
+					$related_document_ids = isset($this->params['related_document_ids']) ? $this->params['related_document_ids'] : NULL;
+					$user_access = isset($this->params['user_access']) ? $this->params['user_access'] : NULL;
+					$tmp_user_access = array();
+					$ids = array();
+
+					if($upload_status) {
+						$model = new Folder;
+						$model->folder_parent_id = $parent_folder;
+						$model->name = $file_name;
+						$model->perihal = $perihal;
+						$model->nomor = $nomor;
+						$model->description = $description;
+						$model->format = $file_format;
+						$model->size = $file_size;
+						$model->type = "file";
+						$model->is_revision = 0;
+						$model->related_document = $related_document_ids;
+						$model->user_access = NULL;
+						$model->created_by = $this->user_id;
+						$model->created_on = Snl::app()->dateNow();
+						$model->updated_by = $this->user_id;
+						$model->updated_on = Snl::app()->dateNow();
+						$model->is_deleted = 0;
+						
+						if($user_access != NULL && $this->isJSON($user_access)) {
+							$user_access = json_decode($user_access);
+
+							foreach ($user_access as $key => $value) {
+								array_push($ids, $value->user);
+							}
+
+							$tmp_user_access = $user_access;
+						}
+
+
+						// otomatis menambahkan akses kepada pemilik folder
+						$folder_parent = Folder::model()->findByPk($model->folder_parent_id);
+						if($folder_parent != NULL) {
+							if($this->user_id != $folder_parent->created_by) {
+								if(!in_array($folder_parent->created_by, $ids)) {
+									$data = array(
+										'user' 	=> $folder_parent->created_by,
+										'role'	=> array('view')
+									);
+
+									array_push($tmp_user_access, $data);
+								}
+							}
+						}
+
+						if(count($user_access) > 0) {
+							$model->user_access = json_encode($tmp_user_access);
+						}
+						
+						if($model->save()) {
+							$data = array(
+								'file_id' 			=> $model->folder_id,
+								'folder_parent_id' 	=> $model->folder_parent_id,
+								'name' 				=> $model->name,
+								'perihal' 			=> $model->perihal,
+								'nomor' 			=> $model->nomor,
+								'description' 		=> $model->description,
+							);
+
+							$result = array(
+								'status' => 200,
+								'data'	 => $data,
+							);
+
+							$this->renderJSON($result);
+
+						} else {
+							$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage($folder->errors)));
+						}
+
+
+					} else {
+						$this->renderErrorMessage(403, 'UploadFailed', array(
+									'error' => $this->parseErrorMessage(array('file' => $upload_status))
+								));
+					}
+
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
 	}
