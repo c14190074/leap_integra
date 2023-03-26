@@ -85,6 +85,7 @@
 					
 					$result = array(
 						'status' => 200,
+						'user_id'	=> $user->user_id,
 						'email' 	=> $user->email,
 						'fullname' => $user->fullname						
 					);

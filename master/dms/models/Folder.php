@@ -206,8 +206,12 @@
 			return false;
 		}
 
-		public function isTheOwner() {
-			if($this->created_by == Snl::app()->user()->user_id) {
+		public function isTheOwner($id = 0) {
+			if($id == 0) {
+				$id = Snl::app()->user()->user_id;
+			}
+			
+			if($this->created_by == $id) {
 				return true;
 			}
 			return false;

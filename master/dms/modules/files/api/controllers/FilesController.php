@@ -429,32 +429,39 @@
 
 					if($model != NULL) {
 						$type = $model->type;
-						if(!$model->hasChild()) {
-							$model->is_deleted = 1;
+						if($model->isTheOwner($this->user_id)) {
+							if(!$model->hasChild()) {
+								$model->is_deleted = 1;
+								if($model->save()) {
+									if($type == 'file') {
+										$msg = 'File berhasil dihapus';
+									} else {
+										$msg = 'Folder berhasil dihapus';
+									}
+									
+									$result = array(
+										'status' 	=> 200,
+										'message' 	=> $msg
+									);
 
-							if($model->save()) {
-								if($type == 'file') {
-									$msg = 'File berhasil dihapus';
+									$this->renderJSON($result);
 								} else {
-									$msg = 'Folder berhasil dihapus';
-								}
-								
-								$result = array(
-									'status' 	=> 200,
-									'message' 	=> $msg
-								);
-
-								$this->renderJSON($result);
+									$this->renderErrorMessage(403, 'DeleteFailed', array(
+										'error' => $this->parseErrorMessage(array($type => $model->errors))
+									));
+								}				
 							} else {
 								$this->renderErrorMessage(403, 'DeleteFailed', array(
-									'error' => $this->parseErrorMessage(array($type => $model->errors))
-								));
-							}				
+										'error' => $this->parseErrorMessage(array($type => ucwords(strtolower($type)).' ini tidak dapat dihapus karena terdapat file di dalamnya'))
+									)
+								);
+							}
+
 						} else {
 							$this->renderErrorMessage(403, 'DeleteFailed', array(
-									'error' => $this->parseErrorMessage(array($type => 'Folder ini tidak dapat dihapus karena terdapat file didalamnya'))
-								)
-							);
+										'error' => $this->parseErrorMessage(array($type => 'Anda tidak memiliki akses untuk menghapus '.$type.' ini'))
+									)
+								);
 						}
 
 					} else {
