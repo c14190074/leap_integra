@@ -328,7 +328,6 @@
 
 					}
 
-
 					$result = array(
 						'status' => 200,
 						'total_data' => count($data),
@@ -355,11 +354,10 @@
 						'params'	=> array(':id' => $this->user_id)
 					));
 
-
 					if($shared_folders != NULL && Folder::hasSharedFolder($this->user_id)) {
 						foreach($shared_folders as $folder) {
 							if($folder->hasAccess($this->user_id)) {
-								$folder_created = User::model()->findByPk($folder->created_by);
+								$user_created = User::model()->findByPk($folder->created_by);
 								$user_access_string = 'Only you';
 
                             	if($folder->user_access != NULL) {
@@ -377,7 +375,7 @@
 			                        
 			                      }
 
-			                      array_push($user_email, $folder_created->email." (owner)");
+			                      array_push($user_email, $user_created->email." (owner)");
 			                      
 			                      $user_access_string = implode( ", ", $user_email);
 			                    }
@@ -392,7 +390,7 @@
 									'format' 	=> $folder->format,
 									'size' 		=> $folder->size,
 									'description' 	=> $folder->description,
-									'created_by' 	=> ucwords(strtolower($folder_created->fullname)),
+									'created_by' 	=> ucwords(strtolower($user_created->fullname)),
 									'created_on' 	=> date('d M Y H:i:s', strtotime($folder->created_on)),
 									'updated_on' 	=> date('d M Y H:i:s', strtotime($folder->updated_on)),
 									// 'updated_by' 	=> ucwords(strtolower($user_updated->fullname)),
@@ -481,11 +479,11 @@
 		public function search() {
 			if($this->valid_user_token) {
 				if($this->request_type == 'GET') {
-					$keyword = isset($this->params['keyword']) ? $this->params['keyword'] : 0;
+					$keyword = isset($this->params['keyword']) ? $this->params['keyword'] : '';
 					$data = array();
 
 					$model = Folder::model()->findAll(array(
-						'condition' => "is_deleted = 0 AND is_revision = 0 AND (name LIKE '%".$keyword."%' OR perihal LIKE '%".$keyword."%' OR nomor LIKE '%".$keyword."%' OR description LIKE '%".$keyword."%') ORDER BY name",
+						'condition' => "is_deleted = 0 AND is_revision = 0 AND (name LIKE '%".$keyword."%' OR perihal LIKE '%".$keyword."%' OR nomor LIKE '%".$keyword."%' OR description LIKE '%".$keyword."%') ORDER BY name, perihal, nomor",
 					));
 
 					if($model != NULL) {
@@ -530,6 +528,7 @@
 									'updated_on' 	=> date('d M Y H:i:s', strtotime($folder->updated_on)),
 									'updated_by' 	=> ucwords(strtolower($user_updated->fullname)),
 									'user_access'	=> $user_access_string,
+									// 'file_location' => $folder->getLocation(),
 									// 'related_document' => implode(', ', $folder->getRelatedDocuments()),
 								);
 							}
