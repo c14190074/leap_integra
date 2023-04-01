@@ -8,6 +8,10 @@
 					$description = isset($this->params['description']) ? $this->params['description'] : '';
 					$users = isset($this->params['users']) ? $this->params['users'] : NULL;
 					
+					if($parent_folder == "") {
+						$parent_folder = 0;
+					}
+					
 					$folder = new Folder;
 					$folder->folder_parent_id = $parent_folder;
 					$folder->name = $name;
@@ -70,6 +74,7 @@
 			if($this->valid_user_token) {
 				if($this->request_type == 'GET') {
 					$folder_parent_id = isset($this->params['folder_parent_id']) ? $this->params['folder_parent_id'] : 0;
+					$keyword = isset($this->params['keyword']) ? $this->params['keyword'] : '';
 					$model = NULL;
 					$data = array();
 
@@ -77,6 +82,12 @@
 						$model = Folder::model()->findAll(array(
 							'condition' => 'folder_parent_id = :id AND is_deleted = 0 AND is_revision = 0 ORDER BY type DESC',
 							'params'	=> array(':id' => $folder_parent_id)
+						));
+					}
+
+					if($keyword != "") {
+						$model = Folder::model()->findAll(array(
+							'condition' => "is_deleted = 0 AND is_revision = 0 AND (name LIKE '%".$keyword."%' OR perihal LIKE '%".$keyword."%' OR nomor LIKE '%".$keyword."%' OR description LIKE '%".$keyword."%') ORDER BY name, perihal, nomor",
 						));
 					}
 
