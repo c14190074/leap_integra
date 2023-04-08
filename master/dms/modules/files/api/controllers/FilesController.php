@@ -138,6 +138,8 @@
 									'updated_by' 	=> ucwords(strtolower($user_updated->fullname)),
 									'user_access'	=> $user_access_string,
 									//'related_document' => implode(', ', $folder->getRelatedDocuments()),
+									'is_owner' 		=> $folder->isTheOwner($this->user_id) ? "1" : "0",
+									'file_url'		=> Snl::app()->baseUrl() . 'uploads/documents/'.$folder->name
 								);
 
 							}
@@ -332,6 +334,7 @@
 									'updated_on' 	=> date('d M Y H:i:s', strtotime($model->updated_on)),
 									'updated_by' 	=> ucwords(strtolower($user_updated->fullname)),
 									'user_access'	=> $user_access_string,
+									'is_owner' 		=> $model->isTheOwner($this->user_id) ? "1" : "0",
 									//'related_document' => implode(', ', $folder->getRelatedDocuments()),
 								);
 							}
@@ -406,11 +409,50 @@
 									'updated_on' 	=> date('d M Y H:i:s', strtotime($folder->updated_on)),
 									// 'updated_by' 	=> ucwords(strtolower($user_updated->fullname)),
 									'user_access'	=> $user_access_string,
+									'is_owner' 		=> $folder->isTheOwner($this->user_id) ? "1" : "0",
 									//'related_document' => implode(', ', $folder->getRelatedDocuments()),
 								);
 							}
 						}
 
+					}
+
+					$result = array(
+						'status' => 200,
+						'total_data' => count($data),
+						'data'	 => $data,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
+
+		public function getrecentactivities() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$logs = NULL;
+					$data = array();
+
+					$logs = Logs::model()->findAll(array(
+						'condition' => 'is_deleted = 0 AND created_by = :id AND (act != "open" OR type != "folder") ORDER BY updated_on DESC LIMIT 3',
+						'params'	=> array(':id' => $this->user_id)
+					));
+
+					if($logs != NULL) {
+						foreach($logs as $log) {
+							$log_created = User::model()->findByPk($log->created_by);
+
+							$data[] = array(
+								'name' 		=> ucwords(strtolower($log_created->fullname)),
+								'created_on' 	=> date('d M Y h:i:s', strtotime($log->created_on)),
+								'description' 		=> $log->description,
+							);
+						}
 					}
 
 					$result = array(
@@ -740,5 +782,136 @@
 			} else {
 				$this->renderInvalidUserToken();
 			}
+		}
+
+		public function getfiledata() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$data = array();
+					$model = Folder::model()->findByPk($folder_id);
+					
+					if($model != NULL) {
+						$data[] = array(
+							'folder_id' 		=> $model->folder_id,
+							'folder_parent_id' 	=> $model->folder_parent_id,
+							'name' 				=> $model->name,
+							'nomor' 				=> $model->nomor,
+							'perihal' 				=> $model->perihal,
+							'type' 				=> $model->type,
+							'format' 				=> $model->format,
+							'size' 				=> $model->size,
+							'description' 				=> $model->description,
+							'created_by' 				=> $model->created_by,
+							'created_on' 				=> $model->created_on,
+							'updated_on' 				=> $model->updated_on,
+							'updated_by' 				=> $model->updated_by,
+							'user_access' 				=> $model->user_access,
+						);
+					}
+
+					$result = array(
+						'status' => 200,
+						'data'	=> $data,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
+
+		public function getrevisionfile() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$data = array();
+					
+					$revisions = Folder::model()->findAll(array(
+						'condition' => 'is_deleted = 0 AND new_file_id = :id ORDER BY folder_id DESC',
+						'params'	=> array(':id' => $folder_id)
+					));
+					
+					if($revisions != NULL) {
+						foreach($revisions as $model) {
+							$user_created = User::model()->findByPk($model->created_by);
+
+							$data[] = array(
+								'folder_id' 		=> $model->folder_id,
+								'folder_parent_id' 	=> $model->folder_parent_id,
+								'name' 				=> $model->name,
+								'no_revision'		=> $model->no_revision == NULL ? 'Original' : 'Versi '.$model->no_revision,
+								'updated_on' 		=> $model->updated_on,
+								'created_by' 		=> $user_created->fullname,
+								'email'				=> $user_created->email
+							);
+						}
+					}
+
+					$result = array(
+						'status' => 200,
+						'data'	=> $data,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
+
+		public function rollback() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'POST') {
+					$active_file_id = isset($this->params['active_file_id']) ? $this->params['active_file_id'] : 0;
+					$target_file_id = isset($this->params['target_file_id']) ? $this->params['target_file_id'] : 0;
+					
+					$active_model = Folder::model()->findByPk($active_file_id);
+					$active_model->is_revision = 1;
+					$active_model->new_file_id = $target_file_id;
+					$active_model->is_deleted = $active_model->folder_id > $target_file_id ? 1 : 0;
+					$active_model->save();
+
+
+					$model = Folder::model()->findAll(array(
+						'condition' => 'is_deleted = 0 AND new_file_id = :id ORDER BY folder_id DESC',
+						'params'	=> array(':id' => $active_file_id)
+					));
+
+					if($model != NULL) {
+						foreach($model as $folder) {
+							$folder->new_file_id = $target_file_id;
+
+							if($folder->folder_id > $target_file_id) {
+								$folder->is_deleted = 1;
+							}
+
+							if($folder->folder_id == $target_file_id) {
+								$folder->is_revision = 0;
+								$folder->new_file_id = NULL;
+							}
+
+
+							$folder->save();
+						}
+					}
+
+					$result = array(
+						'status' => 200,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+
 		}
 	}

@@ -199,6 +199,7 @@
 				'user_id'		=> $this->user_id,
 				//'is_superadmin'	=> $this->is_superadmin,
 				'email'			=> $this->email,
+				'phone'			=> $this->phone,
 				'fullname'		=> ucwords(strtolower($this->fullname)),
 				//'encryption_key'=> $this->encryption_key,
 				//'encryption_iv'	=> $this->encryption_iv,
