@@ -46,30 +46,27 @@
 			// echo Config::baseConfig()->email_sender;
 		}
 
-		public function converttojson() {
-			$data = array();
-			$tmp = array(
-				'user' => '3',
-				'role' => array('view', 'edit')
-			);
+		public function testaccess() {
+			echo SecurityHelper::encrypt(10);
+			// $model = Folder::model()->findByPk(73);
+			// $user_id = 2;
 
-			array_push($data, $tmp);
+			// if($model != NULL) {
+			// 	if($model->user_access != '') {
+			// 		$user_access = json_decode($model->user_access);
+			// 		print_r($user_access);
+			// 		foreach($user_access as $index => $d) {
+			// 			if($d->user == $user_id) {
+			// 				unset($user_access[$index]);
+			// 			}
+						
+			// 		}
 
-			// $tmp = array(
-			// 	'user' => '2',
-			// 	'role' => array('view')
-			// );
-
-			// array_push($data, $tmp);
-
-			
-			echo json_encode($data);
-
-			// foreach ($data as $key => $value) {
-			// 	echo $value['user'];
-			// 	echo '<br />';
+			// 		$user_access = array_values($user_access);
+			// 		echo "<br />";
+			// 		print_r($user_access);
+			// 	}						
 			// }
-
 		}
 		
 		// All ajax function

@@ -30,16 +30,18 @@
 					if($users != NULL) {
 						if($this->isJSON($users)) {
 							$users = json_decode($users);
-							foreach($users as $id) {
-								$data = array(
-									'user' 	=> $id,
-									'role'	=> array('view')
-								);
+							if(count($users) > 0) {
+								foreach($users as $id) {
+									$data = array(
+										'user' 	=> $id,
+										'role'	=> array('view')
+									);
 
-								array_push($user_access, $data);
+									array_push($user_access, $data);
+								}
+
+								$folder->user_access =  json_encode($user_access);
 							}
-
-							$folder->user_access =  json_encode($user_access);
 						}
 					}
 
@@ -139,7 +141,8 @@
 									'user_access'	=> $user_access_string,
 									//'related_document' => implode(', ', $folder->getRelatedDocuments()),
 									'is_owner' 		=> $folder->isTheOwner($this->user_id) ? "1" : "0",
-									'file_url'		=> Snl::app()->baseUrl() . 'uploads/documents/'.$folder->name
+									'file_url'		=> Snl::app()->baseUrl() . 'uploads/documents/'.$folder->name,
+									'is_shared'		=> $folder->user_access == NULL ? "0" : "1",
 								);
 
 							}
@@ -335,6 +338,7 @@
 									'updated_by' 	=> ucwords(strtolower($user_updated->fullname)),
 									'user_access'	=> $user_access_string,
 									'is_owner' 		=> $model->isTheOwner($this->user_id) ? "1" : "0",
+									'is_shared'		=> $model->user_access == NULL ? "0" : "1",
 									//'related_document' => implode(', ', $folder->getRelatedDocuments()),
 								);
 							}
@@ -410,6 +414,7 @@
 									// 'updated_by' 	=> ucwords(strtolower($user_updated->fullname)),
 									'user_access'	=> $user_access_string,
 									'is_owner' 		=> $folder->isTheOwner($this->user_id) ? "1" : "0",
+									'is_shared'		=> $folder->user_access == NULL ? "0" : "1",
 									//'related_document' => implode(', ', $folder->getRelatedDocuments()),
 								);
 							}
@@ -581,6 +586,7 @@
 									'updated_on' 	=> date('d M Y H:i:s', strtotime($folder->updated_on)),
 									'updated_by' 	=> ucwords(strtolower($user_updated->fullname)),
 									'user_access'	=> $user_access_string,
+									'is_shared'		=> $folder->user_access == NULL ? "0" : "1",
 									// 'file_location' => $folder->getLocation(),
 									// 'related_document' => implode(', ', $folder->getRelatedDocuments()),
 								);
@@ -613,24 +619,24 @@
 						'params'	=> array('id' => $this->user_id)
 					));
 
-					$users = array();
+					$data = array();
 
 					if($user_model != NULL) {
             			foreach($user_model as $d) {
             				if($d->hasFolderAccess($folder_id)) {
-            					$data = array(
-            						'user_id' 	=> $d->user_id,
-            						'fullname' 	=> $d->fullname,
-            						'email' 	=> $d->email,
-            					);
-            					array_push($users, $data);
+            					$data[] = array(
+									'user_id' 	=> $d->user_id,
+									'fullname' 	=> ucwords(strtolower($d->fullname)),
+									'email' 	=> $d->email,
+									
+								);
             				}
             			}
             		}
 
-            		$result = array(
-						'status' => 200,
-						'data'	 => $users,
+					$result = array(
+						'status' 	=> 200,
+						'users'	=> $data,
 					);
 
 					$this->renderJSON($result);
@@ -655,13 +661,60 @@
 
 					if($model != NULL) {
             			foreach($model as $d) {
-            				$data = array(
-            					'file_id' 	=> $d->folder_id,
+            				$documents[] = array(
+            					'folder_id' 	=> $d->folder_id,
             					'name'		=> ucwords(strtolower($d->name))
             				);
-
-            				array_push($documents, $data);
             			}
+            		}
+
+            		$result = array(
+						'status' => 200,
+						'data'	 => $documents,
+					);
+
+					$this->renderJSON($result);
+
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
+
+		public function getrelateddocumentbyfile() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$documents = array();
+
+					$model = Folder::model()->findByPk($folder_id);
+
+					if($model != NULL) {
+						if($model->related_document != NULL) {
+							$related_document = json_decode($model->related_document);
+							foreach($related_document as $document_id) {
+								$document_model = Folder::model()->findByPk($document_id);
+								$documents[] = array(
+									'folder_id' 		=> $document_model->folder_id,
+									'folder_parent_id' 	=> $document_model->folder_parent_id,
+									'name' 				=> $document_model->name,
+									'nomor' 			=> $document_model->nomor,
+									'perihal' 			=> $document_model->perihal,
+									'type' 				=> $document_model->type,
+									'format' 			=> $document_model->format,
+									'size' 				=> $document_model->size,
+									'description' 		=> $document_model->description,
+									'created_by' 		=> $document_model->created_by,
+									'created_on' 		=> $document_model->created_on,
+									'updated_on' 		=> $document_model->updated_on,
+									'updated_by' 		=> $document_model->updated_by,
+									'user_access' 		=> $document_model->user_access,
+								);
+							}
+						}
+            			
             		}
 
             		$result = array(
@@ -686,6 +739,7 @@
 				    $targetPath = Snl::app()->rootDirectory() . 'uploads/documents/';
 				    $targetFile =  $targetPath. $_FILES['file']['name'];
 				    $upload_status = move_uploaded_file($tempFile,$targetFile);
+
 				    $file_name = $_FILES['file']['name'];
 				    $file_size = Snl::app()->formatSizeUnits($_FILES['file']['size']);
 				    $file_format = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
@@ -718,15 +772,15 @@
 						$model->updated_on = Snl::app()->dateNow();
 						$model->is_deleted = 0;
 						
-						if($user_access != NULL && $this->isJSON($user_access)) {
-							$user_access = json_decode($user_access);
+						// if($user_access != NULL && $this->isJSON($user_access)) {
+						// 	$user_access = json_decode($user_access);
 
-							foreach ($user_access as $key => $value) {
-								array_push($ids, $value->user);
-							}
+						// 	foreach ($user_access as $key => $value) {
+						// 		array_push($ids, $value->user);
+						// 	}
 
-							$tmp_user_access = $user_access;
-						}
+						// 	$tmp_user_access = $user_access;
+						// }
 
 
 						// otomatis menambahkan akses kepada pemilik folder
@@ -744,9 +798,9 @@
 							}
 						}
 
-						if(count($user_access) > 0) {
-							$model->user_access = json_encode($tmp_user_access);
-						}
+						// if(count($user_access) > 0) {
+						// 	$model->user_access = json_encode($tmp_user_access);
+						// }
 						
 						if($model->save()) {
 							$data = array(
@@ -914,4 +968,411 @@
 			}
 
 		}
+
+		public function manageuseraccess() {
+			if($this->request_type == 'POST') {
+				if($this->valid_user_token) {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$users = isset($this->params['users']) ? $this->params['users'] : NULL;
+					$new_role = isset($this->params['role']) ? $this->params['role'] : 'view';
+					$user_access = array();
+					$current_user = array();
+
+					$model = Folder::model()->findByPk($folder_id);
+					if($model != NULL) {
+						if($model->user_access != NULL) {
+							$current_data = json_decode($model->user_access);
+							foreach($current_data as $d) {
+								$role_data = array();
+								foreach($d->role as $role) {
+									array_push($role_data, $role);
+								}
+
+								$data = array(
+									'user' 	=> $d->user,
+									'role'	=> $role_data,
+								);
+								array_push($current_user, $d->user);
+								array_push($user_access, $data);
+							}
+						}
+
+						if($users != NULL) {
+							if($this->isJSON($users)) {
+								$users = json_decode($users);
+								foreach($users as $id) {
+									$role_data = array();
+									if(!in_array($id, $current_user)) {
+										array_push($role_data, 'view');
+
+										if($new_role == 'edit') {
+											array_push($role_data, 'edit');
+										}
+
+										$data = array(
+											'user' 	=> $id,
+											'role'	=> $role_data
+										);
+
+										array_push($user_access, $data);
+									} else {
+										foreach($user_access as $index => $d) {
+											if($d['user'] == $id) {
+												unset($user_access[$index]);
+											}
+										}
+
+										$user_access = array_values($user_access);
+
+										array_push($role_data, 'view');
+										if($new_role == 'edit') {
+											array_push($role_data, 'edit');
+										}
+
+										$data = array(
+											'user' 	=> $id,
+											'role'	=> $role_data
+										);
+
+										array_push($user_access, $data);
+									}
+
+								}
+
+								$model->user_access =  json_encode($user_access);
+								if($model->save()) {
+									$result = array(
+										'status' => 200,
+									);
+
+									$this->renderJSON($result);
+								} else {
+									$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage($model->errors)));
+								}
+
+							}
+						} else {
+							$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage(array('User ID' => 'Tidak ada data yang dikirim.'))));
+						}
+					} else {
+						$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage(array('data' => 'Data tidak ditemukan.'))));
+					}
+
+
+
+				} else {
+					$this->renderInvalidUserToken();
+				}
+			} else {
+				$this->renderErrorMessage(405, 'MethodNotAllowed');
+			}
+		}
+
+		public function getuseraccessbyfile() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$data = array();
+					
+					$model = Folder::model()->findByPk($folder_id);
+					
+					if($model != NULL) {
+						if($model->user_access != '') {
+							$user_access = json_decode($model->user_access);
+							foreach($user_access as $d) {
+								$user_model = User::model()->findByPk($d->user);
+
+								$data[] = array(
+									'folder_id' => $model->folder_id."",
+									'user_id' 	=> $d->user."",
+									'fullname'		=> $user_model->fullname,
+									'email'		=> $user_model->email,
+									'role' 		=> implode(', ', $d->role),
+
+								);
+							}
+						}						
+					}
+
+					$result = array(
+						'status' => 200,
+						'data'	=> $data,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
+
+		public function deleteuseraccess() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'POST') {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$user_id = isset($this->params['user_id']) ? $this->params['user_id'] : 0;
+					
+					$model = Folder::model()->findByPk($folder_id);
+					$user_access = array();
+
+					if($model != NULL) {
+						if($model->user_access != '') {
+							$current_data = json_decode($model->user_access);
+							foreach($current_data as $d) {
+								if($user_id != $d->user) {
+									$role_data = array();
+									foreach($d->role as $role) {
+										array_push($role_data, $role);
+									}
+
+									$data = array(
+										'user' 	=> $d->user,
+										'role'	=> $role_data,
+									);
+									
+									array_push($user_access, $data);
+								}
+							}
+
+							$model->user_access = count($user_access) > 0 ? json_encode($user_access) : NULL;
+							if($model->save()) {
+								$result = array(
+									'status' => 200,
+								);
+
+								$this->renderJSON($result);
+							} else {
+								$this->renderErrorMessage(403, 'DeleteFailed', array(
+										'error' => $this->parseErrorMessage(array('file' => $model->errors))
+									));
+							}
+						}						
+					}
+
+					
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
+
+
+		public function addrelateddocument() {
+			if($this->request_type == 'POST') {
+				if($this->valid_user_token) {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$documents = isset($this->params['documents']) ? $this->params['documents'] : NULL;	
+					$new_data = array();
+
+					$model = Folder::model()->findByPk($folder_id);
+					if($model != NULL) {
+						if($model->related_document != NULL) {
+							$current_data = json_decode($model->related_document);
+							foreach($current_data as $d) {
+								array_push($new_data, $d);
+							}
+						}
+
+						if($documents != NULL) {
+							if($this->isJSON($documents)) {
+								$documents = json_decode($documents);
+								foreach($documents as $document_id) {
+									if(!in_array($document_id, $new_data)) {
+										array_push($new_data, $document_id);
+									}
+								}
+
+								$model->related_document = json_encode($new_data);
+								if($model->save()) {
+									$result = array(
+										'status' => 200,
+									);
+
+									$this->renderJSON($result);
+								} else {
+									$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage($model->errors)));
+								}
+							} else {
+								$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage(array('Dokumen' => 'Data type must be json.'))));
+							}
+						} else {
+							$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage(array('Dokumen' => 'Tidak ada data yang dikirim.'))));
+						}
+
+
+					} else {
+						$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage(array('data' => 'Data tidak ditemukan.'))));
+					}
+
+				} else {
+					$this->renderInvalidUserToken();
+				}
+			} else {
+				$this->renderErrorMessage(405, 'MethodNotAllowed');
+			}
+		}
+
+		public function deleterelateddocument() {
+			if($this->request_type == 'POST') {
+				if($this->valid_user_token) {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$document_id = isset($this->params['document_id']) ? $this->params['document_id'] : NULL;	
+					
+					$new_data = array();
+
+					$model = Folder::model()->findByPk($folder_id);
+					if($model != NULL) {
+						if($model->related_document != NULL) {
+							$current_data = json_decode($model->related_document);
+							foreach($current_data as $d) {
+								if($d != $document_id) {
+									array_push($new_data, $d);
+								}
+							}
+						}
+
+						$model->related_document = json_encode($new_data);
+						if($model->save()) {
+							$result = array(
+								'status' => 200,
+							);
+
+							$this->renderJSON($result);
+						} else {
+							$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage($model->errors)));
+						}
+
+
+					} else {
+						$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage(array('data' => 'Data tidak ditemukan.'))));
+					}
+
+				} else {
+					$this->renderInvalidUserToken();
+				}
+			} else {
+				$this->renderErrorMessage(405, 'MethodNotAllowed');
+			}
+		}
+
+		public function editfolder() {
+			if($this->request_type == 'POST') {
+				if($this->valid_user_token) {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$name = isset($this->params['name']) ? $this->params['name'] : "Folder";
+					$description = isset($this->params['description']) ? $this->params['description'] : "";
+
+					$model = Folder::model()->findByPk($folder_id);
+					if($model != NULL) {
+						$model->name = $name;
+						$model->description = $description;
+						if($model->save()) {
+							$result = array(
+								'status' => 200,
+							);
+
+							$this->renderJSON($result);
+						} else {
+							$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage($model->errors)));
+						}
+
+
+					} else {
+						$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage(array('data' => 'Data tidak ditemukan.'))));
+					}
+
+				} else {
+					$this->renderInvalidUserToken();
+				}
+			} else {
+				$this->renderErrorMessage(405, 'MethodNotAllowed');
+			}
+		}
+
+		public function revisidocument() {
+			if($this->request_type == 'POST') {
+				if($this->valid_user_token) {
+					$folder_id = isset($this->params['folder_id']) ? $this->params['folder_id'] : 0;
+					$perihal = isset($this->params['perihal']) ? $this->params['perihal'] : '';
+					$nomor = isset($this->params['nomor']) ? $this->params['nomor'] : '';
+					$description = isset($this->params['description']) ? $this->params['description'] : '';
+					
+					$original_file =Folder::model()->findByPk($folder_id);
+
+					if($original_file != NULL) {
+						$tempFile = $_FILES['file']['tmp_name'];
+					    $targetPath = Snl::app()->rootDirectory() . 'uploads/documents/';
+					    $targetFile =  $targetPath. $_FILES['file']['name'];
+					    $upload_status = move_uploaded_file($tempFile,$targetFile);
+
+					    if($upload_status) {
+					    	$file_name = $_FILES['file']['name'];
+						    $file_size = Snl::app()->formatSizeUnits($_FILES['file']['size']);
+						    $file_format = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+
+							$model = new Folder;
+							$model->folder_parent_id = $original_file->folder_parent_id;
+							$model->original_id = $original_file->folder_id;
+							$model->no_revision = $original_file->getNoRevisi() + 1;
+							$model->keyword = $original_file->keyword;
+							$model->user_access = $original_file->user_access;
+							$model->related_document = $original_file->related_document;
+
+							$model->name = $file_name;
+							$model->format = $file_format;
+							$model->size = $file_size;
+
+							$model->perihal = $perihal;
+							$model->nomor = $nomor;
+							$model->description = $description;
+							$model->is_revision = 0;
+							$model->new_file_id = 0;
+							$model->type = "file";
+
+
+							$model->created_by = $this->user_id;
+							$model->created_on = Snl::app()->dateNow();
+							$model->updated_by = $this->user_id;
+							$model->updated_on = Snl::app()->dateNow();
+							$model->is_deleted = 0;
+
+							if($model->save()) {
+								$original_file->is_revision = 1;
+								$original_file->new_file_id = $model->folder_id;
+								$original_file->save();
+								$original_file->setNewFileToAll();
+
+								$result = array(
+									'status' => 200,
+								);
+
+								$this->renderJSON($result);
+							} else {
+								$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage($model->errors)));
+							}
+					    } else {
+							$this->renderErrorMessage(403, 'UploadFailed', array(
+										'error' => $this->parseErrorMessage(array('file' => $upload_status))
+									));
+						}
+
+					} else {
+						$this->renderErrorMessage(403, 'FileRevision', array(
+							'error' => $this->parseErrorMessage(array($type => 'Data tidak ditemukan'))
+						));
+					}
+
+				} else {
+					$this->renderInvalidUserToken();
+				}
+			} else {
+				$this->renderErrorMessage(405, 'MethodNotAllowed');
+			}
+
+		}
 	}
+

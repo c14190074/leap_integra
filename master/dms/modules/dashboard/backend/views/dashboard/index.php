@@ -149,9 +149,9 @@
                                   <?php
                                     if($model->type == "file") {
                                       if($model->format == "pdf") {
-                                        echo  "<img class='w-100 pe-2' src='https://localhost/leap_integra/master/dms/uploads/pdflogo_list.png' />";
+                                        echo  "<img class='w-100 pe-2' src='https://localhost/leap_integra/leap_integra/master/dms/uploads/pdflogo_list.png' />";
                                       } else if($model->format == "doc" || $model->format == "docx" || $model->format == "docs") {
-                                        echo  "<img class='w-100 pe-2' src='https://localhost/leap_integra/master/dms/uploads/wordlogo_list.png' />";
+                                        echo  "<img class='w-100 pe-2' src='https://localhost/leap_integra/leap_integra/master/dms/uploads/wordlogo_list.png' />";
                                       } else {
                                         echo "<i class='fa fa-file opacity-6 text-dark me-3'></i>";
                                       }
