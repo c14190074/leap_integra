@@ -73,17 +73,22 @@
 		public function beforeSave() {
 			if($this->isNewRecord) {
 				$this->created_on = Snl::app()->dateNow();
-				$this->created_by = Snl::app()->user()->user_id;
 				$this->updated_on = Snl::app()->dateNow();
-				$this->updated_by = Snl::app()->user()->user_id;
+
+				if(isset(Snl::app()->user()->user_id)) {
+					$this->created_by = Snl::app()->user()->user_id;
+					$this->updated_by = Snl::app()->user()->user_id;
+				}
 			} else {
 				$this->updated_on = Snl::app()->dateNow();
-				$this->updated_by = Snl::app()->user()->user_id;
+				if(isset(Snl::app()->user()->user_id)) {
+					$this->updated_by = Snl::app()->user()->user_id;
+				}
 			}
 			return TRUE;
 		}
 
-		public static function create_logs($file_target_id, $act = 'general', $type, $description) {
+		public static function create_logs($file_target_id, $act = 'general', $type, $description, $user_id = 0) {
 			$needLog = TRUE;
 			$model = Logs::model()->findByAttribute(array(
 				'condition' => 'file_target_id = :id AND is_deleted = 0 AND act = :act AND type = :type AND description = :description ORDER BY created_on DESC',
@@ -107,6 +112,11 @@
 				$model->act = $act;
 				$model->type = $type;
 				$model->description = $description;
+
+				if($user_id > 0) {
+					$model->created_by = $user_id;
+					$model->updated_by = $user_id;
+				}
 
 				if($model->save()) {
 					return TRUE;

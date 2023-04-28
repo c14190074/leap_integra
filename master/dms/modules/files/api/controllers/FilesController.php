@@ -46,6 +46,8 @@
 					}
 
 					if($folder->save()) {
+						Logs::create_logs($folder->folder_id, 'create', 'folder', 'membuat folder baru dengan nama '.$folder->name, $this->user_id);
+
 						$data = array(
 							'folder_id' 		=> $folder->folder_id,
 							'folder_parent_id' 	=> $folder->folder_parent_id,
@@ -70,7 +72,6 @@
 				$this->renderErrorMessage(405, 'MethodNotAllowed');
 			}
 		}
-
 		
 		public function getfiles() {
 			if($this->valid_user_token) {
@@ -99,7 +100,14 @@
 					// 	}
 					// }
 
+
+
 					if($model != NULL) {
+						if($folder_parent_id > 0) {
+							$folder_parent = Folder::model()->findByPk($folder_parent_id);
+							Logs::create_logs($folder_parent_id, 'open', 'folder', 'membuka folder '.$folder_parent->name, $this->user_id);
+						}
+
 						foreach($model as $folder) {
 							if($folder->hasAccess($this->user_id)) {
 								$user_created = User::model()->findByPk($folder->created_by);
@@ -491,8 +499,10 @@
 								if($model->save()) {
 									if($type == 'file') {
 										$msg = 'File berhasil dihapus';
+										Logs::create_logs($model->folder_id, 'delete', 'file', 'menghapus file '.$model->name, $this->user_id);
 									} else {
 										$msg = 'Folder berhasil dihapus';
+										Logs::create_logs($model->folder_id, 'delete', 'menghapus folder '.$model->name, $this->user_id);
 									}
 									
 									$result = array(
@@ -803,6 +813,7 @@
 						// }
 						
 						if($model->save()) {
+							Logs::create_logs($model->folder_id, 'upload', 'file', 'mengunggah file baru '.$model->name, $this->user_id);
 							$data = array(
 								'file_id' 			=> $model->folder_id,
 								'folder_parent_id' 	=> $model->folder_parent_id,
@@ -953,6 +964,8 @@
 
 							$folder->save();
 						}
+
+						Logs::create_logs($target_file_id, 'rollback', 'file', 'melakukan rollback pada file '.$active_model->name, $this->user_id);
 					}
 
 					$result = array(
@@ -1271,6 +1284,7 @@
 						$model->name = $name;
 						$model->description = $description;
 						if($model->save()) {
+							Logs::create_logs($model->folder_id, 'update', 'folder', 'mengubah attribut pada folder '.$model->name, $this->user_id);
 							$result = array(
 								'status' => 200,
 							);
@@ -1341,6 +1355,8 @@
 							$model->is_deleted = 0;
 
 							if($model->save()) {
+								Logs::create_logs($model->folder_id, 'revisi', 'file', 'melakukan revisi dengan file baru '.$model->name, $this->user_id);
+
 								$original_file->is_revision = 1;
 								$original_file->new_file_id = $model->folder_id;
 								$original_file->save();
