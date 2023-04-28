@@ -96,3 +96,19 @@ CREATE TABLE `tbl_user_api_login` (
   `clock_out` datetime DEFAULT NULL,
   PRIMARY KEY (`api_login_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `tbl_form` (
+	`form_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`form` VARCHAR(255),
+	`created_on` DATETIME DEFAULT NULL,
+	`created_by` INT(11) DEFAULT NULL,
+	`updated_on` DATETIME DEFAULT NULL,
+	`updated_by` INT(11) DEFAULT NULL,
+	`is_deleted` TINYINT(1) DEFAULT 0 COMMENT '0=No; 1=Yes',
+	PRIMARY KEY (`form_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `tbl_form` (`form_id`, `form`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
+(1, 'Sakit', '2023-04-27 09:30:54', 1, '2023-04-27 09:30:54', 1, 0),
+(2, 'Peminjaman', '2023-04-27 09:31:54', 1, '2023-04-27 09:31:54', 1, 0),
+(3, 'Izin', '2023-04-27 09:32:54', 1, '2023-04-27 09:32:54', 1, 0);
