@@ -112,3 +112,43 @@ INSERT INTO `tbl_form` (`form_id`, `form`, `created_on`, `created_by`, `updated_
 (1, 'Sakit', '2023-04-27 09:30:54', 1, '2023-04-27 09:30:54', 1, 0),
 (2, 'Peminjaman', '2023-04-27 09:31:54', 1, '2023-04-27 09:31:54', 1, 0),
 (3, 'Izin', '2023-04-27 09:32:54', 1, '2023-04-27 09:32:54', 1, 0);
+
+CREATE TABLE IF NOT EXISTS `tbl_jenis_peminjaman` (
+	`jenis_peminjaman_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`jenis_peminjaman` VARCHAR(255),
+	`created_on` DATETIME DEFAULT NULL,
+	`created_by` INT(11) DEFAULT NULL,
+	`updated_on` DATETIME DEFAULT NULL,
+	`updated_by` INT(11) DEFAULT NULL,
+	`is_deleted` TINYINT(1) DEFAULT 0 COMMENT '0=No; 1=Yes',
+	PRIMARY KEY (`jenis_peminjaman_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `tbl_jenis_peminjaman` (`jenis_peminjaman_id`, `jenis_peminjaman`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
+(1, 'Office365', '2023-04-27 09:30:54', 1, '2023-04-27 09:30:54', 1, 0),
+(2, 'Ruangan', '2023-04-27 09:31:54', 1, '2023-04-27 09:31:54', 1, 0),
+(3, 'Proyektor', '2023-04-27 09:32:54', 1, '2023-04-27 09:32:54', 1, 0);
+
+
+CREATE TABLE IF NOT EXISTS `tbl_permohonan` (
+	`permohonan_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`form_id` INT(11),
+	`jenis_peminjaman_id` INT(11),
+	`perihal` VARCHAR(255),
+	`nrp` VARCHAR(255),
+	`nama` VARCHAR(255),
+	`universitas` VARCHAR(255),
+	`keterangan` VARCHAR(255),
+	`date_start` DATETIME DEFAULT NULL,
+	`date_end` DATETIME DEFAULT NULL,
+	`status` VARCHAR(255),
+	`is_open_for_notif` INT(1),
+	`alasan` VARCHAR(255),
+	`response_by` INT(11),
+	`created_on` DATETIME DEFAULT NULL,
+	`created_by` INT(11) DEFAULT NULL,
+	`updated_on` DATETIME DEFAULT NULL,
+	`updated_by` INT(11) DEFAULT NULL,
+	`is_deleted` TINYINT(1) DEFAULT 0 COMMENT '0=No; 1=Yes',
+	PRIMARY KEY (`permohonan_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
