@@ -191,5 +191,94 @@
 				$this->renderInvalidUserToken();
 			}
 		}
+
+		public function getnumberofnotif() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$model = Permohonan::model()->findAll(array(
+						'condition' => 'is_deleted = 0 AND is_open_for_notif = 0 AND created_by = :user_id ORDER BY updated_on DESC', 
+						'params'	=> array(':user_id' => $this->user_id)
+					));
+					
+					$ctr = 0;
+					if($model != NULL) {
+						$ctr = count($model);
+					}
+
+					$result = array(
+						'status'	=> 200,
+						'data'		=> $ctr,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
+
+		public function getdetailpermohonan() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					$permohonan_id = isset($this->params['permohonan_id']) ? $this->params['permohonan_id'] : 0;
+					$data = array();
+
+					$model = Permohonan::model()->findByPk($permohonan_id);		
+					if($model != NULL) {
+						$form_model = Form::model()->findByPk($model->form_id);
+						$jenis_peminjaman = '';
+
+						if($model->jenis_peminjaman_id > 0) {
+							$jenis_peminjaman_model = JenisPeminjaman::model()->findByPk($model->jenis_peminjaman_id);
+							$jenis_peminjaman = $jenis_peminjaman_model->jenis_peminjaman;
+						}
+
+						$user_created = User::model()->findByPk($model->created_by);
+						$user_updated = User::model()->findByPk($model->updated_by);
+
+						$response_by = '-';
+
+						if($model->response_by != '' && $model->response_by > 0) {
+							$$user_response = User::model()->findByPk($model->response_by);
+							$response_by = $user_response->fullname;
+						}
+						
+						$data[] = array(
+							'permohonan_id' => $model->permohonan_id,
+							'form'			=> $form_model->form,
+							'jenis_peminjaman' => $jenis_peminjaman,
+							'perihal'		=> $model->perihal,
+							'nrp'		=> $model->nrp,
+							'nama'		=> $model->nama,
+							'universitas'	=> $model->universitas,
+							'keterangan'	=> $model->keterangan,
+							'date_start'	=> date('d M Y', strtotime($model->date_start)),
+							'date_end'		=> date('d M Y', strtotime($model->date_end)),
+							'status'		=> ucwords(strtolower($model->status)),
+							'is_open_for_notif'		=> $model->is_open_for_notif,
+							'response_by'	=> $response_by,
+							'alasan'		=> $model->alasan,
+							'created_on'	=> date('d M Y', strtotime($model->created_on)),
+							'created_by'	=> $user_created->fullname,
+							'updated_on'	=> date('d M Y', strtotime($model->updated_on)),
+							'updated_by'	=> $user_updated->fullname,
+						);
+					}
+					
+					$result = array(
+						'status'	=> 200,
+						'data'		=> $data,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$this->renderInvalidUserToken();
+			}
+		}
 		
 	}
