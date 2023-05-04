@@ -197,7 +197,7 @@
 		public function getApiLoginInformation($with_address = TRUE) {
 			$result = array(
 				'user_id'		=> $this->user_id,
-				//'is_superadmin'	=> $this->is_superadmin,
+				'is_superadmin'	=> $this->is_superadmin,
 				'email'			=> $this->email,
 				'phone'			=> $this->phone,
 				'fullname'		=> ucwords(strtolower($this->fullname)),

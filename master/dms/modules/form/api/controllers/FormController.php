@@ -280,5 +280,37 @@
 				$this->renderInvalidUserToken();
 			}
 		}
+
+		public function updatestatus() {
+			if($this->request_type == 'POST') {
+				if($this->valid_user_token) {
+					$permohonan_id = isset($this->params['permohonan_id']) ? $this->params['permohonan_id'] : 0;
+					$status = isset($this->params['status']) ? $this->params['status'] : 'draft';
+					$model = Permohonan::model()->findByPk($permohonan_id);
+
+					if($model != NULL) {
+ 						$model->status = $status;
+ 						if($model->save()) {
+							$result = array(
+								'status' => 200,
+							);
+
+							$this->renderJSON($result);
+						} else {
+							$this->renderErrorMessage(400, 'InvalidResource', array('error' => $this->parseErrorMessage($model->errors)));
+						}
+					} else {
+						$this->renderErrorMessage(403, 'UpdateStatus', array(
+							'error' => $this->parseErrorMessage(array('DataPermohonan' => 'Data tidak ditemukan'))
+						));
+					}
+
+				} else {
+					$this->renderInvalidUserToken();
+				}
+			} else {
+				$this->renderErrorMessage(405, 'MethodNotAllowed');
+			}
+		}
 		
 	}
