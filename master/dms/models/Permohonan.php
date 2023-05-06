@@ -1,6 +1,6 @@
 <?php
 	class Permohonan extends SnlActiveRecord {
-		public $permohonan_id, $form_id, $jenis_peminjaman_id, $perihal, $nrp, $nama, $universitas, $keterangan, $date_start, $date_end, $status, $is_open_for_notif, $response_by, $alasan, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $permohonan_id, $form_id, $jenis_peminjaman_id, $pdf_filename, $perihal, $nrp, $nama, $universitas, $keterangan, $date_start, $date_end, $status, $is_open_for_notif, $response_by, $alasan, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 		
 
 		public function __construct() {
