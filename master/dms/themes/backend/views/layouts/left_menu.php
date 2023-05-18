@@ -37,6 +37,15 @@
             <span class="nav-link-text ms-1">Users</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link<?= $module == "form" ? " active" : ""; ?>" href="<?= Snl::app()->baseUrl() ?>admin/form/index">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-file-text-o text-sm opacity-6 <?= $module == "form" ? " text-white" : "text-dark"; ?>"></i>
+            </div>
+            <span class="nav-link-text ms-1">Form</span>
+          </a>
+        </li>
         <?php endif; ?>
       </ul>
     </div>

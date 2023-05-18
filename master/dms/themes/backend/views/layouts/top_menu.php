@@ -42,6 +42,15 @@
             </li>
             <?php endif; ?>
 
+            <?php if($module == 'form') : ?>
+            <li class="nav-item d-flex align-items-center p-2">
+              <a href="<?= Snl::app()->baseUrl() ?>admin/form/create" class="nav-link text-body">
+                <i class="fa fa-file-text-o me-sm-1"></i>
+                <span class="d-sm-inline d-none">Form</span>
+              </a>
+            </li>
+            <?php endif; ?>
+
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" data-bs-toggle="modal" data-bs-target="#modal-upload-form">
                 <i class="fa fa-upload me-sm-1"></i>
