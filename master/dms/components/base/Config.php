@@ -63,6 +63,6 @@
 		}
 
 		public static function getRootDirectory() {
-			return $_SERVER['DOCUMENT_ROOT'] . '/leap_integra/leap_integra/master/dms/';
+			return $_SERVER['DOCUMENT_ROOT'] . '/leap_integra/master/dms/';
 		}
 	}
