@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2023 at 04:46 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.26
+-- Generation Time: May 21, 2023 at 03:25 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -52,7 +52,7 @@ CREATE TABLE `tbl_folder` (
   `updated_on` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   `is_deleted` tinyint(1) DEFAULT 0 COMMENT '0=No; 1=Yes'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tbl_folder`
@@ -82,7 +82,7 @@ INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `is_revision`
 (22, 18, 'FilePDF.pdf', 0, 0, 0, 0, '34', 'fddf', '45435435', 'dss', '[\"15\"]', 'file', 'pdf', '84.9 KB', 'asdsadsa', '[{\"user\":\"3\",\"role\":[\"view\"]},{\"user\":\"2\",\"role\":[\"view\"]}]', NULL, NULL, '2023-02-04 13:53:19', 1, '2023-02-04 13:53:19', 1, 0),
 (23, 18, '', NULL, NULL, NULL, 0, '', '', '', '', NULL, 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-02-04 15:37:35', 1, '2023-02-04 15:37:35', 1, 0),
 (24, 18, 'EF_TestResult.pdf', 1, 1, 19, 0, '125704022023', 'test', '1257', '#tes', NULL, 'file', 'pdf', '118.92 KB', 'Revisi untuk fileDoc jam 15.44', '[{\"user\":\"2\",\"role\":[\"view\"]},{\"user\":\"3\",\"role\":[\"view\",\"edit\"]}]', NULL, NULL, '2023-02-04 15:44:28', 1, '2023-02-04 15:44:28', 1, 0),
-(25, 0, 'Keagamaan', 0, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'semua materi', NULL, NULL, NULL, '2023-02-05 09:42:09', 1, '2023-02-07 12:00:32', 1, 0),
+(25, 0, 'Etika Keluarga Kristen', 0, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'semua materi', NULL, NULL, NULL, '2023-02-05 09:42:09', 1, '2023-04-19 14:06:20', 1, 0),
 (26, 25, 'EF_TestResult.pdf', 0, NULL, NULL, 0, '213', 'test result', '2323', '#test', NULL, 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-02-05 10:13:10', 1, '2023-02-05 10:13:10', 1, 0),
 (27, 0, '', 0, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', NULL, NULL, NULL, '2023-02-05 11:56:00', 1, '2023-02-05 11:56:08', 1, 1),
 (28, 25, '', 0, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', NULL, NULL, NULL, '2023-02-05 13:11:17', 1, '2023-02-05 13:15:11', 1, 1),
@@ -128,7 +128,88 @@ INSERT INTO `tbl_folder` (`folder_id`, `folder_parent_id`, `name`, `is_revision`
 (68, 63, 'FilePDF.pdf', 1, 1, 64, 64, '3434343', '', NULL, '', NULL, 'file', 'pdf', '84.9 KB', '', NULL, NULL, NULL, '2023-02-15 12:52:17', 1, '2023-02-15 12:52:35', 1, 1),
 (69, 0, 'Android Folder 1', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Folder test', '[{\"user\":\"3\",\"role\":[\"view\"]},{\"user\":\"4\",\"role\":[\"view\"]}]', NULL, NULL, '2023-02-22 11:41:27', 1, '2023-02-23 10:44:57', 1, 0),
 (70, 0, 'Android Folder 2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Folder test dibuat melalui API', '[{\"user\":3,\"role\":[\"view\"]},{\"user\":4,\"role\":[\"view\"]}]', NULL, NULL, '2023-02-22 11:48:39', NULL, '2023-02-22 11:48:39', NULL, 0),
-(71, 0, 'Android Folder 3', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Folder test', '[{\"user\":\"3\",\"role\":[\"view\"]},{\"user\":\"4\",\"role\":[\"view\"]}]', NULL, NULL, '2023-02-22 11:53:44', 1, '2023-02-23 10:45:11', 1, 0);
+(71, 0, 'Android Folder 3', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Folder test', '[{\"user\":\"3\",\"role\":[\"view\"]},{\"user\":\"4\",\"role\":[\"view\"]}]', NULL, NULL, '2023-02-22 11:53:44', 1, '2023-02-23 10:45:11', 1, 0),
+(72, 0, 'Api Folder From Flutter', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'for testing purpose', '[{\"user\":2,\"role\":[\"view\"]},{\"user\":4,\"role\":[\"view\"]}]', NULL, NULL, '2023-04-17 10:14:48', 1, '2023-04-19 14:11:48', 1, 0),
+(73, 72, 'EF_TestResult.pdf', 0, NULL, NULL, NULL, '1704', 'senin1704', NULL, NULL, NULL, 'file', 'pdf', '118.92 KB', '', '[{\"user\":4,\"role\":[\"view\",\"edit\"]},{\"user\":2,\"role\":[\"view\"]}]', NULL, NULL, '2023-04-17 10:29:36', 1, '2023-04-19 13:06:16', 1, 0),
+(74, 72, 'PDF1.pdf', 0, NULL, NULL, NULL, '12323', 'dasdsad', '', NULL, '[10,13,26]', 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-04-17 14:11:52', 1, '2023-04-19 13:04:03', 1, 0),
+(75, 72, 'PDF2.pdf', 0, NULL, NULL, NULL, '432`', '12344', '', NULL, '[\"10\",\"15\",17,19]', 'file', 'pdf', '118.92 KB', '', '[]', NULL, NULL, '2023-04-19 10:24:42', 1, '2023-04-19 12:31:16', 1, 1),
+(76, 0, 'api folder 2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', '[{\"user\":3,\"role\":[\"view\"]}]', NULL, NULL, '2023-04-19 12:32:00', 1, '2023-04-19 12:32:10', 1, 1),
+(77, 72, 'Sub Api Folder 2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', '[{\"user\":4,\"role\":[\"view\"]}]', NULL, NULL, '2023-04-19 14:12:09', 1, '2023-04-21 10:53:30', 1, 0),
+(78, 72, 'Sub Api Folder', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', NULL, NULL, NULL, '2023-04-19 14:14:33', 1, '2023-04-19 14:14:33', 1, 0),
+(79, 72, 'Sub Api Folder 3', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, '', '[{\"user\":2,\"role\":[\"view\"]},{\"user\":4,\"role\":[\"view\"]},{\"user\":3,\"role\":[\"view\"]}]', NULL, NULL, '2023-04-19 14:14:48', 1, '2023-04-19 14:14:48', 1, 0),
+(80, 77, 'FilePDF_EF.pdf', 1, NULL, NULL, 85, '123', 'hal1', NULL, NULL, NULL, 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-04-21 09:39:59', 1, '2023-04-21 10:59:52', 1, 0),
+(81, 77, 'EF_TestResult.pdf', 0, NULL, NULL, NULL, '123', 'hal2', NULL, NULL, NULL, 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-04-21 09:44:46', 1, '2023-04-21 10:00:15', 1, 1),
+(82, 77, 'FilePDF_EF.pdf', 0, NULL, NULL, NULL, '12323', 'hal3', NULL, NULL, NULL, 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-04-21 09:52:43', 1, '2023-04-21 09:55:20', 1, 1),
+(83, 77, 'EF_TestResult-3.pdf', 1, 1, 80, 80, '123 rev', 'hal1 rev', NULL, NULL, NULL, 'file', 'pdf', '118.92 KB', 'rev file', '[{\"user\":4,\"role\":[\"view\"]}]', NULL, NULL, '2023-04-21 10:52:11', 1, '2023-04-21 10:56:09', 1, 1),
+(84, 77, 'FilePDF_EF.pdf', 1, 2, 83, 83, '123 rev', 'hal1 rev 2', NULL, NULL, NULL, 'file', 'pdf', '118.92 KB', 'rev file', '[{\"user\":4,\"role\":[\"view\"]}]', NULL, NULL, '2023-04-21 10:54:10', 1, '2023-04-21 10:54:28', 1, 1),
+(85, 77, 'EF_TestResult-3.pdf', 0, 1, 80, 0, '123', 'hal1 rev', NULL, NULL, NULL, 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-04-21 10:59:52', 1, '2023-04-21 10:59:52', 1, 0),
+(86, 0, 'DMS Surel', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'folder', NULL, NULL, 'Folder untuk aplikasi Surel', '[{\"user\":2,\"role\":[\"view\"]}]', NULL, NULL, '2023-04-28 14:13:17', 1, '2023-04-28 14:20:05', 1, 0),
+(87, 86, 'EF_TestResult-3.pdf', 0, NULL, NULL, NULL, '232132', '121323', NULL, NULL, NULL, 'file', 'pdf', '118.92 KB', '', NULL, NULL, NULL, '2023-04-28 14:20:37', 1, '2023-04-28 14:21:11', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_form`
+--
+
+CREATE TABLE `tbl_form` (
+  `form_id` int(11) NOT NULL,
+  `form` varchar(255) DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_on` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `is_deleted` tinyint(1) DEFAULT 0 COMMENT '0=No; 1=Yes'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `tbl_form`
+--
+
+INSERT INTO `tbl_form` (`form_id`, `form`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
+(1, 'Sakit', '2023-04-27 09:30:54', 1, '2023-04-27 09:30:54', 1, 0),
+(2, 'Peminjaman', '2023-04-27 09:31:54', 1, '2023-04-27 09:31:54', 1, 0),
+(3, 'Izin', '2023-04-27 09:32:54', 1, '2023-04-27 09:32:54', 1, 0),
+(4, 'Pengajuan e-KTP', '2023-05-18 12:28:41', 1, '2023-05-18 12:43:00', 1, 0),
+(5, 'Pengajuan Passport', '2023-05-18 13:14:09', 1, '2023-05-18 13:14:09', 1, 0),
+(6, 'Pengajuan Dosen Pembimbing', '2023-05-18 13:18:36', 1, '2023-05-18 13:20:46', 1, 0),
+(7, 'Permohonan Leap', '2023-05-18 13:18:59', 1, '2023-05-18 13:18:59', 1, 0),
+(8, 'Harga Catering', '2023-05-18 13:22:37', 1, '2023-05-18 13:49:26', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_jenis_peminjaman`
+--
+
+CREATE TABLE `tbl_jenis_peminjaman` (
+  `jenis_peminjaman_id` int(11) NOT NULL,
+  `form_id` int(11) NOT NULL,
+  `jenis_peminjaman` varchar(255) DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_on` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `is_deleted` tinyint(1) DEFAULT 0 COMMENT '0=No; 1=Yes'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `tbl_jenis_peminjaman`
+--
+
+INSERT INTO `tbl_jenis_peminjaman` (`jenis_peminjaman_id`, `form_id`, `jenis_peminjaman`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
+(1, 2, 'Office365', '2023-04-27 09:30:54', 1, '2023-04-27 09:30:54', 1, 0),
+(2, 2, 'Ruangan', '2023-04-27 09:31:54', 1, '2023-04-27 09:31:54', 1, 0),
+(3, 2, 'Proyektor', '2023-04-27 09:32:54', 1, '2023-04-27 09:32:54', 1, 0),
+(4, 5, 'E-Passport', '2023-05-18 13:14:09', 1, '2023-05-18 13:14:09', 1, 0),
+(5, 5, 'Reguler Passport', '2023-05-18 13:14:10', 1, '2023-05-18 13:14:10', 1, 0),
+(6, 8, 'Makan siang', '2023-05-18 13:22:37', 1, '2023-05-18 13:22:37', 1, 1),
+(7, 8, 'Makan malam', '2023-05-18 13:22:37', 1, '2023-05-18 13:22:37', 1, 1),
+(8, 8, 'makan pagi', '2023-05-18 13:22:37', 1, '2023-05-18 13:22:37', 1, 1),
+(9, 8, 'Bubur bayi', '2023-05-18 13:33:49', 1, '2023-05-18 13:33:49', 1, 1),
+(10, 8, 'buah', '2023-05-18 13:34:11', 1, '2023-05-18 13:34:11', 1, 1),
+(11, 8, 'Makan siang', '2023-05-18 13:49:26', 1, '2023-05-18 13:49:26', 1, 0),
+(12, 8, 'Makan malam', '2023-05-18 13:49:26', 1, '2023-05-18 13:49:26', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -147,7 +228,7 @@ CREATE TABLE `tbl_logs` (
   `updated_on` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   `is_deleted` tinyint(1) DEFAULT 0 COMMENT '0=No; 1=Yes'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tbl_logs`
@@ -366,7 +447,98 @@ INSERT INTO `tbl_logs` (`logs_id`, `file_target_id`, `act`, `type`, `description
 (210, 37, 'open', 'folder', 'membuka folder Alpro', '2023-02-18 12:05:52', 1, '2023-02-18 12:05:52', 1, 0),
 (211, 71, 'open', 'folder', 'membuka folder Android Folder 3', '2023-02-22 11:54:57', 1, '2023-02-22 11:54:57', 1, 0),
 (212, 69, 'update', 'folder', 'mengubah attribut pada folder Android Folder 1', '2023-02-23 10:44:58', 1, '2023-02-23 10:44:58', 1, 0),
-(213, 71, 'update', 'folder', 'mengubah attribut pada folder Android Folder 3', '2023-02-23 10:45:12', 1, '2023-02-23 10:45:12', 1, 0);
+(213, 71, 'update', 'folder', 'mengubah attribut pada folder Android Folder 3', '2023-02-23 10:45:12', 1, '2023-02-23 10:45:12', 1, 0),
+(214, 4, 'open', 'folder', 'membuka folder Project Android - POS', '2023-04-14 19:05:07', 1, '2023-04-14 19:05:07', 1, 0),
+(215, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 12:04:51', 1, '2023-04-17 12:04:51', 1, 0),
+(216, 73, 'edit', 'file', 'mengubah user akses pada file EF_TestResult.pdf', '2023-04-17 12:56:31', 1, '2023-04-17 12:56:31', 1, 0),
+(217, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 12:56:31', 1, '2023-04-17 12:56:31', 1, 0),
+(218, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 14:05:16', 1, '2023-04-17 14:05:16', 1, 0),
+(219, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 14:06:46', 1, '2023-04-17 14:06:46', 1, 0),
+(220, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 14:08:35', 1, '2023-04-17 14:08:35', 1, 0),
+(221, 4, 'open', 'folder', 'membuka folder Project Android - POS', '2023-04-17 14:09:47', 1, '2023-04-17 14:09:47', 1, 0),
+(222, 8, 'open', 'folder', 'membuka folder Minggu 1', '2023-04-17 14:09:52', 1, '2023-04-17 14:09:52', 1, 0),
+(223, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 14:09:58', 1, '2023-04-17 14:09:58', 1, 0),
+(224, 74, 'upload', 'file', 'mengunggah file baru PDF1.pdf', '2023-04-17 14:11:52', 1, '2023-04-17 14:11:52', 1, 0),
+(225, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 14:11:52', 1, '2023-04-17 14:11:52', 1, 0),
+(226, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 15:30:23', 1, '2023-04-17 15:30:23', 1, 0),
+(227, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 15:33:43', 1, '2023-04-17 15:33:43', 1, 0),
+(228, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 15:35:34', 1, '2023-04-17 15:35:34', 1, 0),
+(229, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 15:37:32', 1, '2023-04-17 15:37:32', 1, 0),
+(230, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 15:38:51', 1, '2023-04-17 15:38:51', 1, 0),
+(231, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 15:39:02', 1, '2023-04-17 15:39:02', 1, 0),
+(232, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 15:51:13', 1, '2023-04-17 15:51:13', 1, 0),
+(233, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 15:52:15', 1, '2023-04-17 15:52:15', 1, 0),
+(234, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 15:55:35', 1, '2023-04-17 15:55:35', 1, 0),
+(235, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 16:17:17', 1, '2023-04-17 16:17:17', 1, 0),
+(236, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 16:19:15', 1, '2023-04-17 16:19:15', 1, 0),
+(237, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 16:22:50', 1, '2023-04-17 16:22:50', 1, 0),
+(238, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 16:23:28', 1, '2023-04-17 16:23:28', 1, 0),
+(239, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 16:24:11', 1, '2023-04-17 16:24:11', 1, 0),
+(240, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 16:25:10', 1, '2023-04-17 16:25:10', 1, 0),
+(241, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-17 16:26:16', 1, '2023-04-17 16:26:16', 1, 0),
+(242, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-18 12:36:07', 1, '2023-04-18 12:36:07', 1, 0),
+(243, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-18 12:42:37', 1, '2023-04-18 12:42:37', 1, 0),
+(244, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-18 12:46:35', 1, '2023-04-18 12:46:35', 1, 0),
+(245, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-18 12:49:04', 1, '2023-04-18 12:49:04', 1, 0),
+(246, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-18 12:55:44', 1, '2023-04-18 12:55:44', 1, 0),
+(247, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-18 12:56:56', 1, '2023-04-18 12:56:56', 1, 0),
+(248, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-18 13:03:50', 1, '2023-04-18 13:03:50', 1, 0),
+(249, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-18 14:05:15', 1, '2023-04-18 14:05:15', 1, 0),
+(250, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-19 10:20:58', 1, '2023-04-19 10:20:58', 1, 0),
+(251, 75, 'upload', 'file', 'mengunggah file baru PDF2.pdf', '2023-04-19 10:24:52', 1, '2023-04-19 10:24:52', 1, 0),
+(252, 72, 'open', 'folder', 'membuka folder api folder', '2023-04-19 10:24:52', 1, '2023-04-19 10:24:52', 1, 0),
+(253, 72, 'open', 'folder', 'membuka folder Api Folder From Flutter', '2023-04-21 10:04:51', 1, '2023-04-21 10:04:51', 1, 0),
+(254, 77, 'open', 'folder', 'membuka folder Sub Api Folder 2', '2023-04-21 10:04:55', 1, '2023-04-21 10:04:55', 1, 0),
+(255, 72, 'open', 'folder', 'membuka folder Api Folder From Flutter', '2023-04-21 10:53:10', 1, '2023-04-21 10:53:10', 1, 0),
+(256, 40, 'open', 'folder', 'membuka folder PKN', '2023-04-28 14:11:16', 1, '2023-04-28 14:11:16', 1, 0),
+(257, 37, 'open', 'folder', 'membuka folder Alpro', '2023-04-28 14:11:29', 1, '2023-04-28 14:11:29', 1, 0),
+(258, 86, 'create', 'folder', 'membuat folder baru dengan nama DMS Surel', '2023-04-28 14:13:17', 1, '2023-04-28 14:13:17', 1, 0),
+(259, 77, 'open', 'folder', 'membuka folder Sub Api Folder 2', '2023-04-28 14:19:28', 1, '2023-04-28 14:19:28', 1, 0),
+(260, 86, 'update', 'folder', 'mengubah attribut pada folder DMS Surel', '2023-04-28 14:20:05', 1, '2023-04-28 14:20:05', 1, 0),
+(261, 87, 'upload', 'file', 'mengunggah file baru EF_TestResult-3.pdf', '2023-04-28 14:20:37', 1, '2023-04-28 14:20:37', 1, 0),
+(262, 86, 'open', 'folder', 'membuka folder DMS Surel', '2023-04-28 14:20:38', 1, '2023-04-28 14:20:38', 1, 0),
+(263, 87, 'delete', 'file', 'menghapus file EF_TestResult-3.pdf', '2023-04-28 14:21:11', 1, '2023-04-28 14:21:11', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_permohonan`
+--
+
+CREATE TABLE `tbl_permohonan` (
+  `permohonan_id` int(11) NOT NULL,
+  `form_id` int(11) DEFAULT NULL,
+  `jenis_peminjaman_id` int(11) DEFAULT NULL,
+  `pdf_filename` varchar(255) DEFAULT NULL,
+  `perihal` varchar(255) DEFAULT NULL,
+  `nrp` varchar(255) DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `universitas` varchar(255) DEFAULT NULL,
+  `keterangan` varchar(255) DEFAULT NULL,
+  `date_start` datetime DEFAULT NULL,
+  `date_end` datetime DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `is_open_for_notif` int(1) DEFAULT NULL,
+  `response_by` int(11) DEFAULT NULL,
+  `alasan` varchar(255) DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_on` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `is_deleted` tinyint(1) DEFAULT 0 COMMENT '0=No; 1=Yes'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `tbl_permohonan`
+--
+
+INSERT INTO `tbl_permohonan` (`permohonan_id`, `form_id`, `jenis_peminjaman_id`, `pdf_filename`, `perihal`, `nrp`, `nama`, `universitas`, `keterangan`, `date_start`, `date_end`, `status`, `is_open_for_notif`, `response_by`, `alasan`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
+(1, 2, 1, '232323_1_Peminjaman.pdf', 'Test Using Ci', '232323', 'Agung', 'UKP', 'Ini Dari Api Code Igniter', '2023-05-17 00:00:00', '2023-05-24 00:00:00', 'approved', 1, 1, 'Ditolak dengan sengaja', '2023-05-10 09:33:15', 5, '2023-05-10 09:33:15', 5, 0),
+(2, 3, 0, '2321434_2_Izin.pdf', 'healing with fam', '2321434', 'jonathan', 'ubaya', 'healing ke jogja', '2023-05-25 00:00:00', '2023-05-27 00:00:00', 'approved', 1, 1, '', '2023-05-12 04:02:38', 5, '2023-05-12 04:02:38', 5, 0),
+(3, 2, 1, '34324324_3_Peminjaman.pdf', 'Seminar bisnis', '34324324', 'Agus Amurti', 'UNESA', 'Pinjam proyektor untuk kemajuan presentasi', '2023-05-30 00:00:00', '2023-05-31 00:00:00', 'draft', 1, NULL, '', '2023-05-17 03:37:03', 1, '2023-05-17 03:37:03', 1, 0),
+(4, 1, 0, '788687578_4_Sakit.pdf', 'Sakit Hati', '788687578', 'Budi Cahyono', 'ITATS', 'Diputus Tanpa Alasan', '2023-05-24 00:00:00', '2023-05-27 00:00:00', 'rejected', 1, 1, 'alasan tidak masuk akal', '2023-05-17 03:44:20', 1, '2023-05-17 03:44:20', 1, 0),
+(5, 5, 4, '2343434_5_Pengajuan Passport.pdf', 'Pengajuan Pembuatan E-passport', '2343434', 'Budi Santoso', 'UBAYA', 'Izin cuti untuk bikin passport', '2023-05-29 00:00:00', '2023-05-31 00:00:00', 'approved', 1, 1, '', '2023-05-18 07:08:33', 5, '2023-05-18 07:08:33', 5, 0),
+(6, 2, 1, 'C14190001_6_Peminjaman.pdf', 'Pinjam Ruangan', 'C14190001', 'Kevin Andreas', 'UK Petra', 'Seminar', '2023-05-22 00:00:00', '2023-05-23 00:00:00', 'pending', 0, NULL, '', '2023-05-19 02:13:30', 4, '2023-05-19 02:13:30', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -393,7 +565,7 @@ CREATE TABLE `tbl_user` (
   `updated_on` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   `is_deleted` tinyint(1) DEFAULT 0 COMMENT '0=No; 1=Yes'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tbl_user`
@@ -401,9 +573,10 @@ CREATE TABLE `tbl_user` (
 
 INSERT INTO `tbl_user` (`user_id`, `is_superadmin`, `fullname`, `email`, `password`, `phone`, `address`, `position`, `status`, `status_email`, `secret_key`, `encryption_key`, `encryption_iv`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
 (1, 1, 'Jason Immanuel', 'jason@email.com', 'tsG26M+doZc=', '081356894563', NULL, NULL, 1, 1, NULL, '6143541754438333', 'MXLPR1SYD935TJVF', '2023-01-25 06:37:26', 1, '2023-01-25 06:37:26', 1, 0),
-(2, 0, 'Delvo Anderson', 'delvo@email.com', 'urrnRO/83iY=', '456789874565', NULL, NULL, 1, 1, NULL, '9378434021479912', '8MD2RPBW91SZNXI7', '2023-01-25 12:39:43', 3, '2023-01-25 12:39:43', 3, 0),
+(2, 1, 'Delvo Anderson', 'delvo@email.com', 'urrnRO/83iY=', '456789874565', NULL, NULL, 1, 1, NULL, '9378434021479912', '8MD2RPBW91SZNXI7', '2023-01-25 12:39:43', 3, '2023-01-25 12:39:43', 3, 0),
 (3, 0, 'jonas andreas', 'jonas@email.com', 'yYROW/X4cLI=', '081358126547', NULL, NULL, 1, 1, NULL, '3783289032730952', 'CNY0GMIWE6DUK4FR', '2023-01-25 12:40:25', 3, '2023-02-06 11:28:03', 3, 0),
-(4, NULL, 'Kevin', 'kevin@email.com', 'hhnajCW4FFI=', '5465465', NULL, NULL, 1, 1, NULL, '7122781872373108', 'YZTI658FBMCNSH21', '2023-02-14 10:03:30', 1, '2023-02-14 10:03:30', 1, 0);
+(4, 0, 'Kevin', 'kevin@email.com', 'hhnajCW4FFI=', '5465465', NULL, NULL, 1, 1, NULL, '7122781872373108', 'YZTI658FBMCNSH21', '2023-02-14 10:03:30', 1, '2023-02-14 10:03:30', 1, 0),
+(5, 0, 'One User', 'oneuser@email.com', 'Vzof8R3En4I=', '123456789123', NULL, NULL, 1, 0, NULL, '5411988822775768', 'XTQAG09ZCBDIWRM4', '2023-04-26 12:55:21', 1, '2023-04-26 12:55:21', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -416,7 +589,7 @@ CREATE TABLE `tbl_user_api_login` (
   `user_id` int(11) DEFAULT NULL,
   `clock_in` datetime DEFAULT NULL,
   `clock_out` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tbl_user_api_login`
@@ -426,7 +599,110 @@ INSERT INTO `tbl_user_api_login` (`api_login_id`, `user_id`, `clock_in`, `clock_
 (1, 1, '2023-02-22 09:30:54', '2023-02-22 09:31:43'),
 (2, 1, '2023-02-22 09:31:44', '2023-02-22 09:33:21'),
 (3, 1, '2023-02-22 09:36:10', '2023-02-22 11:35:37'),
-(4, 1, '2023-02-22 11:35:37', NULL);
+(4, 1, '2023-02-22 11:35:37', '2023-04-16 22:08:46'),
+(5, 1, '2023-04-16 22:08:46', '2023-04-17 10:28:45'),
+(6, 1, '2023-04-17 10:28:45', '2023-04-18 11:19:02'),
+(7, 1, '2023-04-18 11:19:02', '2023-04-18 11:20:58'),
+(8, 1, '2023-04-18 11:20:58', '2023-04-18 12:35:21'),
+(9, 1, '2023-04-18 12:35:21', '2023-04-18 12:40:18'),
+(10, 1, '2023-04-18 12:40:18', '2023-04-28 13:55:35'),
+(11, 2, '2023-04-21 10:47:44', '2023-04-30 11:41:22'),
+(12, 5, '2023-04-26 13:48:44', '2023-04-26 13:50:24'),
+(13, 5, '2023-04-26 13:50:24', '2023-04-26 13:58:11'),
+(14, 5, '2023-04-26 13:58:11', '2023-04-26 14:17:18'),
+(15, 5, '2023-04-26 14:17:19', '2023-04-26 14:19:32'),
+(16, 5, '2023-04-26 14:19:32', '2023-04-26 14:23:18'),
+(17, 5, '2023-04-26 14:23:18', '2023-04-26 14:40:18'),
+(18, 5, '2023-04-26 14:40:54', '2023-04-26 15:13:58'),
+(19, 5, '2023-04-26 15:13:58', '2023-04-26 15:52:46'),
+(20, 5, '2023-04-26 15:52:46', '2023-04-27 13:39:24'),
+(21, 5, '2023-04-27 13:39:24', '2023-05-01 09:49:25'),
+(22, 1, '2023-04-28 13:55:35', '2023-04-28 14:40:43'),
+(23, 1, '2023-04-28 14:40:43', '2023-05-01 09:50:37'),
+(24, 2, '2023-04-30 11:41:22', '2023-05-08 07:51:27'),
+(25, 5, '2023-05-01 09:49:25', '2023-05-04 10:10:38'),
+(26, 1, '2023-05-01 09:50:37', '2023-05-02 15:24:54'),
+(27, 1, '2023-05-02 15:24:54', '2023-05-02 15:54:33'),
+(28, 1, '2023-05-02 15:54:33', '2023-05-04 08:37:21'),
+(29, 1, '2023-05-04 08:37:22', '2023-05-04 08:40:19'),
+(30, 4, '2023-05-04 08:39:10', '2023-05-05 13:19:18'),
+(31, 1, '2023-05-04 08:40:19', '2023-05-04 10:15:56'),
+(32, 5, '2023-05-04 10:10:38', '2023-05-04 10:11:17'),
+(33, 5, '2023-05-04 10:11:17', '2023-05-04 10:13:00'),
+(34, 5, '2023-05-04 10:13:00', '2023-05-04 10:14:03'),
+(35, 5, '2023-05-04 10:14:03', '2023-05-04 11:16:58'),
+(36, 1, '2023-05-04 10:15:56', '2023-05-04 10:28:36'),
+(37, 1, '2023-05-04 10:28:36', '2023-05-04 11:03:19'),
+(38, 1, '2023-05-04 11:03:19', '2023-05-04 12:58:23'),
+(39, 5, '2023-05-04 11:16:58', '2023-05-05 13:18:54'),
+(40, 1, '2023-05-04 12:58:23', '2023-05-05 13:19:45'),
+(41, 5, '2023-05-05 13:18:54', '2023-05-06 11:38:32'),
+(42, 4, '2023-05-05 13:19:18', '2023-05-19 02:08:33'),
+(43, 1, '2023-05-05 13:19:45', '2023-05-05 13:21:05'),
+(44, 1, '2023-05-05 13:21:06', '2023-05-05 13:21:46'),
+(45, 1, '2023-05-05 13:21:47', '2023-05-05 13:23:25'),
+(46, 1, '2023-05-05 13:23:25', '2023-05-06 12:27:45'),
+(47, 5, '2023-05-06 11:38:32', '2023-05-06 12:00:29'),
+(48, 5, '2023-05-06 12:00:29', '2023-05-06 12:35:57'),
+(49, 1, '2023-05-06 12:27:45', '2023-05-06 12:36:20'),
+(50, 5, '2023-05-06 12:35:57', '2023-05-06 12:38:59'),
+(51, 1, '2023-05-06 12:36:20', '2023-05-06 12:40:35'),
+(52, 5, '2023-05-06 12:38:59', '2023-05-06 12:40:13'),
+(53, 5, '2023-05-06 12:40:13', '2023-05-06 13:03:50'),
+(54, 1, '2023-05-06 12:40:35', '2023-05-06 13:04:40'),
+(55, 5, '2023-05-06 13:03:50', '2023-05-06 13:05:17'),
+(56, 1, '2023-05-06 13:04:40', '2023-05-06 13:06:56'),
+(57, 5, '2023-05-06 13:05:17', '2023-05-06 13:05:52'),
+(58, 5, '2023-05-06 13:05:52', '2023-05-06 13:06:42'),
+(59, 5, '2023-05-06 13:06:42', '2023-05-06 13:14:57'),
+(60, 1, '2023-05-06 13:06:56', '2023-05-06 13:19:54'),
+(61, 5, '2023-05-06 13:14:57', '2023-05-06 13:15:28'),
+(62, 5, '2023-05-06 13:15:28', '2023-05-06 13:20:53'),
+(63, 1, '2023-05-06 13:19:54', '2023-05-06 13:23:21'),
+(64, 5, '2023-05-06 13:20:53', '2023-05-06 13:21:39'),
+(65, 5, '2023-05-06 13:21:40', '2023-05-06 13:24:34'),
+(66, 1, '2023-05-06 13:23:21', '2023-05-07 13:12:07'),
+(67, 5, '2023-05-06 13:24:34', '2023-05-09 03:29:59'),
+(68, 1, '2023-05-07 06:10:31', '2023-05-07 13:12:18'),
+(69, 1, '2023-05-07 06:11:55', '2023-05-07 06:16:07'),
+(70, 1, '2023-05-07 06:16:07', '2023-05-07 06:17:42'),
+(71, 1, '2023-05-07 06:17:42', '2023-05-07 06:18:59'),
+(72, 1, '2023-05-07 06:18:59', '2023-05-10 04:55:59'),
+(73, 2, '2023-05-08 07:51:27', '2023-05-08 08:15:34'),
+(74, 2, '2023-05-08 08:22:48', '2023-05-08 08:22:53'),
+(75, 2, '2023-05-08 08:52:09', '2023-05-10 04:37:09'),
+(76, 5, '2023-05-09 03:29:59', '2023-05-10 04:31:59'),
+(77, 5, '2023-05-10 04:31:59', '2023-05-10 04:33:17'),
+(78, 5, '2023-05-10 04:33:17', '2023-05-10 04:56:13'),
+(79, 2, '2023-05-10 04:37:09', '2023-05-12 03:24:36'),
+(80, 1, '2023-05-10 04:55:59', '2023-05-10 04:56:42'),
+(81, 5, '2023-05-10 04:56:13', '2023-05-10 09:09:29'),
+(82, 1, '2023-05-10 04:56:42', '2023-05-10 09:35:04'),
+(83, 5, '2023-05-10 09:09:29', '2023-05-12 03:24:23'),
+(84, 1, '2023-05-10 09:35:04', '2023-05-12 03:18:39'),
+(85, 1, '2023-05-12 03:18:39', '2023-05-12 03:33:44'),
+(86, 5, '2023-05-12 03:24:23', '2023-05-12 03:57:11'),
+(87, 2, '2023-05-12 03:24:36', '2023-05-12 03:25:06'),
+(88, 2, '2023-05-12 03:25:06', '2023-05-12 03:39:55'),
+(89, 1, '2023-05-12 03:33:44', '2023-05-16 04:09:09'),
+(90, 2, '2023-05-12 03:39:55', '2023-05-12 04:05:11'),
+(91, 5, '2023-05-12 03:57:11', '2023-05-16 04:08:41'),
+(92, 2, '2023-05-12 04:05:11', '2023-05-16 04:37:03'),
+(93, 5, '2023-05-16 04:08:41', '2023-05-18 06:51:46'),
+(94, 1, '2023-05-16 04:09:09', '2023-05-17 03:46:39'),
+(95, 2, '2023-05-16 04:37:03', '2023-05-17 03:14:28'),
+(96, 2, '2023-05-17 03:14:28', '2023-05-19 02:09:02'),
+(97, 1, '2023-05-17 03:46:39', '2023-05-17 03:46:39'),
+(98, 1, '2023-05-17 03:46:39', '2023-05-17 03:47:06'),
+(99, 1, '2023-05-17 03:47:06', '2023-05-18 07:09:04'),
+(100, 5, '2023-05-18 06:51:46', '2023-05-20 03:03:10'),
+(101, 1, '2023-05-18 07:09:04', '2023-05-18 07:20:32'),
+(102, 1, '2023-05-18 07:20:32', '2023-05-20 03:15:48'),
+(103, 4, '2023-05-19 02:08:33', '2023-05-19 02:09:37'),
+(104, 2, '2023-05-19 02:09:02', NULL),
+(105, 4, '2023-05-19 02:09:37', NULL),
+(106, 5, '2023-05-20 03:03:10', NULL),
+(107, 1, '2023-05-20 03:15:48', NULL);
 
 --
 -- Indexes for dumped tables
@@ -439,10 +715,28 @@ ALTER TABLE `tbl_folder`
   ADD PRIMARY KEY (`folder_id`);
 
 --
+-- Indexes for table `tbl_form`
+--
+ALTER TABLE `tbl_form`
+  ADD PRIMARY KEY (`form_id`);
+
+--
+-- Indexes for table `tbl_jenis_peminjaman`
+--
+ALTER TABLE `tbl_jenis_peminjaman`
+  ADD PRIMARY KEY (`jenis_peminjaman_id`);
+
+--
 -- Indexes for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
   ADD PRIMARY KEY (`logs_id`);
+
+--
+-- Indexes for table `tbl_permohonan`
+--
+ALTER TABLE `tbl_permohonan`
+  ADD PRIMARY KEY (`permohonan_id`);
 
 --
 -- Indexes for table `tbl_user`
@@ -464,25 +758,43 @@ ALTER TABLE `tbl_user_api_login`
 -- AUTO_INCREMENT for table `tbl_folder`
 --
 ALTER TABLE `tbl_folder`
-  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `folder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+
+--
+-- AUTO_INCREMENT for table `tbl_form`
+--
+ALTER TABLE `tbl_form`
+  MODIFY `form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `tbl_jenis_peminjaman`
+--
+ALTER TABLE `tbl_jenis_peminjaman`
+  MODIFY `jenis_peminjaman_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=214;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
+
+--
+-- AUTO_INCREMENT for table `tbl_permohonan`
+--
+ALTER TABLE `tbl_permohonan`
+  MODIFY `permohonan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_user_api_login`
 --
 ALTER TABLE `tbl_user_api_login`
-  MODIFY `api_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `api_login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

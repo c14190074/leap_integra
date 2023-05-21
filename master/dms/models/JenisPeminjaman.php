@@ -1,6 +1,6 @@
 <?php
 	class JenisPeminjaman extends SnlActiveRecord {
-		public $jenis_peminjaman_id, $jenis_peminjaman, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $jenis_peminjaman_id, $form_id, $jenis_peminjaman, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 		
 
 		public function __construct() {
