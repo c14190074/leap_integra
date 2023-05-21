@@ -55,7 +55,8 @@
 			$this->toolbarElement = '<a href="'.Snl::app()->baseUrl().'admin/form/index" class="btn btn-default btn-sm pull-right m-l-20"><i class="glyphicon glyphicon-remove"></i></a>';
 			return $this->render('form', array(
 				'toolbar' => $this->toolbar(),
-				'model'   => $model
+				'model'   => $model,
+				'form_type_data' => null
 			));
 		}
 
