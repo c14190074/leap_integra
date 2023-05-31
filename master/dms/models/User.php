@@ -196,7 +196,7 @@
 
 		public function getApiLoginInformation($with_address = TRUE) {
 			$result = array(
-				'user_id'		=> $this->user_id,
+				'user_id'		=> $this->user_id.'',
 				'is_superadmin'	=> $this->is_superadmin,
 				'email'			=> $this->email,
 				'phone'			=> $this->phone,

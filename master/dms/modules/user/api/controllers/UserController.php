@@ -85,7 +85,7 @@
 					
 					$result = array(
 						'status' => 200,
-						'user_id'	=> $user->user_id,
+						'user_id'	=> $user->user_id.'',
 						'email' 	=> $user->email,
 						'fullname' => $user->fullname						
 					);
@@ -112,7 +112,7 @@
 					if($users != NULL) {
 						foreach ($users as $user) {
 							$data[] = array(
-								'user_id' 	=> $user->user_id,
+								'user_id' 	=> $user->user_id.'',
 								'fullname' 	=> ucwords(strtolower($user->fullname)),
 								'email' 	=> $user->email,
 								

@@ -49,8 +49,8 @@
 						Logs::create_logs($folder->folder_id, 'create', 'folder', 'membuat folder baru dengan nama '.$folder->name, $this->user_id);
 
 						$data = array(
-							'folder_id' 		=> $folder->folder_id,
-							'folder_parent_id' 	=> $folder->folder_parent_id,
+							'folder_id' 		=> $folder->folder_id.'',
+							'folder_parent_id' 	=> $folder->folder_parent_id.'',
 							'name' 				=> $folder->name,
 							'description' 		=> $folder->description,
 						);
@@ -133,8 +133,8 @@
 					              } 
 
 					        	$data[] = array(
-									'folder_id' 		=> $folder->folder_id,
-									'folder_parent_id' 	=> $folder->folder_parent_id,
+									'folder_id' 		=> $folder->folder_id.'',
+									'folder_parent_id' 	=> $folder->folder_parent_id.'',
 									'name' 		=> $folder->name,
 									'nomor' 	=> $folder->nomor,
 									'perihal' 	=> $folder->perihal,
@@ -331,8 +331,8 @@
 			                    }
 
                             	$data[] = array(
-									'folder_id' 		=> $model->folder_id,
-									'folder_parent_id' 	=> $model->folder_parent_id,
+									'folder_id' 		=> $model->folder_id.'',
+									'folder_parent_id' 	=> $model->folder_parent_id.'',
 									'name' 		=> $model->name,
 									'nomor' 	=> $model->nomor,
 									'perihal' 	=> $model->perihal,
@@ -407,8 +407,8 @@
 			                    }
 
                             	$data[] = array(
-									'folder_id' 		=> $folder->folder_id,
-									'folder_parent_id' 	=> $folder->folder_parent_id,
+									'folder_id' 		=> $folder->folder_id.'',
+									'folder_parent_id' 	=> $folder->folder_parent_id.'',
 									'name' 		=> $folder->name,
 									'nomor' 	=> $folder->nomor,
 									'perihal' 	=> $folder->perihal,
@@ -582,8 +582,8 @@
 			                    }
 
                             	$data[] = array(
-									'folder_id' 		=> $folder->folder_id,
-									'folder_parent_id' 	=> $folder->folder_parent_id,
+									'folder_id' 		=> $folder->folder_id.'',
+									'folder_parent_id' 	=> $folder->folder_parent_id.'',
 									'name' 		=> $folder->name,
 									'nomor' 	=> $folder->nomor,
 									'perihal' 	=> $folder->perihal,
@@ -635,7 +635,7 @@
             			foreach($user_model as $d) {
             				if($d->hasFolderAccess($folder_id)) {
             					$data[] = array(
-									'user_id' 	=> $d->user_id,
+									'user_id' 	=> $d->user_id.'',
 									'fullname' 	=> ucwords(strtolower($d->fullname)),
 									'email' 	=> $d->email,
 									
@@ -672,7 +672,7 @@
 					if($model != NULL) {
             			foreach($model as $d) {
             				$documents[] = array(
-            					'folder_id' 	=> $d->folder_id,
+            					'folder_id' 	=> $d->folder_id.'',
             					'name'		=> ucwords(strtolower($d->name))
             				);
             			}
@@ -707,8 +707,8 @@
 							foreach($related_document as $document_id) {
 								$document_model = Folder::model()->findByPk($document_id);
 								$documents[] = array(
-									'folder_id' 		=> $document_model->folder_id,
-									'folder_parent_id' 	=> $document_model->folder_parent_id,
+									'folder_id' 		=> $document_model->folder_id.'',
+									'folder_parent_id' 	=> $document_model->folder_parent_id.'',
 									'name' 				=> $document_model->name,
 									'nomor' 			=> $document_model->nomor,
 									'perihal' 			=> $document_model->perihal,
@@ -716,10 +716,10 @@
 									'format' 			=> $document_model->format,
 									'size' 				=> $document_model->size,
 									'description' 		=> $document_model->description,
-									'created_by' 		=> $document_model->created_by,
+									'created_by' 		=> $document_model->created_by.'',
 									'created_on' 		=> $document_model->created_on,
 									'updated_on' 		=> $document_model->updated_on,
-									'updated_by' 		=> $document_model->updated_by,
+									'updated_by' 		=> $document_model->updated_by.'',
 									'user_access' 		=> $document_model->user_access,
 								);
 							}
@@ -746,11 +746,11 @@
 			if($this->valid_user_token) {
 				if($this->request_type == 'POST') {
 					$tempFile = $_FILES['file']['tmp_name'];
-				    $targetPath = Snl::app()->rootDirectory() . 'uploads/documents/';
-				    $targetFile =  $targetPath. $_FILES['file']['name'];
+				    $targetPath = 'uploads/documents/';
+				    $targetFile =  $targetPath. preg_replace('/\s+/', '', $_FILES['file']['name']);
 				    $upload_status = move_uploaded_file($tempFile,$targetFile);
 
-				    $file_name = $_FILES['file']['name'];
+				    $file_name = preg_replace('/\s+/', '', $_FILES['file']['name']);
 				    $file_size = Snl::app()->formatSizeUnits($_FILES['file']['size']);
 				    $file_format = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 
@@ -815,8 +815,8 @@
 						if($model->save()) {
 							Logs::create_logs($model->folder_id, 'upload', 'file', 'mengunggah file baru '.$model->name, $this->user_id);
 							$data = array(
-								'file_id' 			=> $model->folder_id,
-								'folder_parent_id' 	=> $model->folder_parent_id,
+								'file_id' 			=> $model->folder_id.'',
+								'folder_parent_id' 	=> $model->folder_parent_id.'',
 								'name' 				=> $model->name,
 								'perihal' 			=> $model->perihal,
 								'nomor' 			=> $model->nomor,
@@ -858,8 +858,8 @@
 					
 					if($model != NULL) {
 						$data[] = array(
-							'folder_id' 		=> $model->folder_id,
-							'folder_parent_id' 	=> $model->folder_parent_id,
+							'folder_id' 		=> $model->folder_id.'',
+							'folder_parent_id' 	=> $model->folder_parent_id.'',
 							'name' 				=> $model->name,
 							'nomor' 				=> $model->nomor,
 							'perihal' 				=> $model->perihal,
@@ -867,10 +867,10 @@
 							'format' 				=> $model->format,
 							'size' 				=> $model->size,
 							'description' 				=> $model->description,
-							'created_by' 				=> $model->created_by,
+							'created_by' 				=> $model->created_by.'',
 							'created_on' 				=> $model->created_on,
 							'updated_on' 				=> $model->updated_on,
-							'updated_by' 				=> $model->updated_by,
+							'updated_by' 				=> $model->updated_by.'',
 							'user_access' 				=> $model->user_access,
 						);
 					}
@@ -905,8 +905,8 @@
 							$user_created = User::model()->findByPk($model->created_by);
 
 							$data[] = array(
-								'folder_id' 		=> $model->folder_id,
-								'folder_parent_id' 	=> $model->folder_parent_id,
+								'folder_id' 		=> $model->folder_id.'',
+								'folder_parent_id' 	=> $model->folder_parent_id.'',
 								'name' 				=> $model->name,
 								'no_revision'		=> $model->no_revision == NULL ? 'Original' : 'Versi '.$model->no_revision,
 								'updated_on' 		=> $model->updated_on,
@@ -1319,7 +1319,7 @@
 
 					if($original_file != NULL) {
 						$tempFile = $_FILES['file']['tmp_name'];
-					    $targetPath = Snl::app()->rootDirectory() . 'uploads/documents/';
+					    $targetPath = 'uploads/documents/';
 					    $targetFile =  $targetPath. $_FILES['file']['name'];
 					    $upload_status = move_uploaded_file($tempFile,$targetFile);
 

@@ -288,8 +288,8 @@
 		public function upload() {
 			if (!empty($_FILES)) {
 			    $tempFile = $_FILES['file']['tmp_name'];
-			    $targetPath = Snl::app()->rootDirectory() . 'uploads/documents/';
-			    $targetFile =  $targetPath. $_FILES['file']['name'];
+			    $targetPath = 'uploads/documents/';
+			    $targetFile =  $targetPath. preg_replace('/\s+/', '', $_FILES['file']['name']);
 			 
 			    move_uploaded_file($tempFile,$targetFile);
 			    echo json_encode($tempFile);

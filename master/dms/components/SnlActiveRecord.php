@@ -355,9 +355,11 @@
 				$values = '';
 				foreach ($data as $key => $value) {
 					if(in_array($key, $this->getTableFields())) {
-					    $fields .= "`".$key."`, ";
-						$values .= ":{$key}, ";
-						$params[":{$key}"] = $key == 'is_deleted' ? 0 : $value;
+						if($key != $this->primary_key) {
+						    $fields .= "`".$key."`, ";
+							$values .= ":{$key}, ";
+							$params[":{$key}"] = $key == 'is_deleted' ? 0 : $value;
+						}
 					}
 				}
 

@@ -1,8 +1,13 @@
 <?php
 	class Config {
-		const SERVER = '127.0.0.1';
-		const DB_USERNAME = 'integrauser';
-		const DB_PASSWORD = 'An0thrS3crt1t5';
+		// const SERVER = '127.0.0.1';
+		// const DB_USERNAME = 'integrauser';
+		// const DB_PASSWORD = 'An0thrS3crt1t5';
+		// const DB_NAME = 'leap_integra_dms';
+
+		const SERVER = 'localhost';
+		const DB_USERNAME = 'root';
+		const DB_PASSWORD = '';
 		const DB_NAME = 'leap_integra_dms';
 
 		public static function getBaseUrl() {
@@ -63,6 +68,6 @@
 		}
 
 		public static function getRootDirectory() {
-			return $_SERVER['DOCUMENT_ROOT'] . '/leap_integra/dms/';
+			return $_SERVER['DOCUMENT_ROOT'] . 'leap_integra/leap_integra/dms/';
 		}
 	}
