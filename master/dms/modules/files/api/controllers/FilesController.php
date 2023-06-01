@@ -1333,7 +1333,7 @@
 							$model->original_id = $original_file->folder_id;
 							$model->no_revision = $original_file->getNoRevisi() + 1;
 							$model->keyword = $original_file->keyword;
-							$model->user_access = $original_file->user_access;
+							// $model->user_access = $original_file->user_access;
 							$model->related_document = $original_file->related_document;
 
 							$model->name = $file_name;
@@ -1353,6 +1353,39 @@
 							$model->updated_by = $this->user_id;
 							$model->updated_on = Snl::app()->dateNow();
 							$model->is_deleted = 0;
+
+							$user_access = json_decode($original_file->user_access);
+							$new_user_access = array();
+
+							foreach($user_access as $data) {
+								if($data->user != $this->user_id) {
+									$new_role = array();
+									foreach($data->role as $role) {
+										array_push($new_role, $role);
+									}
+
+									$new_data = array(
+										'user' 	=> $data->user,
+										'role'	=> $new_role,
+									);
+
+									array_push($new_user_access, $new_data);
+								}
+							}
+
+							$new_role = array();
+							array_push($new_role, 'view');
+							array_push($new_role, 'edit');
+							$new_data = array(
+								'user' 	=> $original_file->created_by,
+								'role'	=> $new_role,
+							);
+
+							array_push($new_user_access, $new_data);
+
+							if(count($new_user_access) > 0) {
+								$model->user_access = json_encode($new_user_access);
+							}
 
 							if($model->save()) {
 								Logs::create_logs($model->folder_id, 'revisi', 'file', 'melakukan revisi dengan file baru '.$model->name, $this->user_id);

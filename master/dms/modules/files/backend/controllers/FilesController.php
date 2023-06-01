@@ -209,9 +209,41 @@
 				// $model->perihal = $original_file->perihal;
 				// $model->unit_kerja = $original_file->unit_kerja;
 				$model->keyword = $original_file->keyword;
-				$model->user_access = $original_file->user_access;
+				// $model->user_access = $original_file->user_access;
 				$model->type = "file";
 				
+				$user_access = json_decode($original_file->user_access);
+				$new_user_access = array();
+
+				foreach($user_access as $data) {
+					if($data->user != Snl::app()->user()->user_id) {
+						$new_role = array();
+						foreach($data->role as $role) {
+							array_push($new_role, $role);
+						}
+
+						$new_data = array(
+							'user' 	=> $data->user,
+							'role'	=> $new_role,
+						);
+
+						array_push($new_user_access, $new_data);
+					}
+				}
+
+				$new_role = array();
+				array_push($new_role, 'view');
+				array_push($new_role, 'edit');
+				$new_data = array(
+					'user' 	=> $original_file->created_by,
+					'role'	=> $new_role,
+				);
+
+				array_push($new_user_access, $new_data);
+
+				if(count($new_user_access) > 0) {
+					$model->user_access = json_encode($new_user_access);
+				}
 
 				if($model->save()) {
 					$original_file->is_revision = 1;
@@ -396,7 +428,7 @@
 						Logs::create_logs($model->folder_id, 'delete', 'file', 'menghapus file '.$model->name);
 						Snl::app()->setFlashMessage('File '.$model->name.' berhasil dihapus.', 'info');
 					} else {
-						Logs::create_logs($model->folder_id, 'delete', 'menghapus folder '.$model->name);
+						Logs::create_logs($model->folder_id, 'delete', 'folder', 'menghapus folder '.$model->name);
 						Snl::app()->setFlashMessage('Folder '.$model->name.' berhasil dihapus.', 'info');	
 					}
 					

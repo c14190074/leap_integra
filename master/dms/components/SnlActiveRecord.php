@@ -11,7 +11,7 @@
 		public $join = array();
 		
 		public function openConnection() {
-			$this->conn = new PDO("mysql:host=".Config::SERVER."; port=3307; dbname=".Config::DB_NAME, Config::DB_USERNAME, Config::DB_PASSWORD);
+			$this->conn = new PDO("mysql:host=".Config::SERVER."; dbname=".Config::DB_NAME, Config::DB_USERNAME, Config::DB_PASSWORD);
 			// set the PDO error mode to exception
     		$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}

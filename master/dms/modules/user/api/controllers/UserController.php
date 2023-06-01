@@ -133,5 +133,28 @@
 				$this->renderInvalidUserToken();
 			}
 		}
+
+		public function islogin() {
+			if($this->valid_user_token) {
+				if($this->request_type == 'GET') {
+					
+					$result = array(
+						'status' 	=> 200,
+						'message'	=> 1,
+					);
+
+					$this->renderJSON($result);
+				} else {
+					$this->renderErrorMessage(405, 'MethodNotAllowed');
+				}
+			} else {
+				$result = array(
+					'status' 	=> 200,
+					'message'	=> 0,
+				);
+
+				$this->renderJSON($result);
+			}
+		}
 		
 	}
