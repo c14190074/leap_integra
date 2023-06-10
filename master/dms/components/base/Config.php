@@ -22,6 +22,7 @@
 			$config = new StdClass();
 
 			if($is_frontend) {
+				$config->perusahaan_id = 1;
 				$config->theme_url 	= self::getBaseUrl().'themes/frontend/';
 				$config->site_title = 'Leap | PT Integra';
 				$config->copyright 	= '2023 © Leap | PT Integra';
@@ -29,6 +30,7 @@
 				$config->no_banner	= self::getBaseUrl().'uploads/no_banner.png';
 				$config->display_per_page = 12;
 			} else {
+				$config->perusahaan_id = 1;
 				$config->theme_url 	= self::getBaseUrl().'themes/backend/';
 				$config->site_title = 'Leap | PT Integra';
 				$config->copyright 	= '2023 © Leap | PT Integra';

@@ -103,7 +103,7 @@
 			$model = new User;
 			if(isset($_POST['User'])) {
 				$model->setAttributes($_POST['User']);
-
+				$model->perusahaan_id = Snl::app()->config()->perusahaan_id;
 				if($model->save()) {
 					$model->sendEmailVerification();
 					Snl::app()->setFlashMessage('User baru berhasil ditambahkan.', 'info');

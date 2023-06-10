@@ -1,6 +1,6 @@
 <?php
 	class User extends SnlActiveRecord {
-		public $user_id, $is_superadmin, $fullname, $email, $password, $phone, $address, $position, $status, $status_email, $ttd, $secret_key, $encryption_key, $encryption_iv, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $user_id, $perusahaan_id, $is_superadmin, $fullname, $email, $password, $phone, $address, $position, $status, $status_email, $ttd, $secret_key, $encryption_key, $encryption_iv, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 		public $password_repeat;
 
 		public function __construct() {

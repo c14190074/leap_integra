@@ -5,6 +5,10 @@
 		}
 
 		public function profile() {
+			if(!Snl::app()->user()->is_superadmin) {
+				$this->redirect('admin/dashboard/index');
+			}
+			
 			$this->page_title = 'Profil Perusahaan';
 			$this->crumbs = array('Perusahaan', 'Profil');
 			
