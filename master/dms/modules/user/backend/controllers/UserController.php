@@ -195,6 +195,32 @@
 			$this->redirect('admin/user/login');
 		}
 
+		public function uploadsign() {
+			
+			if(isset($_POST['submit-sign'])) {
+				$model = User::model()->findByPk(Snl::app()->user()->user_id);
+				
+
+				$tempFile = $_FILES['file']['tmp_name'];
+
+				$temp = explode(".", $_FILES["file"]["name"]);
+                $newfilename = round(microtime(true)) . '.' . end($temp);
+
+                $targetPath = 'uploads/documents/';
+                $targetFile =  $targetPath. $newfilename;
+			 
+			    if(move_uploaded_file($tempFile,$targetFile)) {
+			    	$model->ttd = $newfilename;
+			    	$model->save();
+			    	Snl::app()->setFlashMessage('Privy Sign telah berhasil diupdate', 'info', 'flashmessage', FALSE);
+			    } else {
+			    	Snl::app()->setFlashMessage('Gagal mengunggah file!', 'danger', 'flashmessage', FALSE);
+			    }
+
+			    $this->redirect('admin/user/profile');
+			}
+		}
+
 		// All ajax function
 		public function validate() {
 			$post = $_POST['post'];

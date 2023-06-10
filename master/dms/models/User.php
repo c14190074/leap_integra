@@ -1,6 +1,6 @@
 <?php
 	class User extends SnlActiveRecord {
-		public $user_id, $is_superadmin, $fullname, $email, $password, $phone, $address, $position, $status, $status_email, $secret_key, $encryption_key, $encryption_iv, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
+		public $user_id, $is_superadmin, $fullname, $email, $password, $phone, $address, $position, $status, $status_email, $ttd, $secret_key, $encryption_key, $encryption_iv, $created_on, $created_by, $updated_on, $updated_by, $is_deleted;
 		public $password_repeat;
 
 		public function __construct() {
@@ -35,6 +35,7 @@
 				'address' => 'Alamat',
 				'status' => 'Status',
 				'status_email' => 'Status Email',
+				'ttd' => 'Privy Sign',
 				'secret_key' => 'Secret Key',
 				'encryption_key' => 'Encryption Key',
 				'encryption_iv' => 'Encryption IV',
@@ -197,7 +198,7 @@
 		public function getApiLoginInformation($with_address = TRUE) {
 			$result = array(
 				'user_id'		=> $this->user_id.'',
-				'is_superadmin'	=> $this->is_superadmin,
+				'is_superadmin'	=> $this->is_superadmin == NULL || $this->is_superadmin == "" ? "0" : "1",
 				'email'			=> $this->email,
 				'phone'			=> $this->phone,
 				'fullname'		=> ucwords(strtolower($this->fullname)),

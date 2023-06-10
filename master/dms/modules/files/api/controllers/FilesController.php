@@ -94,13 +94,6 @@
 						));
 					}
 
-					// if($model != NULL) {
-					// 	if(Folder::countNumberOfFile($model, $this->user_id) == 0) {
-					// 		$model = NULL;
-					// 	}
-					// }
-
-
 
 					if($model != NULL) {
 						if($folder_parent_id > 0) {
@@ -151,6 +144,7 @@
 									'is_owner' 		=> $folder->isTheOwner($this->user_id) ? "1" : "0",
 									'file_url'		=> Snl::app()->baseUrl() . 'uploads/documents/'.$folder->name,
 									'is_shared'		=> $folder->user_access == NULL ? "0" : "1",
+									'has_edit_access' => $folder->hasEditAccess($this->user_id) ? "1" : "0",
 								);
 
 							}
@@ -782,17 +776,7 @@
 						$model->updated_on = Snl::app()->dateNow();
 						$model->is_deleted = 0;
 						
-						// if($user_access != NULL && $this->isJSON($user_access)) {
-						// 	$user_access = json_decode($user_access);
-
-						// 	foreach ($user_access as $key => $value) {
-						// 		array_push($ids, $value->user);
-						// 	}
-
-						// 	$tmp_user_access = $user_access;
-						// }
-
-
+						
 						// otomatis menambahkan akses kepada pemilik folder
 						$folder_parent = Folder::model()->findByPk($model->folder_parent_id);
 						if($folder_parent != NULL) {
@@ -808,9 +792,6 @@
 							}
 						}
 
-						// if(count($user_access) > 0) {
-						// 	$model->user_access = json_encode($tmp_user_access);
-						// }
 						
 						if($model->save()) {
 							Logs::create_logs($model->folder_id, 'upload', 'file', 'mengunggah file baru '.$model->name, $this->user_id);

@@ -88,8 +88,7 @@
 				$model->type = "folder";
 				$model->is_revision = 0;
 				$model->user_access = NULL;
-				// $model->user_access = isset($_POST['Folder']['user_access']) ? json_encode($_POST['Folder']['user_access']) : NULL;
-
+				
 				$user_access = array();
 				if(isset($_POST['Folder']['user_access'])) {
 					for($i = 0; $i < count($_POST['Folder']['user_access']); $i++) {
@@ -130,10 +129,6 @@
 			$model = new Folder;
 			$ids = array();
 			if(isset($_POST['Folder'])) {
-				// print_r($_POST['Folder']['user_access'][0]);
-				// echo "<br />";
-				// print_r($_POST['Folder']['access_role'][0]);
-				// die();
 				$model->setAttributes($_POST['Folder']);
 				$model->type = "file";
 				$model->is_revision = 0;
@@ -205,11 +200,7 @@
 				$model->is_revision = 0;
 				$model->no_revision = $original_file->getNoRevisi() + 1;
 				$model->new_file_id = 0;
-				// $model->nomor = $original_file->nomor;
-				// $model->perihal = $original_file->perihal;
-				// $model->unit_kerja = $original_file->unit_kerja;
 				$model->keyword = $original_file->keyword;
-				// $model->user_access = $original_file->user_access;
 				$model->type = "file";
 				
 				$user_access = json_decode($original_file->user_access);
@@ -589,10 +580,6 @@
 					));
 
 					$is_search_result = TRUE;
-
-					// $model = Folder::model()->findAll(array(
-					// 	'condition' => 'is_deleted = 0 AND is_revision = 0 AND (name LIKE "%'.$keyword.'%" OR nomor LIKE "%'.$keyword.'%" OR perihal LIKE "%'.$keyword.'%" OR unit_kerja LIKE "%'.$keyword.'%" OR keyword LIKE "%'.$keyword.'%" OR description LIKE "%'.$keyword.'%") ORDER BY type DESC',
-					// ));
 
 				} else {
 					$model = Folder::model()->findAll(array(

@@ -183,14 +183,18 @@
 			return false;
 		}
 
-		public function hasEditAccess() {
+		public function hasEditAccess($user_id = 0) {
+			if($user_id == 0) {
+				$user_id = Snl::app()->user()->user_id;
+			}
+
 			$user_access = array();
 			if($this->user_access != NULL) {
 				$user_access = json_decode($this->user_access);
 			}
 
 			foreach($user_access as $d) {
-				if($d->user == Snl::app()->user()->user_id) {
+				if($d->user == $user_id) {
 					foreach($d->role as $r) {
 						if($r == "edit") {
 							return TRUE;
@@ -199,7 +203,7 @@
 				}	
 			}
 
-			if($this->created_by == Snl::app()->user()->user_id) {
+			if($this->created_by == $user_id) {
 				return TRUE;
 			}
 

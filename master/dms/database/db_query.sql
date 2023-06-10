@@ -152,3 +152,25 @@ CREATE TABLE IF NOT EXISTS `tbl_permohonan` (
 	`is_deleted` TINYINT(1) DEFAULT 0 COMMENT '0=No; 1=Yes',
 	PRIMARY KEY (`permohonan_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `tbl_perusahaan` (
+	`perusahaan_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255),
+	`email` VARCHAR(255),
+	`address` VARCHAR(255),
+	`phone` VARCHAR(255),
+	`created_on` DATETIME DEFAULT NULL,
+	`created_by` INT(11) DEFAULT NULL,
+	`updated_on` DATETIME DEFAULT NULL,
+	`updated_by` INT(11) DEFAULT NULL,
+	`is_deleted` TINYINT(1) DEFAULT 0 COMMENT '0=No; 1=Yes',
+	PRIMARY KEY (`perusahaan_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `tbl_perusahaan` (`name`, `email`, `address`, `phone`, `created_on`, `created_by`, `updated_on`, `updated_by`, `is_deleted`) VALUES
+('PT. Dummy', 'pt-dummy.kontak@email.com', 'Jalan Dummy Percobaan Block V / 5AB', '000-23232003232', '2023-06-10 09:30:54', 1, '2023-06-10 09:30:54', 1, 0);
+
+ALTER TABLE `tbl_user` ADD `ttd` VARCHAR(255) DEFAULT '' AFTER `status_email`;
+
+ALTER TABLE `tbl_user` ADD `perusahaan_id` INT(11) DEFAULT 0 AFTER `user_id`;

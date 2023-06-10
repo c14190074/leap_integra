@@ -25,6 +25,12 @@
                     </a>
                 </li>
 
+                <li class="nav-item pt-2">
+                    <a class="nav-link text-body" data-scroll="" href="#sign">
+                        <span class="text-sm"><i class="fa fa-lock text-sm me-2"></i>Privy Sign</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>
@@ -144,6 +150,45 @@
                     <div class="form-group">
                         <div class="col-md-12">
                             <button type="button" class="btn btn-primary" onclick="submitform('app_form_password', 'User')">Ubah Password</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4" id="sign">
+            <div class="card-header">
+                <h5>Privy Sign</h5>
+            </div>
+            <div class="card-body pt-0">
+                <form class="form-material form-horizontal" id="app_form_sign" action="uploadsign" method="POST" enctype="multipart/form-data">
+                    <?= Snl::chtml()->activeTextbox($model, 'user_id', array('class' => 'hidden')) ?>
+                    
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <?php
+                                if($model->ttd == '' || $model == NULL) {
+                                    echo "<label class='col-md-12'>Not set up yet</label>";
+                                } else {
+                                    echo "<img style='width: 100px;' src='".Snl::app()->baseUrl() . 'uploads/documents/'.$model->ttd."' />";
+                                }
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-12">Upload Here</label>
+                        <div class="col-md-12">
+                            <input type="file" class="form-control" name="file" />
+                        </div>
+                         <p class="col-md-12" style="font-size: 10pt;">File type : JPG & PNG. Max 1 MB</p>
+                    </div>
+
+                    
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button type="submit" name="submit-sign" class="btn btn-primary">Update</button>
                         </div>
                     </div>
                 </form>
